@@ -1,0 +1,38 @@
+{
+  "generated_at": "2025-11-27T16:10:28.623859",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Sum of Even Numbers",
+      "description": "Write a C++ function called `sumOfEvenNumbers` that takes an integer `n` as input. The function should calculate and return the sum of all even numbers from 1 up to and including `n`. If `n` is less than 1, the function should return 0.",
+      "solution": "#include <iostream>\n\nint sumOfEvenNumbers(int n) {\n    if (n < 1) {\n        return 0;\n    }\n    int sum = 0;\n    for (int i = 1; i <= n; ++i) {\n        if (i % 2 == 0) {\n            sum += i;\n        }\n    }\n    return sum;\n}\n\nint main() {\n    int n;\n    std::cin >> n;\n    std::cout << sumOfEvenNumbers(n) << std::endl;\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10",
+          "expected_output": "30"
+        },
+        {
+          "input": "5",
+          "expected_output": "6"
+        },
+        {
+          "input": "0",
+          "expected_output": "0"
+        },
+        {
+          "input": "1",
+          "expected_output": "0"
+        },
+        {
+          "input": "2",
+          "expected_output": "2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "all_tests_passed": true,
+        "test_summary": "5/5 passed"
+      }
+    }
+  ]
+}
