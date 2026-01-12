@@ -1,0 +1,110 @@
+{
+  "generated_at": "2026-01-12T14:32:58.431741",
+  "num_tasks": 2,
+  "tasks": [
+    {
+      "title": "Sum of Even Numbers",
+      "description": "Write a program that reads an integer $N$ from the user and calculates the sum of all even integers from 1 up to and including $N$ using a `for` loop.",
+      "buggy_code": null,
+      "code_with_blanks": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n, sum = 0;\n    if (!(cin >> n)) return 0;\n\n    // Loop from 1 to n\n    for (int i = 1; _____; i++) {\n        // Check if the current number is even\n        if (_____ == 0) {\n            sum += _____;\n        }\n    }\n\n    cout << sum << endl;\n    return 0;\n}",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n, sum = 0;\n    if (!(cin >> n)) return 0;\n\n    // Loop from 1 to n\n    for (int i = 1; i <= n; i++) {\n        // Check if the current number is even\n        if (i % 2 == 0) {\n            sum += i;\n        }\n    }\n\n    cout << sum << endl;\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10",
+          "expected_output": "30"
+        },
+        {
+          "input": "5",
+          "expected_output": "6"
+        },
+        {
+          "input": "1",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10",
+            "expected": "30",
+            "actual": "30",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    },
+    {
+      "title": "Sum of Digits",
+      "description": "Write a program that takes a positive integer as input and calculates the sum of its digits using a `while` loop. For example, if the input is 123, the output should be 6 (1+2+3).",
+      "buggy_code": null,
+      "code_with_blanks": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num, digitSum = 0;\n    if (!(cin >> num)) return 0;\n\n    // Process each digit until the number becomes 0\n    while (_____) {\n        // Extract the last digit using the modulo operator\n        int lastDigit = _____;\n        \n        // Add the digit to the running total\n        digitSum += lastDigit;\n        \n        // Remove the last digit using integer division\n        num = _____;\n    }\n\n    cout << digitSum << endl;\n    return 0;\n}",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num, digitSum = 0;\n    if (!(cin >> num)) return 0;\n\n    // Process each digit until the number becomes 0\n    while (num > 0) {\n        // Extract the last digit using the modulo operator\n        int lastDigit = num % 10;\n        \n        // Add the digit to the running total\n        digitSum += lastDigit;\n        \n        // Remove the last digit using integer division\n        num = num / 10;\n    }\n\n    cout << digitSum << endl;\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "123",
+          "expected_output": "6"
+        },
+        {
+          "input": "5005",
+          "expected_output": "10"
+        },
+        {
+          "input": "9",
+          "expected_output": "9"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "123",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5005",
+            "expected": "10",
+            "actual": "10",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "9",
+            "expected": "9",
+            "actual": "9",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}

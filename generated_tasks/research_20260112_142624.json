@@ -1,0 +1,162 @@
+{
+  "generated_at": "2026-01-12T14:26:24.009857",
+  "num_tasks": 3,
+  "tasks": [
+    {
+      "title": "Sum of Even Numbers",
+      "description": "Write a program that reads an integer `n` and calculates the sum of all even integers from 1 to `n` (inclusive). The buggy code fails to include the number `n` if it is even, has a logic error in checking for evenness, and initializes the sum incorrectly.",
+      "buggy_code": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    // Bug: sum is initialized to 1, should be 0\n    int sum = 1; \n    // Bug: loop condition uses < instead of <=, missing n if n is even\n    for (int i = 1; i < n; i++) {\n        // Bug: uses division / instead of modulo % to check for even numbers\n        if (i / 2 == 0) {\n            sum += i;\n        }\n    }\n    std::cout << sum << std::endl;\n    return 0;\n}",
+      "code_with_blanks": null,
+      "solution": "#include <iostream>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n    int sum = 0;\n    for (int i = 1; i <= n; i++) {\n        if (i % 2 == 0) {\n            sum += i;\n        }\n    }\n    std::cout << sum << std::endl;\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "6",
+          "expected_output": "12"
+        },
+        {
+          "input": "5",
+          "expected_output": "6"
+        },
+        {
+          "input": "1",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "6",
+            "expected": "12",
+            "actual": "12",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    },
+    {
+      "title": "Factorial Finder",
+      "description": "This program should calculate the factorial of a given non-negative integer `n`. The buggy code contains an infinite loop, an incorrect initialization, and a logic error that results in 0 for all outputs.",
+      "buggy_code": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    // Bug: Factorial should be initialized to 1, not 0\n    long long factorial = 0;\n    \n    // Bug: The loop never decrements n, causing an infinite loop\n    // Bug: The condition n > 0 will fail for input 0 (0! is 1)\n    while (n > 0) {\n        factorial *= n;\n    }\n    \n    std::cout << factorial << std::endl;\n    return 0;\n}",
+      "code_with_blanks": null,
+      "solution": "#include <iostream>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n    long long factorial = 1;\n    \n    while (n > 0) {\n        factorial *= n;\n        n--;\n    }\n    \n    std::cout << factorial << std::endl;\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "120"
+        },
+        {
+          "input": "0",
+          "expected_output": "1"
+        },
+        {
+          "input": "3",
+          "expected_output": "6"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5",
+            "expected": "120",
+            "actual": "120",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "3",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    },
+    {
+      "title": "Countdown Timer",
+      "description": "The program is intended to take an integer `n` and count down to 1, followed by the phrase \"BLAST OFF!\". The buggy code has a semicolon error that separates the loop body from the loop header, an incorrect increment expression, and missing spaces.",
+      "buggy_code": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    \n    // Bug: Semicolon at the end of for loop header makes it a null statement\n    // Bug: i++ is used instead of i-- for a countdown\n    for (int i = n; i > 0; i++);\n    {\n        std::cout << n << \" \";\n    }\n    \n    std::cout << \"BLAST OFF!\" << std::endl;\n    return 0;\n}",
+      "code_with_blanks": null,
+      "solution": "#include <iostream>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n    \n    for (int i = n; i > 0; i--) {\n        std::cout << i << \" \";\n    }\n    \n    std::cout << \"BLAST OFF!\" << std::endl;\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "5 4 3 2 1 BLAST OFF!"
+        },
+        {
+          "input": "1",
+          "expected_output": "1 BLAST OFF!"
+        },
+        {
+          "input": "0",
+          "expected_output": "BLAST OFF!"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5",
+            "expected": "5 4 3 2 1 BLAST OFF!",
+            "actual": "5 4 3 2 1 BLAST OFF!",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1",
+            "expected": "1 BLAST OFF!",
+            "actual": "1 BLAST OFF!",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0",
+            "expected": "BLAST OFF!",
+            "actual": "BLAST OFF!",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}

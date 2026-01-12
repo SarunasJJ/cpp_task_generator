@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-01-12T14:25:44.066767",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Movie Ticket Pricing System",
+      "description": "Write a complete C++ program that calculates the price of a movie ticket based on two factors: age and student status. \n\nThe pricing rules are as follows:\n1. If the person is 12 years old or younger, the ticket price is $7.00.\n2. If the person is 65 years old or older, the ticket price is $8.00.\n3. For all others (ages 13 to 64):\n   - If the person is a student, the ticket price is $10.00.\n   - If the person is NOT a student, the ticket price is $12.00.\n\nInput Format: Two integers separated by a space. The first integer represents the age, and the second integer represents student status (1 for true/student, 0 for false/not a student).\nOutput Format: The price formatted to exactly two decimal places.",
+      "buggy_code": null,
+      "code_with_blanks": null,
+      "solution": "#include <iostream>\n#include <iomanip>\n\nusing namespace std;\n\n/**\n * Calculates the ticket price based on age and student status.\n * Rules:\n * - Age <= 12: $7.00\n * - Age >= 65: $8.00\n * - Else (13-64): Student ? $10.00 : $12.00\n */\ndouble calculatePrice(int age, bool isStudent) {\n    if (age <= 12) {\n        return 7.00;\n    } else if (age >= 65) {\n        return 8.00;\n    } else {\n        if (isStudent) {\n            return 10.00;\n        } else {\n            return 12.00;\n        }\n    }\n}\n\nint main() {\n    int age;\n    int studentInput;\n\n    // Read age and student status (0 or 1)\n    if (!(cin >> age >> studentInput)) {\n        return 0;\n    }\n\n    bool isStudent = (studentInput == 1);\n    \n    double finalPrice = calculatePrice(age, isStudent);\n\n    // Output formatted to 2 decimal places\n    cout << fixed << setprecision(2) << finalPrice << endl;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10 0",
+          "expected_output": "7.00"
+        },
+        {
+          "input": "25 1",
+          "expected_output": "10.00"
+        },
+        {
+          "input": "40 0",
+          "expected_output": "12.00"
+        },
+        {
+          "input": "70 1",
+          "expected_output": "8.00"
+        },
+        {
+          "input": "13 0",
+          "expected_output": "12.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 0",
+            "expected": "7.00",
+            "actual": "7.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "25 1",
+            "expected": "10.00",
+            "actual": "10.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "40 0",
+            "expected": "12.00",
+            "actual": "12.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 4,
+            "input": "70 1",
+            "expected": "8.00",
+            "actual": "8.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 5,
+            "input": "13 0",
+            "expected": "12.00",
+            "actual": "12.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}

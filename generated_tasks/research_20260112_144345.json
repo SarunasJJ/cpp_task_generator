@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-01-12T14:43:45.983387",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "String Reversal via Recursion",
+      "description": "Complete the recursive function `reverseString` which takes a string as input and returns the string in reverse order. For example, given the input \"recursive\", the function should return \"evisrucer\".",
+      "buggy_code": null,
+      "code_with_blanks": "#include <iostream>\n#include <string>\n\n// Recursive function to reverse a string\nstd::string reverseString(std::string s) {\n    // Base case: if the string is empty or has one character\n    if (_____) {\n        return s;\n    }\n\n    // Recursive step: \n    // Take the last character and append the result of reversing the rest\n    return s.back() + _____(_____);\n}\n\nint main() {\n    std::string input;\n    if (std::cin >> input) {\n        std::cout << reverseString(input) << std::endl;\n    }\n    return 0;\n}",
+      "solution": "#include <iostream>\n#include <string>\n\n// Recursive function to reverse a string\nstd::string reverseString(std::string s) {\n    // Base case: if the string is empty or has one character\n    if (s.length() <= 1) {\n        return s;\n    }\n\n    // Recursive step: \n    // Take the last character and append the result of reversing the rest\n    return s.back() + reverseString(s.substr(0, s.length() - 1));\n}\n\nint main() {\n    std::string input;\n    if (std::cin >> input) {\n        std::cout << reverseString(input) << std::endl;\n    }\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "olleh"
+        },
+        {
+          "input": "C++",
+          "expected_output": "++C"
+        },
+        {
+          "input": "a",
+          "expected_output": "a"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "olleh",
+            "actual": "olleh",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "C++",
+            "expected": "++C",
+            "actual": "++C",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "a",
+            "expected": "a",
+            "actual": "a",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}

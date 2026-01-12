@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-01-12T19:02:51.725078",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Prime Number and Square Calculation",
+      "description": "Complete the program by filling in the missing parts of the function definitions and function calls. The program reads an integer from the user, determines if it is a prime number using a boolean function, and calculates its square using another function.",
+      "buggy_code": null,
+      "code_with_blanks": "#include <iostream>\n#include <cmath>\n\n// Function to check if a number is prime\n_____ isPrime(int n) {\n    if (n <= 1) return _____;\n    for (int i = 2; i <= std::sqrt(n); i++) {\n        if (n % i == 0) return _____;\n    }\n    return _____;\n}\n\n// Function to calculate the square of a number\nint calculateSquare(_____) {\n    return _____;\n}\n\nint main() {\n    int num;\n    if (!(std::cin >> num)) return 0;\n\n    if (_____(num)) {\n        std::cout << num << \" is prime.\" << std::endl;\n    } else {\n        std::cout << num << \" is not prime.\" << std::endl;\n    }\n\n    std::cout << \"Square: \" << _____(num) << std::endl;\n\n    return 0;\n}",
+      "solution": "#include <iostream>\n#include <cmath>\n\n// Function to check if a number is prime\nbool isPrime(int n) {\n    if (n <= 1) return false;\n    for (int i = 2; i <= std::sqrt(n); i++) {\n        if (n % i == 0) return false;\n    }\n    return true;\n}\n\n// Function to calculate the square of a number\nint calculateSquare(int n) {\n    return n * n;\n}\n\nint main() {\n    int num;\n    if (!(std::cin >> num)) return 0;\n\n    if (isPrime(num)) {\n        std::cout << num << \" is prime.\" << std::endl;\n    } else {\n        std::cout << num << \" is not prime.\" << std::endl;\n    }\n\n    std::cout << \"Square: \" << calculateSquare(num) << std::endl;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "7",
+          "expected_output": "7 is prime.\nSquare: 49"
+        },
+        {
+          "input": "4",
+          "expected_output": "4 is not prime.\nSquare: 16"
+        },
+        {
+          "input": "1",
+          "expected_output": "1 is not prime.\nSquare: 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "7",
+            "expected": "7 is prime.\nSquare: 49",
+            "actual": "7 is prime.\nSquare: 49",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4",
+            "expected": "4 is not prime.\nSquare: 16",
+            "actual": "4 is not prime.\nSquare: 16",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1",
+            "expected": "1 is not prime.\nSquare: 1",
+            "actual": "1 is not prime.\nSquare: 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}

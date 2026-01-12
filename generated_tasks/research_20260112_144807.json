@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-01-12T14:48:07.621589",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Sum of Odd Numbers in Range",
+      "description": "Write a program that reads two integers, `start` and `end`, and calculates the sum of all odd integers in the inclusive range [start, end]. The program should handle cases where the range includes negative numbers.",
+      "buggy_code": null,
+      "code_with_blanks": "#include <iostream>\n\nint main() {\n    int start, end;\n    if (!(std::cin >> start >> end)) {\n        return 0;\n    }\n\n    long long sum = _____;\n\n    for (int i = _____; i <= _____; _____) {\n        if (i % 2 != _____) {\n            sum += _____;\n        }\n    }\n\n    std::cout << sum << std::endl;\n\n    return 0;\n}",
+      "solution": "#include <iostream>\n\nint main() {\n    int start, end;\n    if (!(std::cin >> start >> end)) {\n        return 0;\n    }\n\n    long long sum = 0;\n\n    for (int i = start; i <= end; ++i) {\n        if (i % 2 != 0) {\n            sum += i;\n        }\n    }\n\n    std::cout << sum << std::endl;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1 10",
+          "expected_output": "25"
+        },
+        {
+          "input": "5 5",
+          "expected_output": "5"
+        },
+        {
+          "input": "-5 5",
+          "expected_output": "0"
+        },
+        {
+          "input": "10 20",
+          "expected_output": "75"
+        },
+        {
+          "input": "-10 -1",
+          "expected_output": "-25"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 10",
+            "expected": "25",
+            "actual": "25",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 5",
+            "expected": "5",
+            "actual": "5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-5 5",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 4,
+            "input": "10 20",
+            "expected": "75",
+            "actual": "75",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 5,
+            "input": "-10 -1",
+            "expected": "-25",
+            "actual": "-25",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}

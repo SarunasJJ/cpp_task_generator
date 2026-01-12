@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-01-12T14:41:59.187608",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Factorial Calculator",
+      "description": "The following program is intended to calculate the factorial of a non-negative integer `n` (written as `n!`). For example, 5! = 5 * 4 * 3 * 2 * 1 = 120. By definition, 0! is 1. However, the current code contains logic errors in the loop and variable initialization that prevent it from producing the correct result. Identify and fix these errors.",
+      "buggy_code": "#include <iostream>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    long long factorial = 0;\n    for (int i = 1; i < n; i++) {\n        factorial *= i;\n    }\n\n    std::cout << factorial << std::endl;\n\n    return 0;\n}",
+      "code_with_blanks": null,
+      "solution": "#include <iostream>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    // Factorial must start at 1 because 0! = 1 \n    // and multiplying by 0 would result in 0.\n    long long factorial = 1;\n\n    // The loop must include n (i <= n) to multiply the last digit.\n    // If n is 0, the loop condition (1 <= 0) is false, and it correctly returns 1.\n    for (int i = 1; i <= n; i++) {\n        factorial *= i;\n    }\n\n    std::cout << factorial << std::endl;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "120"
+        },
+        {
+          "input": "0",
+          "expected_output": "1"
+        },
+        {
+          "input": "12",
+          "expected_output": "479001600"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5",
+            "expected": "120",
+            "actual": "120",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "12",
+            "expected": "479001600",
+            "actual": "479001600",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}

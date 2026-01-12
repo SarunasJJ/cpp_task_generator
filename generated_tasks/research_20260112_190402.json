@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-01-12T19:04:02.237452",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Palindrome Number Checker",
+      "description": "Write a complete C++ program that includes a function named `isPalindrome`. \n\nFunction Requirements:\n1. The function `isPalindrome` should take one integer as a parameter.\n2. It should return a `bool`: `true` if the number is a palindrome, and `false` otherwise.\n3. A palindrome number is a number that remains the same when its digits are reversed (e.g., 121, 44, 5).\n4. Negative numbers are not considered palindromes.\n\nMain Function Requirements:\n1. Read a single integer from standard input.\n2. Call the `isPalindrome` function.\n3. If the function returns `true`, print \"Palindrome\".\n4. If the function returns `false`, print \"Not Palindrome\".",
+      "buggy_code": null,
+      "code_with_blanks": null,
+      "solution": "#include <iostream>\n\n/**\n * Checks if a given integer is a palindrome.\n * A palindrome reads the same forwards and backwards.\n */\nbool isPalindrome(int n) {\n    // Negative numbers are not palindromes\n    if (n < 0) {\n        return false;\n    }\n\n    // Single digits are always palindromes\n    if (n >= 0 && n < 10) {\n        return true;\n    }\n\n    long long original = n;\n    long long reversed = 0;\n    long long remainder;\n\n    // Reverse the integer\n    while (n != 0) {\n        remainder = n % 10;\n        reversed = reversed * 10 + remainder;\n        n /= 10;\n    }\n\n    // Check if original and reversed are the same\n    return original == reversed;\n}\n\nint main() {\n    int num;\n    if (std::cin >> num) {\n        if (isPalindrome(num)) {\n            std::cout << \"Palindrome\" << std::endl;\n        } else {\n            std::cout << \"Not Palindrome\" << std::endl;\n        }\n    }\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "121",
+          "expected_output": "Palindrome"
+        },
+        {
+          "input": "-121",
+          "expected_output": "Not Palindrome"
+        },
+        {
+          "input": "123",
+          "expected_output": "Not Palindrome"
+        },
+        {
+          "input": "7",
+          "expected_output": "Palindrome"
+        },
+        {
+          "input": "1001",
+          "expected_output": "Palindrome"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "121",
+            "expected": "Palindrome",
+            "actual": "Palindrome",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-121",
+            "expected": "Not Palindrome",
+            "actual": "Not Palindrome",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "123",
+            "expected": "Not Palindrome",
+            "actual": "Not Palindrome",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 4,
+            "input": "7",
+            "expected": "Palindrome",
+            "actual": "Palindrome",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 5,
+            "input": "1001",
+            "expected": "Palindrome",
+            "actual": "Palindrome",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      }
+    }
+  ]
+}
