@@ -1,5 +1,5 @@
 """
-Response parser: extracts structured tasks from LLM responses.
+Response parser: extracts structured tasks from LLM responses (write-from-scratch only).
 """
 
 import re
@@ -36,23 +36,11 @@ class ResponseParser:
         task["title"] = title_match.group(1).strip() if title_match else "Untitled"
 
         desc_match = re.search(
-            r"DESCRIPTION:\s*(.+?)(?=BUGGY_CODE:|CODE_WITH_BLANKS:|SOLUTION:|$)",
+            r"DESCRIPTION:\s*(.+?)(?=SOLUTION:|$)",
             block,
             re.DOTALL,
         )
         task["description"] = desc_match.group(1).strip() if desc_match else ""
-
-        buggy_match = re.search(
-            r"BUGGY_CODE:\s*" + ResponseParser._FENCE, block, re.DOTALL
-        )
-        if buggy_match:
-            task["buggy_code"] = buggy_match.group(1).strip()
-
-        blank_match = re.search(
-            r"CODE_WITH_BLANKS:\s*" + ResponseParser._FENCE, block, re.DOTALL
-        )
-        if blank_match:
-            task["code_with_blanks"] = blank_match.group(1).strip()
 
         solution_match = re.search(
             r"SOLUTION:\s*" + ResponseParser._FENCE, block, re.DOTALL

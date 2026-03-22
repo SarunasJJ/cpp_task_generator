@@ -53,24 +53,6 @@ function TaskCard({ task, index }) {
         <strong>Description:</strong> {task.description}
       </p>
 
-      {task.buggy_code && (
-        <div style={{ marginBottom: '15px' }}>
-          <strong>Buggy code:</strong>
-          <pre style={{ background: '#ffe6e6', padding: '12px', overflowX: 'auto', fontSize: '13px' }}>
-            {task.buggy_code}
-          </pre>
-        </div>
-      )}
-
-      {task.code_with_blanks && (
-        <div style={{ marginBottom: '15px' }}>
-          <strong>Code with blanks:</strong>
-          <pre style={{ background: '#e6f3ff', padding: '12px', overflowX: 'auto', fontSize: '13px' }}>
-            {task.code_with_blanks}
-          </pre>
-        </div>
-      )}
-
       <div style={{ marginBottom: '15px' }}>
         <strong>Expected test cases (from model):</strong>
         {Array.isArray(task.test_cases) && task.test_cases.length > 0 ? (
@@ -156,7 +138,6 @@ function TaskCard({ task, index }) {
 function App() {
   const [config, setConfig] = useState({
     topic: TOPICS[0].value,
-    task_type: 'write_function',
     num_tasks: 1,
     provider: 'gemini',
     api_key: '',
@@ -209,7 +190,6 @@ function App() {
 
     const body = {
       topic: config.topic,
-      task_type: config.task_type,
       num_tasks: parseInt(config.num_tasks, 10),
       provider: config.provider,
     };
@@ -405,16 +385,6 @@ function App() {
                     {t.label}
                   </option>
                 ))}
-              </select>
-            </label>
-
-            <label>
-              <strong>Task type:</strong>
-              <br />
-              <select name="task_type" value={config.task_type} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px' }}>
-                <option value="write_function">Write program</option>
-                <option value="fix_code">Fix buggy code</option>
-                <option value="fill_blank">Fill in blanks</option>
               </select>
             </label>
 

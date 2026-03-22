@@ -14,13 +14,13 @@ class CTaskGenerator:
         self.provider = (provider or "").strip().lower()
         self._llm = LLMClient(self.provider, api_key)
 
-    def generate_tasks(self, topic, task_type, num_tasks=1):
+    def generate_tasks(self, topic, num_tasks=1):
         print(f"\n{'='*60}")
         print(f"Generating {num_tasks} C task(s) via {self.provider}...")
-        print(f"Topic: {topic} | Type: {task_type}")
+        print(f"Topic: {topic} | Type: write from scratch")
         print(f"{'='*60}\n")
 
-        prompt = PromptBuilder.build_prompt(topic, task_type, num_tasks)
+        prompt = PromptBuilder.build_prompt(topic, num_tasks)
 
         try:
             response_text = self._llm.generate_text(prompt)
@@ -68,8 +68,6 @@ class CTaskGenerator:
             task_data = {
                 "title": task.get("title"),
                 "description": task.get("description"),
-                "buggy_code": task.get("buggy_code"),
-                "code_with_blanks": task.get("code_with_blanks"),
                 "solution": task.get("solution"),
                 "test_cases": task.get("test_cases"),
                 "validation": task.get("test_results"),

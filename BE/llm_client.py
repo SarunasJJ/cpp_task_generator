@@ -27,7 +27,7 @@ class LLMClient:
             import google.generativeai as genai
 
             genai.configure(api_key=api_key)
-            model_name = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+            model_name = os.getenv("GEMINI_MODEL", "gemini-3.0-flash")
             self._gemini_model = genai.GenerativeModel(model_name=model_name)
         elif self.provider == "claude":
             from anthropic import Anthropic
@@ -61,7 +61,7 @@ class LLMClient:
                     raise LLMClientError("Unexpected Claude response block type")
                 return block.text
 
-            model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+            model = os.getenv("OPENAI_MODEL", "gpt-5o-mini")
             chat = self._openai_client.chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],

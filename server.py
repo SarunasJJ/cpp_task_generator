@@ -66,8 +66,6 @@ def _task_payload(task):
     return {
         "title": task.get("title"),
         "description": task.get("description"),
-        "buggy_code": task.get("buggy_code"),
-        "code_with_blanks": task.get("code_with_blanks"),
         "solution": task.get("solution"),
         "test_cases": task.get("test_cases"),
         "validation": vr,
@@ -133,14 +131,13 @@ def generate_tasks():
         ), 400
 
     topic = data.get("topic")
-    task_type = data.get("task_type")
     num_tasks = data.get("num_tasks", 1)
 
-    if not topic or not task_type:
-        return jsonify({"error": "topic and task_type are required"}), 400
+    if not topic:
+        return jsonify({"error": "topic is required"}), 400
 
     try:
-        all_tasks = gen.generate_tasks(topic, task_type, num_tasks)
+        all_tasks = gen.generate_tasks(topic, num_tasks)
 
         research_filename = f"research_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         os.makedirs("generated_tasks", exist_ok=True)
