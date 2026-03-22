@@ -1,162 +1,597 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+const API_BASE = 'http://localhost:5000';
+
+const TOPICS = [
+  { value: 'variables and operators', label: 'Variables and operators' },
+  { value: 'conditionals and loops', label: 'Conditionals and loops' },
+  { value: 'arrays and strings', label: 'Arrays and strings' },
+  { value: 'pointers and memory allocation', label: 'Pointers and memory allocation' },
+];
+
+const PROVIDERS = [
+  { value: 'gemini', label: 'Google Gemini' },
+  { value: 'claude', label: 'Anthropic Claude' },
+  { value: 'gpt', label: 'OpenAI GPT' },
+];
+
+function TaskCard({ task, index }) {
+  const valid = task.valid ?? task.validation?.all_passed;
+  const vr = task.validation || {};
+
+  return (
+    <div
+      style={{
+        border: `2px solid ${valid ? '#28a745' : '#dc3545'}`,
+        margin: '20px 0',
+        padding: '20px',
+        borderRadius: '8px',
+        background: valid ? '#f8fff9' : '#fff8f8',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+        <h2 style={{ marginTop: 0, marginBottom: '8px' }}>
+          {index + 1}. {task.title}
+        </h2>
+        <span
+          style={{
+            padding: '6px 12px',
+            background: valid ? '#28a745' : '#dc3545',
+            color: 'white',
+            borderRadius: '4px',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {valid ? 'Valid (tests passed)' : 'Invalid (tests failed or compile error)'}
+        </span>
+      </div>
+
+      <p style={{ marginTop: 0 }}>
+        <strong>Description:</strong> {task.description}
+      </p>
+
+      {task.buggy_code && (
+        <div style={{ marginBottom: '15px' }}>
+          <strong>Buggy code:</strong>
+          <pre style={{ background: '#ffe6e6', padding: '12px', overflowX: 'auto', fontSize: '13px' }}>
+            {task.buggy_code}
+          </pre>
+        </div>
+      )}
+
+      {task.code_with_blanks && (
+        <div style={{ marginBottom: '15px' }}>
+          <strong>Code with blanks:</strong>
+          <pre style={{ background: '#e6f3ff', padding: '12px', overflowX: 'auto', fontSize: '13px' }}>
+            {task.code_with_blanks}
+          </pre>
+        </div>
+      )}
+
+      <div style={{ marginBottom: '15px' }}>
+        <strong>Expected test cases (from model):</strong>
+        {Array.isArray(task.test_cases) && task.test_cases.length > 0 ? (
+          <ul style={{ paddingLeft: '20px', margin: '8px 0' }}>
+            {task.test_cases.map((tc, i) => (
+              <li key={i} style={{ marginBottom: '8px' }}>
+                <div>
+                  <strong>Input:</strong>{' '}
+                  <span style={{ whiteSpace: 'pre-wrap' }}>{tc.input}</span>
+                </div>
+                <div>
+                  <strong>Expected output:</strong>{' '}
+                  <span style={{ whiteSpace: 'pre-wrap' }}>{tc.expected_output}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p style={{ color: '#666' }}>None parsed.</p>
+        )}
+      </div>
+
+      <div style={{ marginBottom: '15px' }}>
+        <strong>Solution:</strong>
+        <pre style={{ background: '#f4f4f4', padding: '12px', overflowX: 'auto', fontSize: '13px' }}>
+          {task.solution || '(no solution)'}
+        </pre>
+      </div>
+
+      <div style={{ marginTop: '16px', padding: '12px', background: '#fff', border: '1px solid #ddd', borderRadius: '6px' }}>
+        <strong>Validation (gcc + run):</strong>
+        <p style={{ margin: '8px 0' }}>
+          <strong>Compiled:</strong> {vr.compiled ? 'Yes' : 'No'}
+        </p>
+        {vr.compilation_error && (
+          <div style={{ marginBottom: '10px' }}>
+            <strong>Compilation error:</strong>
+            <pre style={{ background: '#ffe6e6', padding: '10px', fontSize: '12px', overflowX: 'auto' }}>
+              {vr.compilation_error}
+            </pre>
+          </div>
+        )}
+        {vr.test_results && vr.test_results.length > 0 && (
+          <div>
+            <strong>Per-test results:</strong>
+            {vr.test_results.map((tr, idx) => (
+              <div
+                key={idx}
+                style={{
+                  marginTop: '10px',
+                  padding: '10px',
+                  background: tr.passed ? '#e8f5e9' : '#ffebee',
+                  borderRadius: '4px',
+                  fontSize: '13px',
+                }}
+              >
+                <div>
+                  <strong>Test {tr.test_number}:</strong> {tr.passed ? 'Passed' : 'Failed'}
+                </div>
+                <div>
+                  <strong>Input:</strong> <span style={{ whiteSpace: 'pre-wrap' }}>{tr.input}</span>
+                </div>
+                <div>
+                  <strong>Expected:</strong> <span style={{ whiteSpace: 'pre-wrap' }}>{tr.expected}</span>
+                </div>
+                <div>
+                  <strong>Actual:</strong> <span style={{ whiteSpace: 'pre-wrap' }}>{tr.actual ?? 'N/A'}</span>
+                </div>
+                {tr.error && (
+                  <div style={{ color: '#c62828' }}>
+                    <strong>Runtime error:</strong> {tr.error}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function App() {
   const [config, setConfig] = useState({
-    topic: 'Loops',
+    topic: TOPICS[0].value,
     task_type: 'write_function',
-    num_tasks: 1
+    num_tasks: 1,
+    provider: 'gemini',
+    api_key: '',
   });
-  
+
   const [tasks, setTasks] = useState([]);
+  const [meta, setMeta] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [configLoading, setConfigLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [configMessage, setConfigMessage] = useState(null);
+  const [activeTab, setActiveTab] = useState('generator');
+
+  const [jsonFiles, setJsonFiles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileContent, setFileContent] = useState(null);
+  const [loadingFiles, setLoadingFiles] = useState(false);
+
+  const saveConfig = async () => {
+    setConfigMessage(null);
+    setError(null);
+    if (!config.api_key.trim()) {
+      setConfigMessage({ type: 'error', text: 'Enter an API key to save.' });
+      return;
+    }
+    setConfigLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/config`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ provider: config.provider, api_key: config.api_key.trim() }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setConfigMessage({ type: 'ok', text: `${data.provider} API key saved on server.` });
+      } else {
+        setConfigMessage({ type: 'error', text: data.error || 'Config failed' });
+      }
+    } catch (err) {
+      setConfigMessage({ type: 'error', text: 'Network error talking to server.' });
+    }
+    setConfigLoading(false);
+  };
 
   const generate = async () => {
     setLoading(true);
     setError(null);
     setTasks([]);
+    setMeta(null);
+
+    const body = {
+      topic: config.topic,
+      task_type: config.task_type,
+      num_tasks: parseInt(config.num_tasks, 10),
+      provider: config.provider,
+    };
+    if (config.api_key.trim()) {
+      body.api_key = config.api_key.trim();
+    }
 
     try {
-      const res = await fetch('http://localhost:5000/api/generate', {
+      const res = await fetch(`${API_BASE}/api/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          topic: config.topic,
-          task_type: config.task_type,
-          num_tasks: parseInt(config.num_tasks),
-        }),
+        body: JSON.stringify(body),
       });
 
       const data = await res.json();
 
       if (data.success && Array.isArray(data.tasks)) {
         setTasks(data.tasks);
+        setMeta({
+          provider: data.provider,
+          total_generated: data.total_generated,
+          valid_count: data.valid_count,
+          invalid_count: data.invalid_count,
+        });
       } else {
-        setError(data.error || "Failed to generate tasks");
-        setTasks([]);
+        setError(data.error || 'Failed to generate tasks');
       }
-
     } catch (err) {
       console.error(err);
-      setError("Network error: Could not connect to server");
-      setTasks([]);
+      setError('Network error: could not connect to server');
     }
     setLoading(false);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setConfig(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const loadJsonFiles = async () => {
+    setLoadingFiles(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/files`);
+      const data = await res.json();
+      if (data.files) {
+        setJsonFiles(data.files);
+      }
+    } catch (err) {
+      console.error('Error loading files:', err);
+    }
+    setLoadingFiles(false);
   };
 
+  const loadFileContent = async (filename) => {
+    try {
+      const res = await fetch(`${API_BASE}/api/files/${filename}`);
+      const data = await res.json();
+      setFileContent(data);
+      setSelectedFile(filename);
+    } catch (err) {
+      console.error('Error loading file content:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'viewer') {
+      loadJsonFiles();
+    }
+  }, [activeTab]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setConfig((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const isTaskValid = (t) => t.valid ?? t.validation?.all_passed;
+  const validTasks = tasks.filter((t) => isTaskValid(t));
+  const invalidTasks = tasks.filter((t) => !isTaskValid(t));
+
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>C++ Exercise Generator</h1>
-      
-      <div style={{ display: 'grid', gap: '10px', marginBottom: '20px', padding: '15px', background: '#f5f5f5', borderRadius: '5px' }}>
-        
-        <label>
-          <strong>Topic:</strong><br/>
-          <select name="topic" value={config.topic} onChange={handleChange} style={{ width: '100%', padding: '5px' }}>
-            <option value="Loops">Loops</option>
-            <option value="Conditionals">Conditionals</option>
-            <option value="Arrays">Arrays</option>
-            <option value="Pointers">Pointers</option>
-            <option value="Functions">Functions</option>
-            <option value="Classes">Classes</option>
-            <option value="Recursion">Recursion</option>
-          </select>
-        </label>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', fontFamily: 'system-ui, Arial, sans-serif' }}>
+      <h1>C exercise generator</h1>
+      <p style={{ color: '#555', marginTop: '-8px' }}>
+        Generate stdin/stdout C exercises, compile with gcc, and review every exercise — including failures — with
+        tests and solutions.
+      </p>
 
-        <label>
-          <strong>Task Type:</strong><br/>
-          <select name="task_type" value={config.task_type} onChange={handleChange} style={{ width: '100%', padding: '5px' }}>
-            <option value="write_function">Write Function</option>
-            <option value="fix_code">Fix Buggy Code</option>
-            <option value="fill_blank">Fill in Blanks</option>
-          </select>
-        </label>
-
-        <label>
-          <strong>Number of Exercises:</strong><br/>
-          <input 
-            type="number" 
-            name="num_tasks" 
-            min="1" 
-            max="100"
-            value={config.num_tasks} 
-            onChange={handleChange}
-            style={{ width: '100%', padding: '5px' }}
-          />
-        </label>
-
-        <button 
-          onClick={generate} 
-          disabled={loading}
-          style={{ 
-            padding: '10px', 
-            background: loading ? '#ccc' : '#007bff', 
-            color: 'white', 
-            border: 'none', 
-            cursor: loading ? 'not-allowed' : 'pointer',
-            fontSize: '16px'
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', borderBottom: '2px solid #ddd' }}>
+        <button
+          type="button"
+          onClick={() => setActiveTab('generator')}
+          style={{
+            padding: '10px 20px',
+            background: activeTab === 'generator' ? '#007bff' : 'transparent',
+            color: activeTab === 'generator' ? 'white' : '#007bff',
+            border: 'none',
+            borderBottom: activeTab === 'generator' ? '3px solid #007bff' : 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
           }}
         >
-          {loading ? 'Generating...' : 'Generate Exercises'}
+          Generator
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('viewer')}
+          style={{
+            padding: '10px 20px',
+            background: activeTab === 'viewer' ? '#007bff' : 'transparent',
+            color: activeTab === 'viewer' ? 'white' : '#007bff',
+            border: 'none',
+            borderBottom: activeTab === 'viewer' ? '3px solid #007bff' : 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+          }}
+        >
+          Saved JSON files
         </button>
       </div>
 
-      <hr />
+      {activeTab === 'generator' && (
+        <>
+          <div
+            style={{
+              display: 'grid',
+              gap: '12px',
+              marginBottom: '20px',
+              padding: '16px',
+              background: '#f5f5f5',
+              borderRadius: '8px',
+            }}
+          >
+            <label>
+              <strong>AI provider:</strong>
+              <br />
+              <select name="provider" value={config.provider} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px' }}>
+                {PROVIDERS.map((p) => (
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-      {error && (
-        <div style={{ color: 'red', padding: '10px', background: '#ffe6e6', borderRadius: '4px', marginBottom: '20px' }}>
-          <strong>Error:</strong> {error}
-        </div>
+            <label>
+              <strong>API key (optional if set in env or saved):</strong>
+              <br />
+              <input
+                type="password"
+                name="api_key"
+                autoComplete="off"
+                placeholder="Paste key — or rely on server env / saved config"
+                value={config.api_key}
+                onChange={handleChange}
+                style={{ width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box' }}
+              />
+            </label>
+
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={saveConfig}
+                disabled={configLoading}
+                style={{
+                  padding: '10px 16px',
+                  background: configLoading ? '#ccc' : '#6c757d',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: configLoading ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {configLoading ? 'Saving…' : 'Save key on server'}
+              </button>
+            </div>
+
+            {configMessage && (
+              <div
+                style={{
+                  padding: '10px',
+                  borderRadius: '4px',
+                  background: configMessage.type === 'ok' ? '#e8f5e9' : '#ffebee',
+                  color: configMessage.type === 'ok' ? '#1b5e20' : '#b71c1c',
+                }}
+              >
+                {configMessage.text}
+              </div>
+            )}
+
+            <label>
+              <strong>Topic:</strong>
+              <br />
+              <select name="topic" value={config.topic} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px' }}>
+                {TOPICS.map((t) => (
+                  <option key={t.value} value={t.value}>
+                    {t.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label>
+              <strong>Task type:</strong>
+              <br />
+              <select name="task_type" value={config.task_type} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px' }}>
+                <option value="write_function">Write program</option>
+                <option value="fix_code">Fix buggy code</option>
+                <option value="fill_blank">Fill in blanks</option>
+              </select>
+            </label>
+
+            <label>
+              <strong>Number of exercises:</strong>
+              <br />
+              <input
+                type="number"
+                name="num_tasks"
+                min="1"
+                max="100"
+                value={config.num_tasks}
+                onChange={handleChange}
+                style={{ width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box' }}
+              />
+            </label>
+
+            <button
+              type="button"
+              onClick={generate}
+              disabled={loading}
+              style={{
+                padding: '12px',
+                background: loading ? '#ccc' : '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                fontSize: '16px',
+                fontWeight: '600',
+              }}
+            >
+              {loading ? 'Generating…' : 'Generate exercises'}
+            </button>
+          </div>
+
+          <hr />
+
+          {error && (
+            <div style={{ color: '#b71c1c', padding: '12px', background: '#ffebee', borderRadius: '6px', marginBottom: '16px' }}>
+              <strong>Error:</strong> {error}
+            </div>
+          )}
+
+          {meta && (
+            <div
+              style={{
+                padding: '12px 16px',
+                background: '#e3f2fd',
+                borderRadius: '6px',
+                marginBottom: '16px',
+                fontSize: '14px',
+              }}
+            >
+              <strong>Provider:</strong> {meta.provider ?? '—'} · <strong>Total:</strong> {meta.total_generated} ·{' '}
+              <strong style={{ color: '#2e7d32' }}>Valid:</strong> {meta.valid_count} ·{' '}
+              <strong style={{ color: '#c62828' }}>Invalid:</strong> {meta.invalid_count}
+            </div>
+          )}
+
+          {tasks.length > 0 ? (
+            <>
+              {validTasks.length > 0 && (
+                <section style={{ marginBottom: '32px' }}>
+                  <h2 style={{ fontSize: '1.25rem', color: '#2e7d32', borderBottom: '2px solid #c8e6c9', paddingBottom: '8px' }}>
+                    Valid exercises ({validTasks.length})
+                  </h2>
+                  {validTasks.map((task) => {
+                    const idx = tasks.indexOf(task);
+                    return <TaskCard key={`v-${idx}`} task={task} index={idx} />;
+                  })}
+                </section>
+              )}
+
+              {invalidTasks.length > 0 && (
+                <section>
+                  <h2 style={{ fontSize: '1.25rem', color: '#c62828', borderBottom: '2px solid #ffcdd2', paddingBottom: '8px' }}>
+                    Invalid exercises ({invalidTasks.length})
+                  </h2>
+                  {invalidTasks.map((task) => {
+                    const idx = tasks.indexOf(task);
+                    return <TaskCard key={`i-${idx}`} task={task} index={idx} />;
+                  })}
+                </section>
+              )}
+            </>
+          ) : (
+            !loading && <p style={{ textAlign: 'center', color: '#666' }}>Choose options and generate, or save an API key first.</p>
+          )}
+        </>
       )}
 
-      {tasks.length > 0 ? (
-        tasks.map((task, i) => (
-          <div key={i} style={{ border: '1px solid #ccc', margin: '20px 0', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-            <h2 style={{ marginTop: 0 }}>{i + 1}. {task.title}</h2>
-            <p><strong>Description:</strong> {task.description}</p>
-            
-            {task.buggy_code && (
-              <div style={{ marginBottom: '15px' }}>
-                <strong>Buggy Code:</strong>
-                <pre style={{ background: '#ffe6e6', padding: '10px', overflowX: 'auto' }}>{task.buggy_code}</pre>
+      {activeTab === 'viewer' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '20px', minHeight: '500px' }}>
+          <div style={{ borderRight: '1px solid #ddd', paddingRight: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+              <h3 style={{ margin: 0 }}>Saved files</h3>
+              <button
+                type="button"
+                onClick={loadJsonFiles}
+                disabled={loadingFiles}
+                style={{
+                  padding: '5px 10px',
+                  background: '#28a745',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '3px',
+                  cursor: loadingFiles ? 'not-allowed' : 'pointer',
+                  fontSize: '12px',
+                }}
+              >
+                {loadingFiles ? '…' : 'Refresh'}
+              </button>
+            </div>
+
+            {jsonFiles.length === 0 ? (
+              <p style={{ color: '#666', fontSize: '14px' }}>No files found</p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                {jsonFiles.map((file, i) => (
+                  <button
+                    type="button"
+                    key={i}
+                    onClick={() => loadFileContent(file)}
+                    style={{
+                      padding: '10px',
+                      background: selectedFile === file ? '#007bff' : 'white',
+                      color: selectedFile === file ? 'white' : '#333',
+                      border: '1px solid #ddd',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      fontSize: '13px',
+                      wordBreak: 'break-all',
+                    }}
+                  >
+                    {file}
+                  </button>
+                ))}
               </div>
             )}
-            
-            {task.code_with_blanks && (
-              <div style={{ marginBottom: '15px' }}>
-                <strong>Fill in the Blanks:</strong>
-                <pre style={{ background: '#e6f3ff', padding: '10px', overflowX: 'auto' }}>{task.code_with_blanks}</pre>
-              </div>
-            )}
-            
-            <details>
-              <summary style={{ cursor: 'pointer', color: '#007bff' }}>View Solution & Test Cases</summary>
-              <div style={{ marginTop: '10px' }}>
-                <strong>Solution:</strong>
-                <pre style={{ background: '#f0f0f0', padding: '10px', overflowX: 'auto' }}>{task.solution}</pre>
-                
-                <strong>Example Test Cases:</strong>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {task.test_cases && task.test_cases.map((tc, idx) => (
-                    <li key={idx} style={{ background: '#fafafa', padding: '5px', borderBottom: '1px solid #eee' }}>
-                      <code>In: {tc.input}</code> → <code>Out: {tc.expected_output}</code>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </details>
           </div>
-        ))
-      ) : (
-        !loading && <p style={{ textAlign: 'center', color: '#666' }}>Select options above and click Generate to begin.</p>
+
+          <div>
+            {!fileContent ? (
+              <p style={{ textAlign: 'center', color: '#666', marginTop: '50px' }}>
+                Select a file to view its contents
+              </p>
+            ) : (
+              <div>
+                <div style={{ background: '#f5f5f5', padding: '15px', borderRadius: '5px', marginBottom: '20px' }}>
+                  <h3 style={{ margin: '0 0 10px 0' }}>{selectedFile}</h3>
+                  <p style={{ margin: '5px 0', fontSize: '14px' }}>
+                    <strong>Generated:</strong> {fileContent.generated_at}
+                  </p>
+                  {fileContent.provider && (
+                    <p style={{ margin: '5px 0', fontSize: '14px' }}>
+                      <strong>Provider:</strong> {fileContent.provider}
+                    </p>
+                  )}
+                  <p style={{ margin: '5px 0', fontSize: '14px' }}>
+                    <strong>Total tasks:</strong> {fileContent.num_tasks}
+                  </p>
+                  <p style={{ margin: '5px 0', fontSize: '14px' }}>
+                    <strong>Passed validation:</strong>{' '}
+                    {fileContent.tasks?.filter((t) => t.validation?.all_passed || t.valid).length || 0} /{' '}
+                    {fileContent.num_tasks}
+                  </p>
+                </div>
+
+                {fileContent.tasks?.map((task, i) => (
+                  <TaskCard key={i} task={task} index={i} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

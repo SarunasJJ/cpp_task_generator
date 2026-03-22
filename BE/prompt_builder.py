@@ -1,36 +1,38 @@
 """
-Prompt Builder Module
-Constructs structured prompts for Gemini AI
+Prompt builder for C exercise generation (any supported LLM).
 """
 
+
 class PromptBuilder:
-    """Builds prompts for task generation"""
-    
     TASK_TYPE_DESCRIPTIONS = {
-        "write_function": "Write a complete function from scratch",
+        "write_function": "Write a complete program from scratch",
         "fix_code": "Fix buggy code",
-        "fill_blank": "Fill in missing parts of code"
+        "fill_blank": "Fill in missing parts of code",
     }
-    
+
+    TOPICS = [
+        "variables and operators",
+        "conditionals and loops",
+        "arrays and strings",
+        "pointers and memory allocation",
+    ]
+
     @staticmethod
     def build_prompt(topic, task_type, num_tasks):
-        """Build a structured prompt for Gemini"""
-        
         task_desc = PromptBuilder.TASK_TYPE_DESCRIPTIONS.get(task_type, task_type)
-        
-        # Different instructions based on task type
+
         if task_type == "fix_code":
             task_instructions = """
 TASK [number]:
 TITLE: [Brief title]
 DESCRIPTION: [Problem description]
 BUGGY_CODE:
-```cpp
-[Buggy C++ code with errors that need to be fixed]
+```c
+[Buggy C code with errors that need to be fixed]
 ```
 SOLUTION:
-```cpp
-[Fixed, working C++ solution code]
+```c
+[Fixed, working C solution code]
 ```
 """
         elif task_type == "fill_blank":
@@ -39,29 +41,31 @@ TASK [number]:
 TITLE: [Brief title]
 DESCRIPTION: [Problem description]
 CODE_WITH_BLANKS:
-```cpp
-[C++ code with blanks marked as _____ that need to be filled]
+```c
+[C code with blanks marked as _____ that need to be filled]
 ```
 SOLUTION:
-```cpp
-[Complete, working C++ solution code]
+```c
+[Complete, working C solution code]
 ```
 """
-        else:  # write_function
+        else:
             task_instructions = """
 TASK [number]:
 TITLE: [Brief title]
 DESCRIPTION: [Clear problem description with requirements]
 SOLUTION:
-```cpp
-[Complete, working C++ solution code]
+```c
+[Complete, working C solution code]
 ```
 """
-        
-        prompt = f"""You are an expert C++ programming educator. Generate {num_tasks} programming exercise(s) with the following specifications:
+
+        prompt = f"""You are an expert C programming educator. Generate {num_tasks} programming exercise(s) with the following specifications:
 
 Topic: {topic}
 Task Type: {task_desc}
+
+Focus the exercises strictly on standard C (C11). Use only: stdio.h, stdlib.h, string.h, ctype.h, math.h as needed.
 
 For EACH task, provide the following in a structured format:
 
@@ -80,14 +84,15 @@ Expected Output: [expected output 3]
 ---
 
 IMPORTANT REQUIREMENTS:
-1. Solutions MUST be complete, compilable C++ code with #include statements
-2. Solutions MUST have a main() function that reads from stdin and writes to stdout
-3. Test cases must have EXACT expected outputs (character-perfect)
-4. For "fix_code" tasks: Include BUGGY_CODE section with code that has deliberate errors. DO NOT include comments like '// Bug: ...' or '// Error here'.
-5. For "fill_blank" tasks: Include CODE_WITH_BLANKS section with blanks marked as _____. The comments in the blank code must NOT reveal the answer or give hints how to solve the probnlem.
-6. Ensure code follows proper C++ syntax and best practices
-7. Make test cases comprehensive to verify correctness
+1. For "write_function" / write-from-scratch tasks, the description must specify stdin/stdout formats, edge cases, and constraints.
+2. Solutions MUST be complete, compilable C code with necessary #include lines.
+3. Solutions MUST have a main() function that reads from stdin and writes to stdout (unless the description explicitly defines a different I/O contract — then follow that consistently in tests).
+4. Test cases must have EXACT expected outputs (character-perfect), including newlines if your program prints them.
+5. For "fix_code" tasks: include a BUGGY_CODE section with deliberate errors. Do NOT add comments like '// Bug:' or '// Error here'.
+6. For "fill_blank" tasks: use CODE_WITH_BLANKS with blanks as _____. Comments in the partial code must NOT reveal the answer.
+7. For "pointers and memory allocation" topics, you may use malloc/calloc/realloc/free where appropriate; ensure no leaks on the tested paths and that invalid inputs are handled as described.
+8. Keep programs small enough to compile and run quickly.
 
 Generate {num_tasks} task(s) now:"""
-        
+
         return prompt

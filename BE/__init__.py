@@ -1,4 +1,4 @@
-from .generator import CPPTaskGenerator
+from .generator import CTaskGenerator, CPPTaskGenerator
 
-__version__ = "1.0.0"
-__all__ = ['CPPTaskGenerator']
+__version__ = "2.0.0"
+__all__ = ["CTaskGenerator", "CPPTaskGenerator"]
