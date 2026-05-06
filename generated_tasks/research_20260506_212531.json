@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T21:25:31.222351",
+  "provider": "claude",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Reverse a String and Check if It's a Palindrome",
+      "description": "A palindrome is a word, phrase, or sequence that reads the same forwards and backwards, ignoring spaces and letter case. Palindromes appear in word games, data validation, and license plate recognition systems. Understanding how to reverse strings and compare them is a fundamental skill for working with text data in C.\n\nYour program must read a single line of text from stdin, create a reversed version of that string, and determine whether the original string is a palindrome. For this exercise, treat the comparison as case-insensitive (convert all letters to lowercase before comparing) but do not ignore spaces or special characters\u2014compare the strings exactly as they appear after case conversion. Output the reversed string and then print \"YES\" if the string is a palindrome or \"NO\" if it is not.\n\nWORKED EXAMPLE:\nInput: \"racecar\" \u2192 reversed: \"racecar\" \u2192 they match. Output: \"racecar\\nYES\". Input: \"hello\" \u2192 reversed: \"olleh\" \u2192 they don't match. Output: \"olleh\\nNO\".",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[256];\n    char reversed[256];\n    char str_lower[256];\n    char reversed_lower[256];\n    \n    fgets(str, sizeof(str), stdin);\n    \n    int len = strlen(str);\n    if (str[len - 1] == '\\n') {\n        str[len - 1] = '\\0';\n        len--;\n    }\n    \n    for (int i = 0; i < len; i++) {\n        reversed[i] = str[len - 1 - i];\n    }\n    reversed[len] = '\\0';\n    \n    for (int i = 0; i < len; i++) {\n        str_lower[i] = tolower((unsigned char)str[i]);\n        reversed_lower[i] = tolower((unsigned char)reversed[i]);\n    }\n    str_lower[len] = '\\0';\n    reversed_lower[len] = '\\0';\n    \n    printf(\"%s\\n\", reversed);\n    \n    if (strcmp(str_lower, reversed_lower) == 0) {\n        printf(\"YES\\n\");\n    } else {\n        printf(\"NO\\n\");\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "racecar",
+          "expected_output": "racecar\nYES"
+        },
+        {
+          "input": "hello",
+          "expected_output": "olleh\nNO"
+        },
+        {
+          "input": "Madam",
+          "expected_output": "madaM\nYES"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "racecar",
+            "expected": "racecar\nYES",
+            "actual": "racecar\nYES",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "hello",
+            "expected": "olleh\nNO",
+            "actual": "olleh\nNO",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "Madam",
+            "expected": "madaM\nYES",
+            "actual": "madaM\nYES",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

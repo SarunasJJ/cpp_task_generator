@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T19:53:36.952640",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Sum of Multiples in a Range",
+      "description": "Conditionals and loops are fundamental tools in programming. Loops allow us to repeat a block of code multiple times, which is essential for processing lists of items or performing calculations over a range. Conditionals, on the other hand, let our programs make decisions, executing different code paths based on whether a certain condition is true or false. Combining these, we can iterate through a sequence and selectively perform actions only on items that meet specific criteria. For example, you might want to find the sum of all numbers in a given range that are divisible by another number.\n\nYour program must read three integers from standard input: `start`, `end`, and `divisor`. The `start` and `end` values define an inclusive range of numbers, and `divisor` is the number whose multiples you need to sum within that range. You can assume `start` will always be less than or equal to `end`. Both `start` and `end` will be non-negative integers (0 to 1000). The `divisor` will be a positive integer (1 to 100). Your program should calculate the sum of all integers `i` such that `start <= i <= end` and `i` is a multiple of `divisor`. Print the final sum to standard output, followed by a newline. If no multiples are found in the range, the sum is 0.\n\nWORKED EXAMPLE:\nInput: 1 10 3 \u2192 sum: 0 \u2192 3 \u2192 9 \u2192 18. Output: 18.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int start, end, divisor;\n    \n    // Read the three integers from standard input\n    scanf(\"%d %d %d\", &start, &end, &divisor);\n    \n    int sum_of_multiples = 0;\n    \n    // Loop through the range from 'start' to 'end' (inclusive)\n    for (int i = start; i <= end; i++) {\n        // Check if the current number 'i' is a multiple of 'divisor'\n        // A number 'i' is a multiple of 'divisor' if the remainder of i / divisor is 0\n        if (i % divisor == 0) {\n            sum_of_multiples += i; // Add 'i' to the sum if it's a multiple\n        }\n    }\n    \n    // Print the final sum to standard output, followed by a newline\n    printf(\"%d\\n\", sum_of_multiples);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1 10 3",
+          "expected_output": "18"
+        },
+        {
+          "input": "0 5 2",
+          "expected_output": "6"
+        },
+        {
+          "input": "7 9 5",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 10 3",
+            "expected": "18",
+            "actual": "18",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 5 2",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "7 9 5",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

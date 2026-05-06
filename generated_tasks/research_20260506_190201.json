@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-05-06T19:02:01.618809",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Palindrome String Checker",
+      "description": "Strings are fundamental data structures in C, often represented as arrays of characters terminated by a null character (`\\0`). Manipulating strings, such as examining their content or transforming them, is a common programming task. A palindrome is a word, phrase, number, or other sequence of characters which reads the same backward as forward, ignoring spaces, punctuation, and capitalization. For example, \"madam\" and \"A man, a plan, a canal: Panama\" are both palindromes.\n\nYour task is to write a C program that reads a line of text from standard input and determines if it is a palindrome. For this exercise, you must consider only alphanumeric characters (letters and numbers) and ignore their case. Any non-alphanumeric characters (spaces, punctuation, symbols) should be disregarded when performing the palindrome check.\n\nThe program should read a single line of text, which can be up to 100 characters long (including spaces and punctuation, but excluding the null terminator). After processing, it must print \"The string is a palindrome.\" if the filtered alphanumeric characters form a palindrome, or \"The string is NOT a palindrome.\" otherwise. Each output message must be followed by a newline character.\n\nWORKED EXAMPLE:\nLet's consider the input: `A man, a plan, a canal: Panama!`\n\n1.  **Input String**: \"A man, a plan, a canal: Panama!\"\n2.  **Filter and Convert to Lowercase**: We iterate through the input, keep only alphanumeric characters, and convert them to lowercase.\n    *   'A' becomes 'a'\n    *   ' ' is ignored\n    *   'm' becomes 'm'\n    *   ...\n    *   ':' is ignored\n    *   'P' becomes 'p'\n    *   ...\n    *   '!' is ignored\n    The resulting filtered string is: \"amanaplanacanalpanama\"\n3.  **Palindrome Check**: We now compare characters from the beginning and end of the filtered string, moving inwards.\n    *   `filtered_string[0]` ('a') vs `filtered_string[20]` ('a') -> Match\n    *   `filtered_string[1]` ('m') vs `filtered_string[19]` ('m') -> Match\n    *   ... (This continues for all pairs)\n    *   Since all pairs match, the filtered string \"amanaplanacanalpanama\" is a palindrome.\n4.  **Expected Output**: The string is a palindrome.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h> // For isalnum and tolower\n\n#define MAX_INPUT_LENGTH 101 // Max 100 chars + null terminator\n\nint main() {\n    char input_string[MAX_INPUT_LENGTH];\n    char filtered_string[MAX_INPUT_LENGTH]; // To store only alphanumeric, lowercase chars\n    int i, j;\n    int len_filtered;\n    int is_palindrome = 1; // Assume it's a palindrome until proven otherwise\n\n    // Read the input line\n    if (fgets(input_string, sizeof(input_string), stdin) == NULL) {\n        return 1; // Error reading input\n    }\n\n    // Remove the trailing newline character if present\n    input_string[strcspn(input_string, \"\\n\")] = 0;\n\n    // Filter alphanumeric characters and convert to lowercase\n    j = 0;\n    for (i = 0; input_string[i] != '\\0'; i++) {\n        if (isalnum((unsigned char)input_string[i])) {\n            filtered_string[j] = tolower((unsigned char)input_string[i]);\n            j++;\n        }\n    }\n    filtered_string[j] = '\\0'; // Null-terminate the filtered string\n\n    len_filtered = strlen(filtered_string);\n\n    // Check if the filtered string is a palindrome\n    // An empty string or a single-character string is considered a palindrome\n    if (len_filtered <= 1) {\n        is_palindrome = 1;\n    } else {\n        int left = 0;\n        int right = len_filtered - 1;\n        while (left < right) {\n            if (filtered_string[left] != filtered_string[right]) {\n                is_palindrome = 0; // Mismatch found, not a palindrome\n                break;\n            }\n            left++;\n            right--;\n        }\n    }\n\n    // Print the result\n    if (is_palindrome) {\n        printf(\"The string is a palindrome.\\n\");\n    } else {\n        printf(\"The string is NOT a palindrome.\\n\");\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Madam, in Eden, I'm Adam.",
+          "expected_output": "The string is a palindrome."
+        },
+        {
+          "input": "Hello, World!",
+          "expected_output": "The string is NOT a palindrome."
+        },
+        {
+          "input": "Race car",
+          "expected_output": "The string is a palindrome."
+        },
+        {
+          "input": "Was it a car or a cat I saw?",
+          "expected_output": "The string is a palindrome."
+        },
+        {
+          "input": "???",
+          "expected_output": "The string is a palindrome."
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Madam, in Eden, I'm Adam.",
+            "expected": "The string is a palindrome.",
+            "actual": "The string is a palindrome.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Hello, World!",
+            "expected": "The string is NOT a palindrome.",
+            "actual": "The string is NOT a palindrome.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "Race car",
+            "expected": "The string is a palindrome.",
+            "actual": "The string is a palindrome.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 4,
+            "input": "Was it a car or a cat I saw?",
+            "expected": "The string is a palindrome.",
+            "actual": "The string is a palindrome.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 5,
+            "input": "???",
+            "expected": "The string is a palindrome.",
+            "actual": "The string is a palindrome.",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

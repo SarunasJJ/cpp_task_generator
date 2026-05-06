@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T19:20:04.136557",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Basic Arithmetic Calculator",
+      "description": "In C programming, variables are fundamental containers used to store different types of data, such as numbers or characters. Operators are special symbols that perform operations on these variables and values, allowing you to manipulate data. Basic arithmetic operators like addition (+), subtraction (-), multiplication (*), and division (/) are essential tools for performing calculations and processing numerical information in virtually any program.\n\nYour task is to write a C program that acts as a simple arithmetic calculator. The program must read two integer values from standard input. It should then calculate their sum, difference, product, and integer quotient. If the second integer read is zero, the program must print an error message specifically for the division operation, as division by zero is undefined. The input integers will be within the range of -1000 to 1000.\n\nWORKED EXAMPLE:\nSuppose the input provided is `10 3`.\nThe first integer variable stores 10.\nThe second integer variable stores 3.\nSum: 10 + 3 = 13\nDifference: 10 - 3 = 7\nProduct: 10 * 3 = 30\nQuotient: 10 / 3 = 3 (integer division)\nExpected Output:\nSum: 13\nDifference: 7\nProduct: 30\nQuotient: 3",
+      "solution": "#include <stdio.h> // Required for input/output functions like printf and scanf\n\nint main() {\n    int num1; // Declare an integer variable to store the first number\n    int num2; // Declare an integer variable to store the second number\n\n    // Read two integers from standard input\n    if (scanf(\"%d %d\", &num1, &num2) != 2) {\n        fprintf(stderr, \"Error: Invalid input. Please enter two integers.\\n\");\n        return 1; // Indicate an error\n    }\n\n    // Perform arithmetic operations and store results in variables\n    int sum = num1 + num2;\n    int difference = num1 - num2;\n    int product = num1 * num2;\n\n    // Print the results for sum, difference, and product\n    printf(\"Sum: %d\\n\", sum);\n    printf(\"Difference: %d\\n\", difference);\n    printf(\"Product: %d\\n\", product);\n\n    // Handle division by zero explicitly\n    if (num2 == 0) {\n        printf(\"Quotient: Division by zero is not allowed.\\n\");\n    } else {\n        int quotient = num1 / num2; // Perform integer division\n        printf(\"Quotient: %d\\n\", quotient);\n    }\n\n    return 0; // Indicate successful execution\n}",
+      "test_cases": [
+        {
+          "input": "10 3",
+          "expected_output": "Sum: 13\nDifference: 7\nProduct: 30\nQuotient: 3"
+        },
+        {
+          "input": "5 0",
+          "expected_output": "Sum: 5\nDifference: 5\nProduct: 0\nQuotient: Division by zero is not allowed."
+        },
+        {
+          "input": "-15 4",
+          "expected_output": "Sum: -11\nDifference: -19\nProduct: -60\nQuotient: -3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 3",
+            "expected": "Sum: 13\nDifference: 7\nProduct: 30\nQuotient: 3",
+            "actual": "Sum: 13\nDifference: 7\nProduct: 30\nQuotient: 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 0",
+            "expected": "Sum: 5\nDifference: 5\nProduct: 0\nQuotient: Division by zero is not allowed.",
+            "actual": "Sum: 5\nDifference: 5\nProduct: 0\nQuotient: Division by zero is not allowed.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-15 4",
+            "expected": "Sum: -11\nDifference: -19\nProduct: -60\nQuotient: -3",
+            "actual": "Sum: -11\nDifference: -19\nProduct: -60\nQuotient: -3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

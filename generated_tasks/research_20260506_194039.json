@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T19:40:39.293945",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Simple Vowel Counter",
+      "description": "In C programming, a string is fundamentally an array of characters, terminated by a special null character (`\\0`). Understanding how to process these character arrays is crucial for any text manipulation task. A common operation in text analysis is identifying specific characters or patterns, such as counting vowels, which can be useful in linguistics, search algorithms, or data validation.\n\nYour task is to write a C program that reads a single line of text from standard input and counts the total number of vowels present in it. Vowels are considered to be 'a', 'e', 'i', 'o', 'u', and the counting should be case-insensitive (meaning 'A' and 'a' both count as vowels). The program should then print the total count of vowels to standard output. The input string will have a maximum length of 99 characters (excluding the null terminator and the newline character).\n\nWORKED EXAMPLE:\nInput: `Programming`\n1. Initialize `vowel_count = 0`.\n2. Character 'P': After `tolower('P')` it becomes 'p'. Not a vowel. `vowel_count` remains 0.\n3. Character 'r': After `tolower('r')` it becomes 'r'. Not a vowel. `vowel_count` remains 0.\n4. Character 'o': After `tolower('o')` it becomes 'o'. Is a vowel. `vowel_count` becomes 1.\n5. Character 'g': After `tolower('g')` it becomes 'g'. Not a vowel. `vowel_count` remains 1.\n6. Character 'r': After `tolower('r')` it becomes 'r'. Not a vowel. `vowel_count` remains 1.\n7. Character 'a': After `tolower('a')` it becomes 'a'. Is a vowel. `vowel_count` becomes 2.\n8. Character 'm': After `tolower('m')` it becomes 'm'. Not a vowel. `vowel_count` remains 2.\n9. Character 'm': After `tolower('m')` it becomes 'm'. Not a vowel. `vowel_count` remains 2.\n10. Character 'i': After `tolower('i')` it becomes 'i'. Is a vowel. `vowel_count` becomes 3.\n11. Character 'n': After `tolower('n')` it becomes 'n'. Not a vowel. `vowel_count` remains 3.\n12. Character 'g': After `tolower('g')` it becomes 'g'. Not a vowel. `vowel_count` remains 3.\nExpected Output: `Total vowels: 3`",
+      "solution": "#include <stdio.h>\n#include <string.h> // For strlen\n#include <ctype.h>  // For tolower\n\nint main() {\n    char line[101]; // Buffer for up to 100 characters + null terminator\n    int vowel_count = 0;\n    int i;\n\n    // Read a line of text from stdin\n    // fgets reads at most sizeof(line)-1 characters, or until a newline.\n    // It includes the newline if there's space.\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        return 1; // Error reading input\n    }\n\n    // Iterate through the string until the null terminator\n    // or before the newline character that fgets might have included.\n    for (i = 0; line[i] != '\\0'; i++) {\n        // If fgets included a newline character and it's the last character\n        // before the null terminator, we should ignore it for counting.\n        if (line[i] == '\\n' && line[i+1] == '\\0') {\n            continue;\n        }\n\n        // Convert character to lowercase to handle case-insensitivity\n        char ch = tolower(line[i]);\n\n        // Check if the character is a vowel\n        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {\n            vowel_count++;\n        }\n    }\n\n    // Print the total vowel count\n    printf(\"Total vowels: %d\\n\", vowel_count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello World",
+          "expected_output": "Total vowels: 3"
+        },
+        {
+          "input": "Rhythm",
+          "expected_output": "Total vowels: 0"
+        },
+        {
+          "input": "C Programming is Fun!",
+          "expected_output": "Total vowels: 7"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello World",
+            "expected": "Total vowels: 3",
+            "actual": "Total vowels: 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Rhythm",
+            "expected": "Total vowels: 0",
+            "actual": "Total vowels: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "C Programming is Fun!",
+            "expected": "Total vowels: 7",
+            "actual": "Total vowels: 5",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    }
+  ]
+}

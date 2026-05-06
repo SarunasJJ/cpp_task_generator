@@ -27,7 +27,7 @@ class LLMClient:
             import google.generativeai as genai
 
             genai.configure(api_key=api_key)
-            model_name = os.getenv("GEMINI_MODEL", "gemini-3.0-flash")
+            model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
             self._gemini_model = genai.GenerativeModel(model_name=model_name)
         elif self.provider == "claude":
             from anthropic import Anthropic
@@ -50,7 +50,7 @@ class LLMClient:
                 return response.text
 
             if self.provider == "claude":
-                model = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")
+                model = os.getenv("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
                 msg = self._anthropic_client.messages.create(
                     model=model,
                     max_tokens=8192,

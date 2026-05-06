@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T19:48:02.141256",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "String Reverser",
+      "description": "Strings in C are essentially arrays of characters, terminated by a null character `\\0`. Understanding how to manipulate these character arrays is fundamental to text processing. Reversing a string is a classic problem that helps illustrate how to access and modify elements within an array, which is a core skill in many data processing applications, from simple text utilities to complex data transformation tools.\n\nYour program must read a single line of text from standard input. This line will represent a string, which can contain spaces and other printable ASCII characters. The length of the string will be at most 99 characters (excluding the null terminator). Your program must then reverse this string and print the reversed string to standard output, followed by a newline character. If the input string is empty (just a newline is entered), the program should print an blank line (just a newline character).",
+      "solution": "#include <stdio.h>\n#include <string.h> // Required for strlen, strcspn\n\nint main() {\n    char str[101]; // Buffer for up to 99 characters + null terminator + potential newline\n\n    // Read a line of text from stdin\n    // fgets is safer than scanf for strings, especially with spaces\n    if (fgets(str, sizeof(str), stdin) == NULL) {\n        return 1; // Error reading input\n    }\n\n    // Remove the trailing newline character if it exists\n    // strcspn returns the index of the first occurrence of a character from the second string in the first string\n    str[strcspn(str, \"\\n\")] = '\\0';\n\n    int length = strlen(str);\n\n    // Reverse the string in-place\n    for (int i = 0, j = length - 1; i < j; i++, j--) {\n        char temp = str[i];\n        str[i] = str[j];\n        str[j] = temp;\n    }\n\n    // Print the reversed string followed by a newline\n    printf(\"%s\\n\", str);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello World",
+          "expected_output": "dlroW olleH"
+        },
+        {
+          "input": "Programming",
+          "expected_output": "gnimmargorP"
+        },
+        {
+          "input": "",
+          "expected_output": ""
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello World",
+            "expected": "dlroW olleH",
+            "actual": "dlroW olleH",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Programming",
+            "expected": "gnimmargorP",
+            "actual": "gnimmargorP",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "",
+            "actual": "",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

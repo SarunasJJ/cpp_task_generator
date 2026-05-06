@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T21:25:09.614072",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Count Vowels in a String",
+      "description": "In C programming, a string is fundamentally an array of characters, terminated by a special null character (`\\0`). Understanding how to process strings is crucial for many applications, from parsing user input to text analysis and data manipulation. This exercise will help you get familiar with iterating through strings and performing character-based checks, a fundamental skill for text processing.\n\nYour task is to write a C program that reads a single line of text from standard input and counts the total number of vowels present in it. Vowels are defined as 'a', 'e', 'i', 'o', 'u', and the counting should be case-insensitive (meaning 'A' counts as a vowel, just like 'a'). The input string will not exceed 100 characters in length. Your program should print the final count of vowels, followed by a newline. If the input string contains no vowels, the count should be 0.",
+      "solution": "#include <stdio.h>\n#include <string.h> // Required for strlen and strcspn\n#include <ctype.h>  // Required for tolower\n\n#define MAX_LINE_LENGTH 101 // For 100 characters + null terminator\n\nint main() {\n    char line[MAX_LINE_LENGTH];\n    int vowel_count = 0;\n\n    // Read a line of text from stdin\n    // fgets is used for safer input of strings, especially with spaces\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        // Handle potential error or empty input gracefully\n        printf(\"Number of vowels: 0\\n\");\n        return 0;\n    }\n\n    // Remove the trailing newline character that fgets might read\n    line[strcspn(line, \"\\n\")] = '\\0';\n\n    // Iterate through each character in the string\n    for (int i = 0; line[i] != '\\0'; i++) {\n        // Convert the character to lowercase to handle case-insensitivity\n        char ch = tolower(line[i]);\n\n        // Check if the character is one of the vowels\n        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {\n            vowel_count++;\n        }\n    }\n\n    // Print the final count of vowels\n    printf(\"Number of vowels: %d\\n\", vowel_count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello World!",
+          "expected_output": "Number of vowels: 3"
+        },
+        {
+          "input": "Rhythm",
+          "expected_output": "Number of vowels: 0"
+        },
+        {
+          "input": "AEIOUaeiou",
+          "expected_output": "Number of vowels: 10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello World!",
+            "expected": "Number of vowels: 3",
+            "actual": "Number of vowels: 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Rhythm",
+            "expected": "Number of vowels: 0",
+            "actual": "Number of vowels: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "AEIOUaeiou",
+            "expected": "Number of vowels: 10",
+            "actual": "Number of vowels: 10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

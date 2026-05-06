@@ -15,6 +15,40 @@ const PROVIDERS = [
   { value: 'gpt', label: 'OpenAI GPT' },
 ];
 
+function parseInlineMarkdown(text) {
+  const parts = [];
+  const regex = /\*\*(.+?)\*\*|`(.+?)`/g;
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index));
+    if (match[1] !== undefined) {
+      parts.push(<strong key={key++}>{match[1]}</strong>);
+    } else {
+      parts.push(
+        <code key={key++} style={{ background: '#f0f0f0', padding: '1px 5px', borderRadius: '3px', fontFamily: 'monospace', fontSize: '0.9em' }}>
+          {match[2]}
+        </code>
+      );
+    }
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return parts;
+}
+
+function WorkedExample({ text }) {
+  return (
+    <div style={{ background: '#f0f4ff', border: '1px solid #c5d0e6', borderLeft: '4px solid #4a6cf7', borderRadius: '6px', padding: '16px', marginTop: '12px', marginBottom: '4px' }}>
+      <div style={{ fontWeight: 'bold', fontSize: '0.85em', color: '#4a6cf7', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '8px' }}>
+        Worked Example
+      </div>
+      <p style={{ margin: 0, color: '#333' }}>{parseInlineMarkdown(text)}</p>
+    </div>
+  );
+}
+
 function TaskCard({ task, index }) {
   const valid = task.valid ?? task.validation?.all_passed;
   const vr = task.validation || {};
@@ -49,9 +83,21 @@ function TaskCard({ task, index }) {
         </span>
       </div>
 
-      <p style={{ marginTop: 0 }}>
-        <strong>Description:</strong> {task.description}
-      </p>
+      {(() => {
+        const marker = 'WORKED EXAMPLE:';
+        const idx = (task.description || '').indexOf(marker);
+        if (idx === -1) {
+          return <p style={{ marginTop: 0 }}><strong>Description:</strong> {task.description}</p>;
+        }
+        const mainDesc = task.description.slice(0, idx).trim();
+        const exampleText = task.description.slice(idx + marker.length).trim();
+        return (
+          <>
+            <p style={{ marginTop: 0 }}><strong>Description:</strong> {mainDesc}</p>
+            <WorkedExample text={exampleText} />
+          </>
+        );
+      })()}
 
       <div style={{ marginBottom: '15px' }}>
         <strong>Expected test cases (from model):</strong>

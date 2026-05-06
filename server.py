@@ -2,7 +2,10 @@ import json
 import os
 from datetime import datetime
 
+from dotenv import load_dotenv
 from flask import Flask, jsonify, request
+
+load_dotenv()
 from flask_cors import CORS
 
 from BE import CTaskGenerator

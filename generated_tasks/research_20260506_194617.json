@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T19:46:17.486743",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Sum of Even Numbers in a Range",
+      "description": "Conditionals allow your program to make decisions based on certain criteria, executing different code blocks depending on whether a condition is true or false. Loops enable your program to repeat a block of code multiple times, which is essential for tasks like processing lists of data or iterating through a sequence. Combining these two concepts lets you perform complex operations, such as summing specific numbers within a given range. For example, you might need to calculate the total count of certain items within a larger inventory, or sum specific values in a dataset.\n\nYour program must read two integers from standard input: `start` and `end`. These integers represent the beginning and end (inclusive) of a range. You should then calculate the sum of all even numbers within this range. The program must print the final sum to standard output, followed by a newline. Assume `start` will always be less than or equal to `end`. The input integers will be between 0 and 1000, inclusive.\n\nWorked Example: Input: 3 7 \u2192 sum: 0 (initial) \u2192 4 (after processing 4) \u2192 10 (after processing 6). Output: 10.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int start, end;\n    int sum = 0;\n\n    // Read the start and end of the range from standard input\n    if (scanf(\"%d %d\", &start, &end) != 2) {\n        // In a real-world scenario, you might add more robust error handling here.\n        // For this exercise, we assume valid input.\n        return 1; // Indicate an error if input reading fails\n    }\n\n    // Loop through each number in the specified range (inclusive)\n    for (int i = start; i <= end; i++) {\n        // Use a conditional statement to check if the current number is even\n        // An even number has a remainder of 0 when divided by 2\n        if (i % 2 == 0) {\n            sum += i; // If it's even, add it to the total sum\n        }\n    }\n\n    // Print the calculated sum to standard output, followed by a newline\n    printf(\"%d\\n\", sum);\n\n    return 0; // Indicate successful execution\n}",
+      "test_cases": [
+        {
+          "input": "1 10",
+          "expected_output": "30"
+        },
+        {
+          "input": "3 3",
+          "expected_output": "0"
+        },
+        {
+          "input": "0 5",
+          "expected_output": "6"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 10",
+            "expected": "30",
+            "actual": "30",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 3",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0 5",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

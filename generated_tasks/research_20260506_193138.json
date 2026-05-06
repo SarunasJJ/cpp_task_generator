@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-06T19:31:38.585984",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Caesar Cipher Encoder",
+      "description": "The Caesar cipher is one of the oldest and simplest methods of encryption. It's a type of substitution cipher where each letter in the plaintext is replaced by a letter some fixed number of positions down or up the alphabet. This exercise provides an excellent opportunity to practice iterating through character arrays (strings) and applying conditional logic to individual characters.\n\nYour task is to implement a Caesar cipher encoder. Your program must read a single line of text and an integer shift value from standard input. It should then encode the text according to the Caesar cipher rules: only alphabetic characters (A-Z, a-z) should be shifted, while non-alphabetic characters (numbers, spaces, punctuation) remain unchanged. The shift should wrap around the alphabet; for example, if 'Z' is shifted by 3, it becomes 'C'. The shift value can be positive (shifting forward) or negative (shifting backward). The input string length will not exceed 1000 characters, and the shift value will be between -1000 and 1000. Finally, print the encoded string to standard output, followed by a newline.\n\nWORKED EXAMPLE:\nLet's trace the encoding process for the input string \"Hello, World!\" with a shift value of 3.\n- The character 'H' (uppercase) is 7 positions from 'A'. Shifting by 3 gives (7 + 3) % 26 = 10. The 10th letter from 'A' is 'K'.\n- The character 'e' (lowercase) is 4 positions from 'a'. Shifting by 3 gives (4 + 3) % 26 = 7. The 7th letter from 'a' is 'h'.\n- The character 'l' (lowercase) is 11 positions from 'a'. Shifting by 3 gives (11 + 3) % 26 = 14. The 14th letter from 'a' is 'o'.\n- The character 'l' (lowercase) similarly becomes 'o'.\n- The character 'o' (lowercase) is 14 positions from 'a'. Shifting by 3 gives (14 + 3) % 26 = 17. The 17th letter from 'a' is 'r'.\n- The character ',' is non-alphabetic, so it remains unchanged.\n- The character ' ' is non-alphabetic, so it remains unchanged.\n- The character 'W' (uppercase) is 22 positions from 'A'. Shifting by 3 gives (22 + 3) % 26 = 25. The 25th letter from 'A' is 'Z'.\n- The character 'o' (lowercase) becomes 'r'.\n- The character 'r' (lowercase) is 17 positions from 'a'. Shifting by 3 gives (17 + 3) % 26 = 20. The 20th letter from 'a' is 'u'.\n- The character 'l' (lowercase) becomes 'o'.\n- The character 'd' (lowercase) is 3 positions from 'a'. Shifting by 3 gives (3 + 3) % 26 = 6. The 6th letter from 'a' is 'g'.\n- The character '!' is non-alphabetic, so it remains unchanged.\nThe final encoded string is \"Khoor, Zruog!\".",
+      "solution": "#include <stdio.h>\n#include <string.h> // Required for strlen, strcspn\n#include <ctype.h>  // Required for isalpha, isupper, islower\n\n#define MAX_LINE_LENGTH 1001 // Max 1000 characters + null terminator\n\nint main() {\n    char line[MAX_LINE_LENGTH];\n    int shift;\n\n    // Read the input string from stdin\n    // fgets is used to read an entire line, including spaces, up to MAX_LINE_LENGTH-1 characters.\n    // It also reads the newline character if present.\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        // Handle potential input error\n        return 1;\n    }\n\n    // Remove the trailing newline character that fgets might include\n    // strcspn finds the first occurrence of a character from the second string in the first string.\n    // Here, it finds the newline and replaces it with a null terminator.\n    line[strcspn(line, \"\\n\")] = 0;\n\n    // Read the integer shift value from stdin\n    if (scanf(\"%d\", &shift) != 1) {\n        // Handle potential input error\n        return 1;\n    }\n\n    // Iterate through each character in the string\n    for (int i = 0; line[i] != '\\0'; i++) {\n        char current_char = line[i];\n\n        // Check if the character is an alphabet letter\n        if (isalpha(current_char)) {\n            char base; // 'A' for uppercase, 'a' for lowercase\n            if (isupper(current_char)) {\n                base = 'A';\n            } else { // islower(current_char)\n                base = 'a';\n            }\n\n            // Calculate the 0-25 offset of the current character from its base ('A' or 'a')\n            int offset = current_char - base;\n\n            // Apply the shift. The modulo operator (%) in C can return negative results for\n            // negative dividends. Adding 26 before the final modulo ensures a positive result\n            // that correctly wraps around the 0-25 range for both positive and negative shifts.\n            offset = (offset + (shift % 26) + 26) % 26;\n\n            // Convert the new offset back to a character and update the string\n            line[i] = base + offset;\n        }\n        // Non-alphabetic characters are left unchanged\n    }\n\n    // Print the encoded string followed by a newline\n    printf(\"%s\\n\", line);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello, World!\n3",
+          "expected_output": "Khoor, Zruog!"
+        },
+        {
+          "input": "ABCXYZ\n27",
+          "expected_output": "BCDYZA"
+        },
+        {
+          "input": "123-abc-XYZ?!\n-5",
+          "expected_output": "123-vwx-STU?!"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello, World!\n3",
+            "expected": "Khoor, Zruog!",
+            "actual": "Khoor, Zruog!",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "ABCXYZ\n27",
+            "expected": "BCDYZA",
+            "actual": "BCDYZA",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "123-abc-XYZ?!\n-5",
+            "expected": "123-vwx-STU?!",
+            "actual": "123-vwx-STU?!",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

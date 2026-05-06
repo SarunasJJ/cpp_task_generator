@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-05-06T19:35:49.139599",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Vowel Counter",
+      "description": "In C programming, strings are fundamental for handling text and are essentially arrays of characters terminated by a null character (`\\0`). Understanding how to iterate through a string and inspect individual characters is a crucial skill for text processing. Many applications, from search engines to data analysis tools, rely on these basic string manipulation techniques. A common task is to analyze the composition of a string, such as counting specific types of characters.\n\nYour task is to write a C program that reads a single line of text from standard input and counts the total number of vowels present in it. Vowels are defined as 'a', 'e', 'i', 'o', 'u', and your program must count both lowercase and uppercase occurrences (e.g., 'A' counts as a vowel, just like 'a'). The input string can contain letters, numbers, spaces, and punctuation. The program should then print the total count of vowels to standard output. The maximum length of the input string will be 100 characters (excluding the null terminator).\n\nWORKED EXAMPLE:\nInput: \"Hello World\"\n1. Initialize `vowel_count = 0`.\n2. Read character 'H'. `tolower('H')` is 'h'. Not a vowel.\n3. Read character 'e'. `tolower('e')` is 'e'. Is a vowel. `vowel_count` becomes 1.\n4. Read character 'l'. `tolower('l')` is 'l'. Not a vowel.\n5. Read character 'l'. `tolower('l')` is 'l'. Not a vowel.\n6. Read character 'o'. `tolower('o')` is 'o'. Is a vowel. `vowel_count` becomes 2.\n7. Read character ' '. `tolower(' ')` is ' '. Not a vowel.\n8. Read character 'W'. `tolower('W')` is 'w'. Not a vowel.\n9. Read character 'o'. `tolower('o')` is 'o'. Is a vowel. `vowel_count` becomes 3.\n10. Read character 'r'. `tolower('r')` is 'r'. Not a vowel.\n11. Read character 'l'. `tolower('l')` is 'l'. Not a vowel.\n12. Read character 'd'. `tolower('d')` is 'd'. Not a vowel.\n13. End of string.\nExpected Output: \"Total vowels: 3\"",
+      "solution": "#include <stdio.h>\n#include <string.h> // Required for strlen()\n#include <ctype.h>  // Required for tolower()\n\nint main() {\n    char input_string[101]; // Allocate space for 100 characters + null terminator\n    int vowel_count = 0;\n    int i;\n\n    // Read a line of text from stdin\n    // fgets is safer than scanf(\"%s\", ...) as it prevents buffer overflows\n    // and can read strings with spaces.\n    // It reads up to 100 characters or until a newline, storing the newline if present.\n    if (fgets(input_string, sizeof(input_string), stdin) == NULL) {\n        return 1; // Handle potential input error\n    }\n\n    // Remove the trailing newline character if fgets included it\n    // This is important because a newline would be counted in strlen()\n    // and could potentially be processed as a character.\n    input_string[strcspn(input_string, \"\\n\")] = '\\0';\n\n    // Iterate through the string character by character\n    for (i = 0; input_string[i] != '\\0'; i++) {\n        // Convert the character to lowercase to simplify vowel checking\n        char current_char = tolower(input_string[i]);\n\n        // Check if the current character is a vowel\n        if (current_char == 'a' || current_char == 'e' ||\n            current_char == 'i' || current_char == 'o' ||\n            current_char == 'u') {\n            vowel_count++;\n        }\n    }\n\n    // Print the total vowel count\n    printf(\"Total vowels: %d\\n\", vowel_count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Programming Is Fun",
+          "expected_output": "Total vowels: 5"
+        },
+        {
+          "input": "Rhythm Gym",
+          "expected_output": "Total vowels: 0"
+        },
+        {
+          "input": "aeiouAEIOU",
+          "expected_output": "Total vowels: 10"
+        },
+        {
+          "input": "My cat has nine lives.",
+          "expected_output": "Total vowels: 7"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Programming Is Fun",
+            "expected": "Total vowels: 5",
+            "actual": "Total vowels: 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Rhythm Gym",
+            "expected": "Total vowels: 0",
+            "actual": "Total vowels: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "aeiouAEIOU",
+            "expected": "Total vowels: 10",
+            "actual": "Total vowels: 10",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 4,
+            "input": "My cat has nine lives.",
+            "expected": "Total vowels: 7",
+            "actual": "Total vowels: 6",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    }
+  ]
+}
