@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T17:58:12.824723",
+  "provider": "gpt",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Score With Bonuses and Penalties",
+      "description": "In many systems, a final score is built from a sequence of small adjustments rather than a single formula. This kind of step-by-step calculation is common in games, grading rules, and transaction processing, where each new piece of information can increase, decrease, or leave a total unchanged.\n\nRead an integer `n` (`1 <= n <= 100`) and then `n` integers. Start with a total of `0`. For each read integer, add `10` to the total if it is positive, subtract `5` if it is negative, and do nothing if it is `0`. After processing all values, print the final total as one integer followed by a newline.\n\nWORKED EXAMPLE:\nInput: `5 3 0 -2 7 -1` \u2192 total: `0 \u2192 10 \u2192 10 \u2192 5 \u2192 15 \u2192 10`. Output: `10`",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int total = 0;\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x > 0) total += 10;\n        else if (x < 0) total -= 5;\n    }\n\n    printf(\"%d\\n\", total);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`5 3 0 -2 7 -1`",
+          "expected_output": "`10`"
+        },
+        {
+          "input": "`1 0`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`4 -4 -3 -2 -1`",
+          "expected_output": "`-20`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`5 3 0 -2 7 -1`",
+            "expected": "`10`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`1 0`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`4 -4 -3 -2 -1`",
+            "expected": "`-20`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "First Even Product",
+      "description": "Programs often need to inspect a stream of numbers and stop as soon as a meaningful condition is met. This is useful in monitoring systems, where the first value that matches a rule determines an action, while earlier values only affect the search process.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Compute the product of the first even integer in the list with the first integer that appears after it and is divisible by `3`. If no even integer exists, or if no later integer divisible by `3` exists, print `0`. Otherwise print the product as one integer followed by a newline. Only the first matching pair matters.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int first_even_found = 0;\n    int first_even = 0;\n    int product = 0;\n    int done = 0;\n\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n\n        if (!first_even_found) {\n            if (x % 2 == 0) {\n                first_even_found = 1;\n                first_even = x;\n            }\n        } else if (!done && x % 3 == 0) {\n            product = first_even * x;\n            done = 1;\n        }\n    }\n\n    if (!done) printf(\"0\\n\");\n    else printf(\"%d\\n\", product);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`6 5 7 8 4 9 12`",
+          "expected_output": "`96`"
+        },
+        {
+          "input": "`4 1 3 5 7`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`5 2 1 4 6 8`",
+          "expected_output": "`12`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`6 5 7 8 4 9 12`",
+            "expected": "`96`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`4 1 3 5 7`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`5 2 1 4 6 8`",
+            "expected": "`12`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Alternating Remainder Sum",
+      "description": "When processing repeated measurements, it is sometimes useful to combine them with different weights depending on their position. Alternating calculations appear in statistics, signal processing, and simple checksum-style computations.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Starting from the first number, add numbers in odd positions and subtract numbers in even positions, using 1-based positions. Print the resulting total as one integer followed by a newline. Negative values in the input must be handled normally, and `n` is always at least `1`.\n\nWORKED EXAMPLE:\nInput: `5 4 1 7 2 3` \u2192 total: `0 \u2192 4 \u2192 3 \u2192 10 \u2192 8 \u2192 11`. Output: `11`",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int total = 0;\n    for (int i = 1; i <= n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (i % 2 == 1) total += x;\n        else total -= x;\n    }\n\n    printf(\"%d\\n\", total);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`5 4 1 7 2 3`",
+          "expected_output": "`11`"
+        },
+        {
+          "input": "`1 9`",
+          "expected_output": "`9`"
+        },
+        {
+          "input": "`4 -2 5 -1 8`",
+          "expected_output": "`-16`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`5 4 1 7 2 3`",
+            "expected": "`11`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`1 9`",
+            "expected": "`9`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`4 -2 5 -1 8`",
+            "expected": "`-16`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Count Up, Count Down",
+      "description": "Tracking a running difference is a common way to compare two categories of events. For example, one counter may increase for successful outcomes while another decreases for failures, and the final balance tells you which side occurred more often.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Initialize a balance to `0`. For each number, add `1` to the balance if it is greater than `50`, subtract `1` if it is less than `50`, and leave it unchanged if it is exactly `50`. After all inputs are processed, print the balance followed by a newline.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int balance = 0;\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x > 50) balance += 1;\n        else if (x < 50) balance -= 1;\n    }\n\n    printf(\"%d\\n\", balance);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`5 60 40 50 51 49`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`3 50 50 50`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`4 100 1 99 2`",
+          "expected_output": "`0`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`5 60 40 50 51 49`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`3 50 50 50`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`4 100 1 99 2`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Digit-Safe Product Filter",
+      "description": "Sometimes only certain inputs are safe to include in a calculation, and the rest must be ignored. This is common in data cleaning, where a running result should only be updated by values that meet a rule such as being within a valid range.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Start with a product of `1`. Multiply the product by every input value whose absolute value is at most `9`. Ignore all other values. If no input value satisfies the rule, print `0`; otherwise print the final product followed by a newline.\n\nWORKED EXAMPLE:\nInput: `5 12 -3 0 8 15` \u2192 product: `1 \u2192 -3 \u2192 0 \u2192 0`. Output: `0`",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    long long product = 1;\n    int used = 0;\n\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x >= -9 && x <= 9) {\n            product *= x;\n            used = 1;\n        }\n    }\n\n    if (!used) printf(\"0\\n\");\n    else printf(\"%lld\\n\", product);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`5 12 -3 0 8 15`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`3 1 2 3`",
+          "expected_output": "`6`"
+        },
+        {
+          "input": "`4 -9 9 10 -10`",
+          "expected_output": "`-81`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`5 12 -3 0 8 15`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`3 1 2 3`",
+            "expected": "`6`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`4 -9 9 10 -10`",
+            "expected": "`-81`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Temperature Trend Switch",
+      "description": "A system that monitors change over time often needs to compare each new reading with the one before it. This is useful for detecting rising trends, falling trends, and mixed movement in measurements like temperature, stock prices, or sensor output.\n\nRead an integer `n` (`2 <= n <= 100`) followed by `n` integers. Count how many times a reading is strictly greater than the previous reading, and how many times it is strictly smaller than the previous reading. Ignore equal neighbors. Print the difference `increases - decreases` as one integer followed by a newline.\n\nWORKED EXAMPLE:\nInput: `6 10 12 12 9 11 8` \u2192 result: `0 \u2192 1 \u2192 1 \u2192 0 \u2192 1 \u2192 0`. Output: `0`",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int prev, curr;\n    if (scanf(\"%d\", &prev) != 1) return 0;\n\n    int diff = 0;\n    for (int i = 1; i < n; i++) {\n        if (scanf(\"%d\", &curr) != 1) return 0;\n        if (curr > prev) diff += 1;\n        else if (curr < prev) diff -= 1;\n        prev = curr;\n    }\n\n    printf(\"%d\\n\", diff);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`6 10 12 12 9 11 8`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`2 5 7`",
+          "expected_output": "`1`"
+        },
+        {
+          "input": "`5 9 7 7 7 2`",
+          "expected_output": "`-2`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`6 10 12 12 9 11 8`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`2 5 7`",
+            "expected": "`1`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`5 9 7 7 7 2`",
+            "expected": "`-2`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Smallest Positive Multiple",
+      "description": "Choosing a value that satisfies a rule while also optimizing an extra condition is a common programming pattern. For example, you may need the first valid option that is also as small as possible, which appears in search problems and resource selection.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Find the smallest positive integer among the inputs that is divisible by `4`. If no such value exists, print `-1`. Otherwise print that value followed by a newline. Ignore zero and negative values completely.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int found = 0;\n    int best = 0;\n\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x > 0 && x % 4 == 0) {\n            if (!found || x < best) {\n                best = x;\n                found = 1;\n            }\n        }\n    }\n\n    if (!found) printf(\"-1\\n\");\n    else printf(\"%d\\n\", best);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`5 16 3 8 20 4`",
+          "expected_output": "`4`"
+        },
+        {
+          "input": "`3 -4 0 2`",
+          "expected_output": "`-1`"
+        },
+        {
+          "input": "`6 12 28 5 40 8 24`",
+          "expected_output": "`8`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`5 16 3 8 20 4`",
+            "expected": "`4`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`3 -4 0 2`",
+            "expected": "`-1`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`6 12 28 5 40 8 24`",
+            "expected": "`8`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Running Average Threshold",
+      "description": "Averages are often used to smooth noisy data and make decisions based on the overall trend rather than a single reading. In simple monitoring tasks, a running total and count are enough to compare the mean against a threshold at the end.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Compute the arithmetic mean of all the values using integer sum and count, but print `1` if the mean is at least `10`, otherwise print `0`. The input values may be negative. Use exact arithmetic for the comparison by comparing `sum` with `10 * n`, and print a newline after the result.\n\nWORKED EXAMPLE:\nInput: `4 5 10 15 0` \u2192 sum: `0 \u2192 5 \u2192 15 \u2192 30 \u2192 30`. Output: `0`",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    long long sum = 0;\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n        sum += x;\n    }\n\n    if (sum >= 10LL * n) printf(\"1\\n\");\n    else printf(\"0\\n\");\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`4 5 10 15 0`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`3 10 10 10`",
+          "expected_output": "`1`"
+        },
+        {
+          "input": "`5 -5 20 10 15 0`",
+          "expected_output": "`1`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`4 5 10 15 0`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`3 10 10 10`",
+            "expected": "`1`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`5 -5 20 10 15 0`",
+            "expected": "`1`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Parking Lot Balance",
+      "description": "Many everyday systems keep a balance between entering and leaving events. A parking lot, for example, can be modeled by a count that rises when a car enters and falls when one leaves, while invalid or neutral entries may need special handling.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Start with `0` cars in the lot. For each input value, add `1` to the count if it is `1`, subtract `1` if it is `-1`, and ignore any other value. If the count would become negative, clamp it to `0` instead. Print the final count followed by a newline.\n\nWORKED EXAMPLE:\nInput: `7 1 1 -1 2 -1 -1 1` \u2192 count: `0 \u2192 1 \u2192 2 \u2192 1 \u2192 1 \u2192 0 \u2192 0 \u2192 1`. Output: `1`",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int cars = 0;\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x == 1) cars++;\n        else if (x == -1) {\n            cars--;\n            if (cars < 0) cars = 0;\n        }\n    }\n\n    printf(\"%d\\n\", cars);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`7 1 1 -1 2 -1 -1 1`",
+          "expected_output": "`1`"
+        },
+        {
+          "input": "`3 -1 -1 -1`",
+          "expected_output": "`0`"
+        },
+        {
+          "input": "`5 1 2 1 -1 -1`",
+          "expected_output": "`0`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`7 1 1 -1 2 -1 -1 1`",
+            "expected": "`1`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`3 -1 -1 -1`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`5 1 2 1 -1 -1`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Prime and Composite Counter",
+      "description": "Counting different categories in a list is a basic way to summarize data. In number processing, it is common to separate values by a property such as divisibility or primality, then compare the totals to decide what is more common.\n\nRead an integer `n` (`1 <= n <= 100`) followed by `n` integers. Count how many of the numbers are prime and how many are composite, ignoring values less than `2`. A prime number has exactly two positive divisors, and a composite number has more than two positive divisors. Print `prime_count - composite_count` followed by a newline.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int prime_count = 0, composite_count = 0;\n\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) return 0;\n\n        if (x < 2) continue;\n\n        int is_prime = 1;\n        for (int d = 2; d * d <= x; d++) {\n            if (x % d == 0) {\n                is_prime = 0;\n                break;\n            }\n        }\n\n        if (is_prime) prime_count++;\n        else composite_count++;\n    }\n\n    printf(\"%d\\n\", prime_count - composite_count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "`6 2 4 5 6 1 9`",
+          "expected_output": "`-1`"
+        },
+        {
+          "input": "`3 2 3 5`",
+          "expected_output": "`3`"
+        },
+        {
+          "input": "`5 1 0 -7 8 11`",
+          "expected_output": "`0`"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "`6 2 4 5 6 1 9`",
+            "expected": "`-1`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "`3 2 3 5`",
+            "expected": "`3`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "`5 1 0 -7 8 11`",
+            "expected": "`0`",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    }
+  ]
+}

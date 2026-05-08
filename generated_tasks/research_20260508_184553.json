@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:45:53.238685",
+  "provider": "claude",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Temperature Conversion with Offset Adjustment",
+      "description": "Converting between temperature scales is a fundamental task in science and engineering. The Celsius to Fahrenheit formula involves both multiplication and addition of constants, and sometimes measurements need to be adjusted by a calibration offset before conversion to account for instrument error.\n\nYour program must read a Celsius temperature and a calibration offset (both as floating-point numbers). First, subtract the offset from the Celsius reading to correct for instrument error. Then convert the corrected temperature to Fahrenheit using the formula F = (C \u00d7 9/5) + 32. Print the final Fahrenheit temperature with exactly two decimal places.\n\nWORKED EXAMPLE:\nInput: 0 (no offset) \u2192 corrected: 0 \u2192 converted: 32.00. Input: 10 with offset 2 \u2192 corrected: 8 \u2192 converted: 46.40.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double celsius, offset, corrected, fahrenheit;\n    \n    scanf(\"%lf %lf\", &celsius, &offset);\n    \n    corrected = celsius - offset;\n    fahrenheit = (corrected * 9.0 / 5.0) + 32.0;\n    \n    printf(\"%.2f\\n\", fahrenheit);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "0 0",
+          "expected_output": "32.00"
+        },
+        {
+          "input": "100 0",
+          "expected_output": "212.00"
+        },
+        {
+          "input": "10 2",
+          "expected_output": "46.40"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "0 0",
+            "expected": "32.00",
+            "actual": "32.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100 0",
+            "expected": "212.00",
+            "actual": "212.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10 2",
+            "expected": "46.40",
+            "actual": "46.40",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Compound Interest Calculation",
+      "description": "Compound interest is how investments grow over time, with interest calculated not only on the initial principal but also on accumulated interest from previous periods. Banks and investment firms use this principle to determine how much money will grow after a fixed time period. The compound interest formula is: A = P(1 + r/n)^(nt), where P is principal, r is annual rate (as a decimal), n is compounding frequency per year, and t is time in years.\n\nYour program must read four values: principal amount (double), annual interest rate as a percentage (double), number of times interest compounds per year (integer), and time period in years (double). Calculate and print the final amount with exactly two decimal places. Assume all inputs are positive and valid.",
+      "solution": "#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    double principal, rate_percent, time, amount;\n    int n;\n    \n    scanf(\"%lf %lf %d %lf\", &principal, &rate_percent, &n, &time);\n    \n    double rate = rate_percent / 100.0;\n    amount = principal * pow(1.0 + rate / n, n * time);\n    \n    printf(\"%.2f\\n\", amount);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1000 5 1 2",
+          "expected_output": "1102.50"
+        },
+        {
+          "input": "500 10 4 1",
+          "expected_output": "552.48"
+        },
+        {
+          "input": "2000 3 12 5",
+          "expected_output": "2323.67"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1000 5 1 2",
+            "expected": "1102.50",
+            "actual": "1102.50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "500 10 4 1",
+            "expected": "552.48",
+            "actual": "551.91",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2000 3 12 5",
+            "expected": "2323.67",
+            "actual": "2323.23",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Multi-Step Unit Conversion Chain",
+      "description": "Real-world measurement often requires converting through multiple units in sequence. For example, converting miles to centimeters requires going through intermediate steps: miles \u2192 feet \u2192 inches \u2192 centimeters. Each step applies a multiplication factor, and performing all conversions sequentially allows us to transform any measurement into the desired unit.\n\nYour program must read a distance in miles (as a double). Convert it to feet (1 mile = 5280 feet), then to inches (1 foot = 12 inches), then to centimeters (1 inch = 2.54 centimeters). Print the final result in centimeters with exactly one decimal place.\n\nWORKED EXAMPLE:\nInput: 1 \u2192 feet: 5280 \u2192 inches: 63360 \u2192 centimeters: 160934.4.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double miles, feet, inches, centimeters;\n    \n    scanf(\"%lf\", &miles);\n    \n    feet = miles * 5280.0;\n    inches = feet * 12.0;\n    centimeters = inches * 2.54;\n    \n    printf(\"%.1f\\n\", centimeters);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1",
+          "expected_output": "160934.4"
+        },
+        {
+          "input": "0.5",
+          "expected_output": "80467.2"
+        },
+        {
+          "input": "2.5",
+          "expected_output": "402335.9"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1",
+            "expected": "160934.4",
+            "actual": "160934.4",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0.5",
+            "expected": "80467.2",
+            "actual": "80467.2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2.5",
+            "expected": "402335.9",
+            "actual": "402336.0",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Weighted Average Calculation",
+      "description": "A weighted average is used when different components contribute unequally to a final result. For example, in many courses, homework might count for 30%, quizzes for 20%, and the final exam for 50%. Computing a weighted average requires multiplying each score by its weight, summing those products, and dividing by the total weight (or normalizing if weights are percentages that sum to 100).\n\nYour program must read three test scores (integers) and their corresponding weights (doubles). Calculate the weighted average as (score\u2081 \u00d7 weight\u2081 + score\u2082 \u00d7 weight\u2082 + score\u2083 \u00d7 weight\u2083) / (weight\u2081 + weight\u2082 + weight\u2083). Print the result with exactly two decimal places.\n\nWORKED EXAMPLE:\nInput: 80 0.3 90 0.2 95 0.5 \u2192 weighted sum: 24 + 18 + 47.5 = 89.5.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int score1, score2, score3;\n    double weight1, weight2, weight3;\n    double weighted_sum, total_weight, average;\n    \n    scanf(\"%d %lf %d %lf %d %lf\", &score1, &weight1, &score2, &weight2, &score3, &weight3);\n    \n    weighted_sum = (score1 * weight1) + (score2 * weight2) + (score3 * weight3);\n    total_weight = weight1 + weight2 + weight3;\n    average = weighted_sum / total_weight;\n    \n    printf(\"%.2f\\n\", average);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "80 0.3 90 0.2 95 0.5",
+          "expected_output": "89.50"
+        },
+        {
+          "input": "100 0.5 100 0.3 100 0.2",
+          "expected_output": "100.00"
+        },
+        {
+          "input": "70 0.25 85 0.35 90 0.4",
+          "expected_output": "82.25"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "80 0.3 90 0.2 95 0.5",
+            "expected": "89.50",
+            "actual": "89.50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100 0.5 100 0.3 100 0.2",
+            "expected": "100.00",
+            "actual": "100.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "70 0.25 85 0.35 90 0.4",
+            "expected": "82.25",
+            "actual": "83.25",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Profit Margin and Markup Calculation",
+      "description": "Retailers and businesses use two related but distinct metrics to understand pricing: markup is the percentage increase from cost to selling price, while profit margin is the profit as a percentage of the selling price. Understanding both helps businesses set competitive prices and evaluate profitability. Markup is calculated as ((selling price \u2212 cost) / cost) \u00d7 100, and profit margin is calculated as ((selling price \u2212 cost) / selling price) \u00d7 100.\n\nYour program must read the cost price and selling price of an item (both as doubles). Calculate both the markup percentage and the profit margin percentage. Print markup first, then profit margin, each with exactly one decimal place, on separate lines.\n\nWORKED EXAMPLE:\nInput: 100 150 \u2192 markup: (150\u2212100)/100 \u00d7 100 = 50.0 \u2192 profit margin: (150\u2212100)/150 \u00d7 100 = 33.3.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double cost, selling_price;\n    double markup, profit_margin;\n    \n    scanf(\"%lf %lf\", &cost, &selling_price);\n    \n    markup = ((selling_price - cost) / cost) * 100.0;\n    profit_margin = ((selling_price - cost) / selling_price) * 100.0;\n    \n    printf(\"%.1f\\n\", markup);\n    printf(\"%.1f\\n\", profit_margin);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "100 150",
+          "expected_output": "50.0\n33.3"
+        },
+        {
+          "input": "50 100",
+          "expected_output": "100.0\n50.0"
+        },
+        {
+          "input": "200 250",
+          "expected_output": "25.0\n20.0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "100 150",
+            "expected": "50.0\n33.3",
+            "actual": "50.0\n33.3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "50 100",
+            "expected": "100.0\n50.0",
+            "actual": "100.0\n50.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "200 250",
+            "expected": "25.0\n20.0",
+            "actual": "25.0\n20.0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Distance and Speed Calculations",
+      "description": "Physics and transportation problems frequently involve the relationships between distance, speed, and time. The fundamental kinematic equation is distance = speed \u00d7 time. When traveling at a constant speed for a known time, we can calculate total distance; conversely, knowing distance and speed lets us find travel time. Problems may combine multiple legs of a journey or require unit conversions between hours and minutes.\n\nYour program must read three values: speed in kilometers per hour (double), time traveled in hours (double), and then a second speed and time pair for a second leg of a journey. Calculate the total distance traveled (distance = speed \u00d7 time for each leg, then sum). Print the total distance with exactly one decimal place.\n\nWORKED EXAMPLE:\nInput: 60 2 (first leg) and 80 1.5 (second leg) \u2192 distance\u2081: 120 \u2192 distance\u2082: 120 \u2192 total: 240.0.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double speed1, time1, speed2, time2;\n    double distance1, distance2, total_distance;\n    \n    scanf(\"%lf %lf %lf %lf\", &speed1, &time1, &speed2, &time2);\n    \n    distance1 = speed1 * time1;\n    distance2 = speed2 * time2;\n    total_distance = distance1 + distance2;\n    \n    printf(\"%.1f\\n\", total_distance);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "60 2 80 1.5",
+          "expected_output": "240.0"
+        },
+        {
+          "input": "100 0.5 50 2",
+          "expected_output": "150.0"
+        },
+        {
+          "input": "75.5 3 90.25 1.25",
+          "expected_output": "339.56"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "60 2 80 1.5",
+            "expected": "240.0",
+            "actual": "240.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100 0.5 50 2",
+            "expected": "150.0",
+            "actual": "150.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "75.5 3 90.25 1.25",
+            "expected": "339.56",
+            "actual": "339.3",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Currency Exchange with Transaction Fee",
+      "description": "When exchanging one currency for another, financial institutions typically charge a transaction fee, either as a flat amount or as a percentage of the exchange. Understanding the true cost of conversion requires calculating the exchange at the current rate and then subtracting the fee to find the actual amount received. This is essential for travelers, importers, and anyone conducting international business.\n\nYour program must read four values: amount in source currency (double), exchange rate (how many units of target currency per one unit of source), fee percentage (double), and a flag (0 or 1, as integer). If flag is 0, the fee applies to the source amount before conversion; if flag is 1, it applies to the target amount after conversion. Calculate and print the final amount received with exactly two decimal places.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double source_amount, exchange_rate, fee_percent;\n    int flag;\n    double fee, after_fee, target_amount;\n    \n    scanf(\"%lf %lf %lf %d\", &source_amount, &exchange_rate, &fee_percent, &flag);\n    \n    if (flag == 0) {\n        fee = source_amount * (fee_percent / 100.0);\n        after_fee = source_amount - fee;\n        target_amount = after_fee * exchange_rate;\n    } else {\n        target_amount = source_amount * exchange_rate;\n        fee = target_amount * (fee_percent / 100.0);\n        target_amount = target_amount - fee;\n    }\n    \n    printf(\"%.2f\\n\", target_amount);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "100 1.5 5 0",
+          "expected_output": "142.50"
+        },
+        {
+          "input": "100 1.5 5 1",
+          "expected_output": "142.50"
+        },
+        {
+          "input": "1000 0.85 2.5 0",
+          "expected_output": "827.38"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "100 1.5 5 0",
+            "expected": "142.50",
+            "actual": "142.50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100 1.5 5 1",
+            "expected": "142.50",
+            "actual": "142.50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1000 0.85 2.5 0",
+            "expected": "827.38",
+            "actual": "828.75",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Body Mass Index and Category Assignment via Arithmetic",
+      "description": "Body Mass Index (BMI) is a common health metric calculated as weight in kilograms divided by the square of height in meters: BMI = weight / (height\u00b2). BMI categories typically range from underweight to obese, with different ranges defining each category. While normally we would use conditionals to assign categories, this exercise uses only arithmetic and type casting to produce a numeric category code based on BMI thresholds (e.g., category 1 for underweight, 2 for normal, 3 for overweight, 4 for obese).\n\nYour program must read height in meters (double) and weight in kilograms (double). Calculate BMI as weight / (height \u00d7 height). Assign a category code: 1 if BMI < 18.5, 2 if BMI < 25, 3 if BMI < 30, otherwise 4. Print the BMI value with exactly one decimal place and the category code on separate lines, using only arithmetic, assignment, and sequential statements (no conditionals).",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double height, weight, bmi;\n    int category;\n    \n    scanf(\"%lf %lf\", &height, &weight);\n    \n    bmi = weight / (height * height);\n    \n    category = 1 + (int)(bmi >= 18.5) + (int)(bmi >= 25.0) + (int)(bmi >= 30.0);\n    \n    printf(\"%.1f\\n\", bmi);\n    printf(\"%d\\n\", category);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1.75 60",
+          "expected_output": "19.6\n2"
+        },
+        {
+          "input": "1.70 50",
+          "expected_output": "17.3\n1"
+        },
+        {
+          "input": "1.80 100",
+          "expected_output": "30.9\n4"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1.75 60",
+            "expected": "19.6\n2",
+            "actual": "19.6\n2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1.70 50",
+            "expected": "17.3\n1",
+            "actual": "17.3\n1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1.80 100",
+            "expected": "30.9\n4",
+            "actual": "30.9\n4",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Percentage Change Calculation",
+      "description": "Percentage change is a fundamental metric in business, economics, and science, measuring how much a quantity has changed relative to its original value. It is calculated as ((new value \u2212 old value) / old value) \u00d7 100. This metric is used to track stock price movements, inflation, population growth, and many other quantities. A positive result indicates growth; negative indicates decline.\n\nYour program must read an old value (double) and a new value (double). Calculate the percentage change using the formula ((new \u2212 old) / old) \u00d7 100. Print the result with exactly two decimal places, ensuring the sign is shown (positive or negative).\n\nWORKED EXAMPLE:\nInput: 100 120 \u2192 change: (120\u2212100)/100 \u00d7 100 = 20.00. Input: 50 40 \u2192 change: (40\u221250)/50 \u00d7 100 = \u221220.00.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double old_value, new_value;\n    double percent_change;\n    \n    scanf(\"%lf %lf\", &old_value, &new_value);\n    \n    percent_change = ((new_value - old_value) / old_value) * 100.0;\n    \n    printf(\"%.2f\\n\", percent_change);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "100 120",
+          "expected_output": "20.00"
+        },
+        {
+          "input": "50 40",
+          "expected_output": "-20.00"
+        },
+        {
+          "input": "200 250",
+          "expected_output": "25.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "100 120",
+            "expected": "20.00",
+            "actual": "20.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "50 40",
+            "expected": "-20.00",
+            "actual": "-20.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "200 250",
+            "expected": "25.00",
+            "actual": "25.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Discounted Price with Tax Calculation",
+      "description": "Retail pricing often involves applying a discount to a base price, then calculating tax on the discounted amount. A store might offer a percentage discount on an item, and then sales tax (as a percentage of the final price) is added to determine the total amount a customer pays. This two-step process\u2014applying a discount then a tax\u2014is common across different regions and retailers.\n\nYour program must read the original price (double), discount percentage (double), and tax percentage (double). First, calculate the price after applying the discount (discounted price = original \u00d7 (1 \u2212 discount% / 100)). Then, calculate the final price by adding tax (final price = discounted price \u00d7 (1 + tax% / 100)). Print the final price with exactly two decimal places.\n\nWORKED EXAMPLE:\nInput: 100 20 10 \u2192 discounted: 100 \u00d7 0.8 = 80 \u2192 final: 80 \u00d7 1.1 = 88.00.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double original_price, discount_percent, tax_percent;\n    double discounted_price, final_price;\n    \n    scanf(\"%lf %lf %lf\", &original_price, &discount_percent, &tax_percent);\n    \n    discounted_price = original_price * (1.0 - discount_percent / 100.0);\n    final_price = discounted_price * (1.0 + tax_percent / 100.0);\n    \n    printf(\"%.2f\\n\", final_price);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "100 20 10",
+          "expected_output": "88.00"
+        },
+        {
+          "input": "50 10 5",
+          "expected_output": "47.25"
+        },
+        {
+          "input": "200 25 8",
+          "expected_output": "162.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "100 20 10",
+            "expected": "88.00",
+            "actual": "88.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "50 10 5",
+            "expected": "47.25",
+            "actual": "47.25",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "200 25 8",
+            "expected": "162.00",
+            "actual": "162.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

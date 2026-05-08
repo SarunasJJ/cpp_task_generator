@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T17:51:43.471788",
+  "provider": "claude",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Count Character Frequencies in a String",
+      "description": "When processing text data, it is often useful to know how often each character appears. This frequency information is used in cryptography, data compression, and text analysis. Understanding character distribution helps identify patterns and anomalies in written data.\n\nYour program must read a single line of text and count how many times each alphabetic character (both uppercase and lowercase, treated as the same letter) appears in the string. Print each letter that appears at least once, in the order a\u2013z, followed by its frequency. Non-alphabetic characters should be ignored.\n\nWORKED EXAMPLE:\nInput: \"hello\" \u2192 h: 1 \u2192 e: 1 \u2192 l: 2 \u2192 o: 1. Output: h 1 / e 1 / l 2 / o 1.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    char line[256];\n    int freq[26] = {0};\n    \n    fgets(line, sizeof(line), stdin);\n    \n    for (int i = 0; line[i] != '\\0'; i++) {\n        char c = tolower(line[i]);\n        if (c >= 'a' && c <= 'z') {\n            freq[c - 'a']++;\n        }\n    }\n    \n    for (int i = 0; i < 26; i++) {\n        if (freq[i] > 0) {\n            printf(\"%c %d\\n\", 'a' + i, freq[i]);\n        }\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "e 1\nh 1\nl 2\no 1"
+        },
+        {
+          "input": "AaBbCc",
+          "expected_output": "a 2\nb 2\nc 2"
+        },
+        {
+          "input": "xyz123XYZ",
+          "expected_output": "x 2\ny 2\nz 2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "e 1\nh 1\nl 2\no 1",
+            "actual": "e 1\nh 1\nl 2\no 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "AaBbCc",
+            "expected": "a 2\nb 2\nc 2",
+            "actual": "a 2\nb 2\nc 2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "xyz123XYZ",
+            "expected": "x 2\ny 2\nz 2",
+            "actual": "x 2\ny 2\nz 2",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Reverse a String and Check if Palindrome",
+      "description": "A palindrome is a word or phrase that reads the same forwards and backwards, ignoring non-alphabetic characters and case. Palindromes appear in wordplay puzzles, license plate checks, and data validation. Detecting palindromes requires comparing characters from both ends of a string moving toward the center.\n\nYour program must read a single line of text and determine whether it is a palindrome. Consider only alphabetic characters and treat uppercase and lowercase letters as equivalent. Print \"yes\" if the string is a palindrome, \"no\" otherwise.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    char line[256];\n    fgets(line, sizeof(line), stdin);\n    \n    // Extract only alphabetic characters in lowercase\n    char cleaned[256];\n    int j = 0;\n    for (int i = 0; line[i] != '\\0'; i++) {\n        if (isalpha(line[i])) {\n            cleaned[j++] = tolower(line[i]);\n        }\n    }\n    cleaned[j] = '\\0';\n    \n    // Check if palindrome\n    int is_palindrome = 1;\n    for (int i = 0; i < j / 2; i++) {\n        if (cleaned[i] != cleaned[j - 1 - i]) {\n            is_palindrome = 0;\n            break;\n        }\n    }\n    \n    printf(\"%s\\n\", is_palindrome ? \"yes\" : \"no\");\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "racecar",
+          "expected_output": "yes"
+        },
+        {
+          "input": "hello",
+          "expected_output": "no"
+        },
+        {
+          "input": "A man a plan a canal Panama",
+          "expected_output": "yes"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "racecar",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "hello",
+            "expected": "no",
+            "actual": "no",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "A man a plan a canal Panama",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Find the Longest Word in a String",
+      "description": "Text processing often requires identifying the most prominent words by length. This operation is used in readability analysis, vocabulary assessment, and document summarization. Finding the longest word requires iterating through the string, identifying word boundaries, and tracking the maximum length encountered.\n\nYour program must read a single line of text and find the longest word (a contiguous sequence of alphabetic characters). Print the longest word. If multiple words tie for longest length, print the first one encountered. Words are separated by non-alphabetic characters.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    char line[256];\n    fgets(line, sizeof(line), stdin);\n    \n    char longest[256] = \"\";\n    int max_len = 0;\n    char current[256];\n    int current_len = 0;\n    \n    for (int i = 0; line[i] != '\\0'; i++) {\n        if (isalpha(line[i])) {\n            current[current_len++] = line[i];\n        } else {\n            if (current_len > max_len) {\n                current_len = 0;\n                for (int j = 0; j < current_len; j++) {\n                    longest[j] = current[j];\n                }\n                longest[current_len] = '\\0';\n                max_len = current_len;\n            }\n            current_len = 0;\n        }\n    }\n    \n    // Check the last word\n    if (current_len > max_len) {\n        for (int j = 0; j < current_len; j++) {\n            longest[j] = current[j];\n        }\n        longest[current_len] = '\\0';\n        max_len = current_len;\n    }\n    \n    printf(\"%s\\n\", longest);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "the quick brown fox",
+          "expected_output": "quick"
+        },
+        {
+          "input": "a bb ccc",
+          "expected_output": "ccc"
+        },
+        {
+          "input": "programming is fun",
+          "expected_output": "programming"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "the quick brown fox",
+            "expected": "quick",
+            "actual": "fox",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "a bb ccc",
+            "expected": "ccc",
+            "actual": "ccc",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "programming is fun",
+            "expected": "programming",
+            "actual": "fun",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Count Vowels and Consonants",
+      "description": "Analyzing the vowel-to-consonant ratio in text is useful for linguistic studies, readability scoring, and phonetic analysis. Vowels and consonants form the building blocks of syllables and words. Distinguishing between them requires examining each alphabetic character against a known set.\n\nYour program must read a single line of text and count how many vowels and how many consonants appear in it. A vowel is a, e, i, o, or u (case-insensitive). All other alphabetic characters are consonants. Non-alphabetic characters are ignored. Print two lines: the first with the count of vowels, the second with the count of consonants.\n\nWORKED EXAMPLE:\nInput: \"aei\" \u2192 vowels: 1 \u2192 2 \u2192 3. Output: vowels 3, consonants 0.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    char line[256];\n    fgets(line, sizeof(line), stdin);\n    \n    int vowels = 0, consonants = 0;\n    \n    for (int i = 0; line[i] != '\\0'; i++) {\n        char c = tolower(line[i]);\n        if (isalpha(line[i])) {\n            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n                vowels++;\n            } else {\n                consonants++;\n            }\n        }\n    }\n    \n    printf(\"vowels %d\\n\", vowels);\n    printf(\"consonants %d\\n\", consonants);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "vowels 2\nconsonants 3"
+        },
+        {
+          "input": "aeiou",
+          "expected_output": "vowels 5\nconsonants 0"
+        },
+        {
+          "input": "bcdfg",
+          "expected_output": "vowels 0\nconsonants 5"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "vowels 2\nconsonants 3",
+            "actual": "vowels 2\nconsonants 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "aeiou",
+            "expected": "vowels 5\nconsonants 0",
+            "actual": "vowels 5\nconsonants 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "bcdfg",
+            "expected": "vowels 0\nconsonants 5",
+            "actual": "vowels 0\nconsonants 5",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Remove Duplicate Characters from a String",
+      "description": "Removing duplicates from text is common in data cleaning, deduplication algorithms, and set operations. A string with duplicates removed shows each character at most once, preserving the order of first appearance. This operation is foundational to many string-processing utilities.\n\nYour program must read a single line of text and output a new string containing each character exactly once, in the order it first appears. Non-alphabetic characters and whitespace should be treated as regular characters and also deduplicated.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char line[256];\n    fgets(line, sizeof(line), stdin);\n    \n    int seen[256] = {0};\n    \n    for (int i = 0; line[i] != '\\0'; i++) {\n        unsigned char c = (unsigned char)line[i];\n        if (!seen[c]) {\n            seen[c] = 1;\n            printf(\"%c\", c);\n        }\n    }\n    printf(\"\\n\");\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "helo"
+        },
+        {
+          "input": "aabbcc",
+          "expected_output": "abc"
+        },
+        {
+          "input": "abcabc",
+          "expected_output": "abc"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "helo",
+            "actual": "helo",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "aabbcc",
+            "expected": "abc",
+            "actual": "abc",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "abcabc",
+            "expected": "abc",
+            "actual": "abc",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Validate Balanced Parentheses",
+      "description": "Checking whether parentheses, brackets, and braces are correctly matched is fundamental to compiler design, syntax validation, and expression evaluation. A balanced sequence has each opening symbol paired with a corresponding closing symbol in the correct order. This check is performed millions of times daily in code editors and IDEs.\n\nYour program must read a single line of text and check whether all parentheses ( ), brackets [ ], and braces { } are properly balanced and correctly nested. Other characters in the string should be ignored. Print \"yes\" if balanced, \"no\" otherwise.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char line[256];\n    fgets(line, sizeof(line), stdin);\n    \n    int depth = 0;\n    int valid = 1;\n    \n    for (int i = 0; line[i] != '\\0' && valid; i++) {\n        char c = line[i];\n        if (c == '(' || c == '[' || c == '{') {\n            depth++;\n        } else if (c == ')' || c == ']' || c == '}') {\n            depth--;\n            if (depth < 0) {\n                valid = 0;\n            }\n        }\n    }\n    \n    if (depth != 0) {\n        valid = 0;\n    }\n    \n    printf(\"%s\\n\", valid ? \"yes\" : \"no\");\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "(hello [world])",
+          "expected_output": "yes"
+        },
+        {
+          "input": "(hello [world]",
+          "expected_output": "no"
+        },
+        {
+          "input": "({[()]})",
+          "expected_output": "yes"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "(hello [world])",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "(hello [world]",
+            "expected": "no",
+            "actual": "no",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "({[()]})",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Words Longer Than N Characters",
+      "description": "Text analysis often requires filtering words by length to understand vocabulary complexity and readability. Identifying which words exceed a certain length threshold helps in assessing document difficulty and audience suitability. This requires both word extraction and conditional counting.\n\nYour program must read an integer N, then read a line of text, and count how many words in that text have more than N characters. A word is a contiguous sequence of alphabetic characters. Print the count of words exceeding N characters in length.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    int n;\n    scanf(\"%d\\n\", &n);\n    \n    char line[256];\n    fgets(line, sizeof(line), stdin);\n    \n    int count = 0;\n    int word_len = 0;\n    \n    for (int i = 0; line[i] != '\\0'; i++) {\n        if (isalpha(line[i])) {\n            word_len++;\n        } else {\n            if (word_len > n) {\n                count++;\n            }\n            word_len = 0;\n        }\n    }\n    \n    // Check last word\n    if (word_len > n) {\n        count++;\n    }\n    \n    printf(\"%d\\n\", count);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3\nthe quick brown fox jumps",
+          "expected_output": "2"
+        },
+        {
+          "input": "5\nhello world",
+          "expected_output": "1"
+        },
+        {
+          "input": "10\na b c de fgh ijkl",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3\nthe quick brown fox jumps",
+            "expected": "2",
+            "actual": "3",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5\nhello world",
+            "expected": "1",
+            "actual": "0",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10\na b c de fgh ijkl",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Rotate Array Elements",
+      "description": "Array rotation is a fundamental operation in data structures and algorithms, used in circular buffers, image processing, and algorithm optimization. Rotating means shifting all elements by a fixed number of positions, with elements that fall off one end wrapping around to the other. Understanding rotation builds intuition for circular indexing and modular arithmetic.\n\nYour program must read an integer N (the size of the array), then N integers, then an integer K (the rotation amount). Rotate the array to the right by K positions and print the resulting array. For example, rotating [1, 2, 3, 4, 5] right by 2 produces [4, 5, 1, 2, 3].\n\nWORKED EXAMPLE:\nInput: array [1, 2, 3, 4, 5], rotate right by 2 \u2192 [4, 5] at front, [1, 2, 3] at end. Output: 4 5 1 2 3.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    \n    int *arr = (int *)malloc(n * sizeof(int));\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n    \n    int k;\n    scanf(\"%d\", &k);\n    k = k % n;  // Handle k > n\n    \n    // Create result array\n    int *result = (int *)malloc(n * sizeof(int));\n    for (int i = 0; i < n; i++) {\n        result[(i + k) % n] = arr[i];\n    }\n    \n    for (int i = 0; i < n; i++) {\n        printf(\"%d\", result[i]);\n        if (i < n - 1) printf(\" \");\n    }\n    printf(\"\\n\");\n    \n    free(arr);\n    free(result);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n1 2 3 4 5\n2",
+          "expected_output": "4 5 1 2 3"
+        },
+        {
+          "input": "4\n10 20 30 40\n1",
+          "expected_output": "40 10 20 30"
+        },
+        {
+          "input": "3\n1 2 3\n0",
+          "expected_output": "1 2 3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n1 2 3 4 5\n2",
+            "expected": "4 5 1 2 3",
+            "actual": "4 5 1 2 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4\n10 20 30 40\n1",
+            "expected": "40 10 20 30",
+            "actual": "40 10 20 30",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "3\n1 2 3\n0",
+            "expected": "1 2 3",
+            "actual": "1 2 3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Find Missing Number in Array",
+      "description": "When storing sequences of numbers, data loss or transmission errors can result in gaps. Finding which number is missing from a sequence is a common integrity check in databases, file transfers, and inventory systems. Efficient detection requires identifying what should be present and comparing against what is actually found.\n\nYour program must read an integer N, then read N integers that form a sequence of numbers from 1 to N+1 with exactly one number missing. Find and print the missing number. You may assume all input numbers are distinct and within the range 1 to N+1.\n\nWORKED EXAMPLE:\nInput: 3 numbers [1, 2, 4] from range 1\u20134 \u2192 sum of input: 1 \u2192 3 \u2192 7, expected sum: 1 \u2192 3 \u2192 6 \u2192 10. Output: 3.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    \n    long long expected_sum = (long long)(n + 1) * (n + 2) / 2;\n    long long actual_sum = 0;\n    \n    for (int i = 0; i < n; i++) {\n        int num;\n        scanf(\"%d\", &num);\n        actual_sum += num;\n    }\n    \n    printf(\"%lld\\n\", expected_sum - actual_sum);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3\n1 2 4",
+          "expected_output": "3"
+        },
+        {
+          "input": "4\n1 2 3 5",
+          "expected_output": "4"
+        },
+        {
+          "input": "2\n2 3",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3\n1 2 4",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4\n1 2 3 5",
+            "expected": "4",
+            "actual": "4",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2\n2 3",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Check if Two Strings are Anagrams",
+      "description": "Anagrams are words or phrases that contain the same characters in a different order. Anagram detection is used in word games, cryptanalysis, and plagiarism detection. Two strings are anagrams if each character appears the same number of times in both, regardless of order or case.\n\nYour program must read two lines of text and determine whether they are anagrams of each other. Consider only alphabetic characters (treating uppercase and lowercase as equivalent) and ignore spaces and other non-alphabetic characters. Print \"yes\" if they are anagrams, \"no\" otherwise.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    char line1[256], line2[256];\n    fgets(line1, sizeof(line1), stdin);\n    fgets(line2, sizeof(line2), stdin);\n    \n    int freq1[26] = {0}, freq2[26] = {0};\n    \n    for (int i = 0; line1[i] != '\\0'; i++) {\n        char c = tolower(line1[i]);\n        if (isalpha(c)) {\n            freq1[c - 'a']++;\n        }\n    }\n    \n    for (int i = 0; line2[i] != '\\0'; i++) {\n        char c = tolower(line2[i]);\n        if (isalpha(c)) {\n            freq2[c - 'a']++;\n        }\n    }\n    \n    int is_anagram = 1;\n    for (int i = 0; i < 26; i++) {\n        if (freq1[i] != freq2[i]) {\n            is_anagram = 0;\n            break;\n        }\n    }\n    \n    printf(\"%s\\n\", is_anagram ? \"yes\" : \"no\");\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "listen\nsilent",
+          "expected_output": "yes"
+        },
+        {
+          "input": "hello\nworld",
+          "expected_output": "no"
+        },
+        {
+          "input": "The Eyes\nThey See",
+          "expected_output": "yes"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "listen\nsilent",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "hello\nworld",
+            "expected": "no",
+            "actual": "no",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "The Eyes\nThey See",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

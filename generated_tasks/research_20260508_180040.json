@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-08T18:00:40.288883",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Smart Shopping Cart Total",
+      "description": "Variables are fundamental in C programming, acting as containers to store data that your program can manipulate. Operators allow you to perform various actions on these variables, such as arithmetic calculations (addition, subtraction, multiplication, division) or comparisons. Understanding how to combine variables and operators is crucial for creating programs that can process numerical information and make decisions based on it, much like a real-world system calculating costs and applying rules.\n\nYour program must calculate the final bill for a customer's shopping cart. It will first read an integer, `N`, representing the number of distinct items the customer has purchased. Following this, it will read `N` pairs of floating-point numbers: `item_price` and `item_quantity`. For each pair, calculate the cost of that item (`item_price * item_quantity`) and add it to a running total. After processing all `N` items, if the `total_cost` exceeds $100.00, a 10% discount should be applied to the `total_cost`. Otherwise, no discount is applied. Finally, print the `final_cost` to two decimal places, followed by a newline character. `N` will be between 1 and 10. `item_price` and `item_quantity` will be positive floating-point numbers.\n\nWORKED EXAMPLE:\nInput: 2 50.0 1.0 60.0 1.0 \u2192 total_cost: 0.0 \u2192 50.0 \u2192 110.0. After discount, final_cost: 110.0 \u2192 99.0. Output: 99.00",
+      "solution": "#include <stdio.h> // Required for scanf and printf\n\nint main() {\n    int N; // Variable to store the number of items\n    double item_price; // Variable to store the price of a single item\n    double item_quantity; // Variable to store the quantity of a single item\n    double total_cost = 0.0; // Variable to accumulate the total cost of all items, initialized to 0\n    double final_cost; // Variable to store the cost after any potential discount\n\n    // Read the number of distinct items from stdin\n    scanf(\"%d\", &N);\n\n    // Loop N times to read details for each item and update total_cost\n    for (int i = 0; i < N; i++) {\n        // Read item price and quantity for the current item\n        scanf(\"%lf %lf\", &item_price, &item_quantity);\n        // Calculate the cost for this item and add it to total_cost\n        // Uses multiplication operator (*) and addition assignment operator (+=)\n        total_cost += (item_price * item_quantity);\n    }\n\n    // Check if the total_cost exceeds $100.00 to apply a discount\n    // Uses relational operator (>) for comparison\n    if (total_cost > 100.00) {\n        // If total_cost is greater than 100, apply a 10% discount\n        // Uses multiplication operator (*)\n        final_cost = total_cost * 0.90; // 0.90 represents 100% - 10% = 90% of the original cost\n    } else {\n        // If total_cost is not greater than 100, no discount is applied\n        final_cost = total_cost;\n    }\n\n    // Print the final calculated cost, formatted to two decimal places, followed by a newline\n    printf(\"%.2lf\\n\", final_cost);\n\n    return 0; // Indicate successful program execution\n}",
+      "test_cases": [
+        {
+          "input": "3\n10.50 2.0\n5.00 3.0\n20.00 1.5",
+          "expected_output": "66.00"
+        },
+        {
+          "input": "2\n75.00 1.0\n30.00 1.0",
+          "expected_output": "94.50"
+        },
+        {
+          "input": "1\n120.00 1.0",
+          "expected_output": "108.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3\n10.50 2.0\n5.00 3.0\n20.00 1.5",
+            "expected": "66.00",
+            "actual": "66.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "2\n75.00 1.0\n30.00 1.0",
+            "expected": "94.50",
+            "actual": "94.50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n120.00 1.0",
+            "expected": "108.00",
+            "actual": "108.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

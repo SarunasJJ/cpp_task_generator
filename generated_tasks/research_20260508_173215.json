@@ -1,0 +1,505 @@
+{
+  "generated_at": "2026-05-08T17:32:15.175836",
+  "provider": "gemini",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Sum of Dynamic Array Elements",
+      "description": "Dynamic memory allocation allows programs to request memory during runtime, rather than at compile time, which is crucial for handling data of unknown or varying sizes. Pointers are the fundamental mechanism for managing this dynamically allocated memory, providing a way to access and manipulate the data stored there. This capability is essential for applications like processing user-defined lists or collections where the number of items isn't fixed.\n\nYour task is to write a C program that calculates the sum of elements in a dynamically allocated integer array. The program will first read a single integer `N` (1 <= N <= 100) from standard input, representing the number of elements. Then, it will read `N` more integers, storing them into a dynamically allocated array. Finally, compute the sum of these elements using pointer arithmetic and print the total sum to standard output, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: 3 10 20 30 \u2192 sum: 10 \u2192 30 \u2192 60. Output: 60",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // Required for malloc and free\n\nint main() {\n    int N;\n    // Read the number of elements\n    if (scanf(\"%d\", &N) != 1) {\n        fprintf(stderr, \"Failed to read N.\\n\");\n        return 1;\n    }\n\n    if (N <= 0 || N > 100) {\n        fprintf(stderr, \"N must be between 1 and 100.\\n\");\n        return 1;\n    }\n\n    // Dynamically allocate memory for N integers\n    int *arr = (int *)malloc(N * sizeof(int));\n    if (arr == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1; // Indicate an error\n    }\n\n    // Read N integers into the dynamically allocated array using pointer arithmetic\n    for (int i = 0; i < N; ++i) {\n        if (scanf(\"%d\", arr + i) != 1) { // arr + i is equivalent to &arr[i]\n            fprintf(stderr, \"Failed to read element %d.\\n\", i);\n            free(arr); // Free memory before exiting on error\n            return 1;\n        }\n    }\n\n    // Calculate the sum using pointer arithmetic\n    long long sum = 0; // Use long long for sum to prevent overflow with many ints\n    for (int i = 0; i < N; ++i) {\n        sum += *(arr + i); // *(arr + i) is equivalent to arr[i]\n    }\n\n    // Print the sum\n    printf(\"%lld\\n\", sum);\n\n    // Free the dynamically allocated memory\n    free(arr);\n    arr = NULL; // Good practice to set pointer to NULL after freeing\n\n    return 0; // Indicate successful execution\n}",
+      "test_cases": [
+        {
+          "input": "5 1 2 3 4 5",
+          "expected_output": "15"
+        },
+        {
+          "input": "1 100",
+          "expected_output": "100"
+        },
+        {
+          "input": "4 -10 20 -30 40",
+          "expected_output": "20"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 1 2 3 4 5",
+            "expected": "15",
+            "actual": "15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 100",
+            "expected": "100",
+            "actual": "100",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4 -10 20 -30 40",
+            "expected": "20",
+            "actual": "20",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Reverse a Dynamic String",
+      "description": "Strings in C are character arrays, and when their length is not known at compile time, dynamic memory allocation becomes indispensable. Pointers allow for efficient traversal and manipulation of these character sequences, enabling operations like reversing, searching, or concatenating strings without needing fixed-size buffers. This flexibility is vital in applications processing user input or file contents where string lengths vary widely.\n\nYour task is to write a C program that reads a single string from standard input, dynamically allocates memory to store it, and then reverses the string in place or into a new dynamically allocated buffer. The input string will contain only printable ASCII characters and spaces, with a maximum length of 99 characters. After reversing, the program must print the reversed string to standard output, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: hello \u2192 reversed: o \u2192 ol \u2192 oll \u2192 olle \u2192 olleh. Output: olleh",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n#include <string.h> // For strlen, strcpy, strcspn\n\nint main() {\n    char buffer[101]; // Temporary buffer for reading input (max 99 chars + null + newline)\n    if (fgets(buffer, sizeof(buffer), stdin) == NULL) {\n        fprintf(stderr, \"Failed to read string.\\n\");\n        return 1;\n    }\n\n    // Remove trailing newline if present\n    buffer[strcspn(buffer, \"\\n\")] = 0;\n\n    int len = strlen(buffer);\n    if (len == 0) { // Handle empty string case\n        printf(\"\\n\");\n        return 0;\n    }\n\n    // Dynamically allocate memory for the string\n    char *str = (char *)malloc((len + 1) * sizeof(char)); // +1 for null terminator\n    if (str == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1;\n    }\n    strcpy(str, buffer); // Copy content to dynamic memory\n\n    // Reverse the string in place using pointers\n    char *start = str;\n    char *end = str + len - 1;\n\n    while (start < end) {\n        char temp = *start;\n        *start = *end;\n        *end = temp;\n        start++;\n        end--;\n    }\n\n    // Print the reversed string\n    printf(\"%s\\n\", str);\n\n    // Free the dynamically allocated memory\n    free(str);\n    str = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello world",
+          "expected_output": "dlrow olleh"
+        },
+        {
+          "input": "A",
+          "expected_output": "A"
+        },
+        {
+          "input": "racecar",
+          "expected_output": "racecar"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello world",
+            "expected": "dlrow olleh",
+            "actual": "dlrow olleh",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "A",
+            "expected": "A",
+            "actual": "A",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "racecar",
+            "expected": "racecar",
+            "actual": "racecar",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Find Max in Dynamic Array with Index",
+      "description": "Working with collections of data, such as arrays, often requires finding specific elements based on certain criteria. When the size of these collections is dynamic, memory must be allocated during program execution, and pointers become indispensable for navigating and accessing array elements. This dynamic capability is fundamental for algorithms that need to efficiently process varying amounts of data, like statistical analysis or data filtering.\n\nYour task is to write a C program that finds the maximum element in a dynamically allocated integer array and its corresponding index. The program will first read a single integer `N` (1 <= N <= 100) from standard input, representing the number of elements. Then, it will read `N` more integers, storing them into a dynamically allocated array. Finally, using pointer arithmetic, find the maximum element and its 0-based index. Print the maximum element and its index, separated by a space, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: 5 10 50 20 80 30 \u2192 max: 10 \u2192 50 \u2192 80. Output: 80 3",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1) {\n        fprintf(stderr, \"Failed to read N.\\n\");\n        return 1;\n    }\n\n    if (N <= 0 || N > 100) {\n        fprintf(stderr, \"N must be between 1 and 100.\\n\");\n        return 1;\n    }\n\n    int *arr = (int *)malloc(N * sizeof(int));\n    if (arr == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1;\n    }\n\n    for (int i = 0; i < N; ++i) {\n        if (scanf(\"%d\", arr + i) != 1) {\n            fprintf(stderr, \"Failed to read element %d.\\n\", i);\n            free(arr);\n            return 1;\n        }\n    }\n\n    // Find the maximum element and its index using pointer arithmetic\n    int max_val = *arr; // Initialize with the first element\n    int max_idx = 0;\n\n    for (int i = 1; i < N; ++i) { // Start from the second element\n        if (*(arr + i) > max_val) { // Compare current element with max_val\n            max_val = *(arr + i);\n            max_idx = i;\n        }\n    }\n\n    printf(\"%d %d\\n\", max_val, max_idx);\n\n    free(arr);\n    arr = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "6 5 2 9 1 7 3",
+          "expected_output": "9 2"
+        },
+        {
+          "input": "1 42",
+          "expected_output": "42 0"
+        },
+        {
+          "input": "3 -10 -5 -20",
+          "expected_output": "-5 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "6 5 2 9 1 7 3",
+            "expected": "9 2",
+            "actual": "9 2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 42",
+            "expected": "42 0",
+            "actual": "42 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "3 -10 -5 -20",
+            "expected": "-5 1",
+            "actual": "-5 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Concatenate Two Dynamic Strings",
+      "description": "String manipulation is a cornerstone of many software applications, from parsing user commands to formatting output. When dealing with strings whose lengths are not fixed, dynamic memory allocation becomes crucial for efficient memory management. Pointers provide the direct means to access and combine these character sequences, allowing for flexible operations like concatenation where the resulting string's size is determined at runtime.\n\nYour task is to write a C program that reads two separate strings from standard input, dynamically allocates memory sufficient to store their concatenation, performs the concatenation, and then prints the resulting combined string. Each input string will contain only printable ASCII characters and spaces, with a maximum length of 49 characters. The program should handle potential empty strings. Print the concatenated string to standard output, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: Hello World \u2192 combined: Hello \u2192 HelloWorld. Output: HelloWorld",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n#include <string.h> // For strlen, strcpy, strcat, strcspn\n\nint main() {\n    char buffer1[51]; // Max 49 chars + null + newline\n    char buffer2[51]; // Max 49 chars + null + newline\n\n    // Read the first string\n    if (fgets(buffer1, sizeof(buffer1), stdin) == NULL) {\n        fprintf(stderr, \"Failed to read first string.\\n\");\n        return 1;\n    }\n    buffer1[strcspn(buffer1, \"\\n\")] = 0; // Remove newline\n\n    // Read the second string\n    if (fgets(buffer2, sizeof(buffer2), stdin) == NULL) {\n        fprintf(stderr, \"Failed to read second string.\\n\");\n        // No dynamic memory allocated yet, so no need to free.\n        return 1;\n    }\n    buffer2[strcspn(buffer2, \"\\n\")] = 0; // Remove newline\n\n    int len1 = strlen(buffer1);\n    int len2 = strlen(buffer2);\n\n    // Allocate memory for the concatenated string (len1 + len2 + 1 for null terminator)\n    char *str_combined = (char *)malloc((len1 + len2 + 1) * sizeof(char));\n    if (str_combined == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1;\n    }\n\n    // Copy first string\n    strcpy(str_combined, buffer1);\n    // Concatenate second string\n    strcat(str_combined, buffer2);\n\n    printf(\"%s\\n\", str_combined);\n\n    free(str_combined);\n    str_combined = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "First\nSecond",
+          "expected_output": "FirstSecond"
+        },
+        {
+          "input": "Hello\n World",
+          "expected_output": "Hello World"
+        },
+        {
+          "input": "Empty",
+          "expected_output": "Empty"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "First\nSecond",
+            "expected": "FirstSecond",
+            "actual": "FirstSecond",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Hello\n World",
+            "expected": "Hello World",
+            "actual": "Hello World",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "Empty",
+            "expected": "Empty",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Dynamic Array Resize with Realloc",
+      "description": "In many scenarios, the initial size estimation for a data structure might prove insufficient or excessive as a program runs. Dynamic memory allocation functions like `realloc` provide a powerful mechanism to adjust the size of an already allocated memory block, either expanding or shrinking it as needed. This flexibility is crucial for applications that manage growing lists or buffers, allowing them to optimize memory usage without needing to manually copy data to new locations.\n\nYour task is to write a C program that demonstrates dynamic array resizing using `realloc`. The program will first read an integer `N` (1 <= N <= 10) representing the initial number of elements, followed by `N` integers to populate the array. Then, it will read a new integer `M` (1 <= M <= 20) representing the final desired size. If `M` is greater than `N`, the program should resize the array using `realloc` and then read `M - N` additional integers to fill the new slots. If `M` is less than or equal to `N`, it should simply truncate the array conceptually. Finally, print all `M` elements (or the `N` elements if `M > N` and `realloc` failed) of the modified array to standard output, each separated by a space, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: 3 1 2 3 5 4 5 \u2192 array: [1,2,3] \u2192 [1,2,3,4,5]. Output: 1 2 3 4 5",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, realloc, free\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1 || N < 1 || N > 10) {\n        fprintf(stderr, \"Invalid N (initial size). N must be between 1 and 10.\\n\");\n        return 1;\n    }\n\n    int *arr = (int *)malloc(N * sizeof(int));\n    if (arr == NULL) {\n        fprintf(stderr, \"Initial memory allocation failed.\\n\");\n        return 1;\n    }\n\n    for (int i = 0; i < N; ++i) {\n        if (scanf(\"%d\", arr + i) != 1) {\n            fprintf(stderr, \"Failed to read initial element %d.\\n\", i);\n            free(arr);\n            return 1;\n        }\n    }\n\n    int M;\n    if (scanf(\"%d\", &M) != 1 || M < 1 || M > 20) {\n        fprintf(stderr, \"Invalid M (final size). M must be between 1 and 20.\\n\");\n        free(arr); // Free initial allocation before exiting\n        return 1;\n    }\n\n    if (M > N) { // Need to expand\n        int *temp_arr = (int *)realloc(arr, M * sizeof(int));\n        if (temp_arr == NULL) {\n            fprintf(stderr, \"Memory reallocation failed. Keeping original array size N.\\n\");\n            // If realloc fails, original 'arr' is still valid. Continue with N elements.\n            M = N; // Adjust M to N, so we print existing N elements\n        } else {\n            arr = temp_arr;\n            // Read new elements into the expanded part\n            for (int i = N; i < M; ++i) {\n                if (scanf(\"%d\", arr + i) != 1) {\n                    fprintf(stderr, \"Failed to read new element %d after realloc.\\n\", i);\n                    // If reading fails mid-way, print what we have successfully read\n                    M = i; // Adjust M to reflect actually read elements\n                    break;\n                }\n            }\n        }\n    } else {\n        // M <= N, no new elements needed, conceptually truncate\n        // The array 'arr' is already valid for at least M elements.\n        // A realloc to a smaller size is also possible but not strictly needed for this problem\n        // since we just need to print the first M elements.\n    }\n\n    // Print the elements up to M (or N if realloc failed or M > N was truncated to N)\n    for (int i = 0; i < M; ++i) {\n        printf(\"%d%s\", *(arr + i), (i == M - 1) ? \"\" : \" \");\n    }\n    printf(\"\\n\");\n\n    free(arr);\n    arr = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 10 20 30 5 40 50",
+          "expected_output": "10 20 30 40 50"
+        },
+        {
+          "input": "5 1 2 3 4 5 3",
+          "expected_output": "1 2 3"
+        },
+        {
+          "input": "2 100 200 2",
+          "expected_output": "100 200"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 10 20 30 5 40 50",
+            "expected": "10 20 30 40 50",
+            "actual": "10 20 30 40 50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 1 2 3 4 5 3",
+            "expected": "1 2 3",
+            "actual": "1 2 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2 100 200 2",
+            "expected": "100 200",
+            "actual": "100 200",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Vowels in Dynamic String",
+      "description": "Character processing is a fundamental aspect of text analysis and data validation in programming. When dealing with text input of unknown length, dynamic memory allocation allows programs to efficiently store and manipulate strings without fixed buffer limitations. Pointers are essential for iterating through these dynamically allocated strings, enabling character-by-character examination to perform tasks like counting specific characters, validating formats, or performing transformations.\n\nYour task is to write a C program that reads a single string from standard input, dynamically allocates memory for it, and then counts the number of vowels (a, e, i, o, u, case-insensitive) present in the string. The input string will contain only printable ASCII characters and spaces, with a maximum length of 99 characters. After counting, print the total number of vowels to standard output, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: Hello World \u2192 vowels: 1 \u2192 2 \u2192 3. Output: 3",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n#include <string.h> // For strlen, strcpy, strcspn\n#include <ctype.h>  // For tolower\n\nint main() {\n    char buffer[101]; // Temporary buffer for reading input\n    if (fgets(buffer, sizeof(buffer), stdin) == NULL) {\n        fprintf(stderr, \"Failed to read string.\\n\");\n        return 1;\n    }\n    buffer[strcspn(buffer, \"\\n\")] = 0; // Remove trailing newline\n\n    int len = strlen(buffer);\n    if (len == 0) { // Handle empty string case\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    // Dynamically allocate memory for the string\n    char *str = (char *)malloc((len + 1) * sizeof(char));\n    if (str == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1;\n    }\n    strcpy(str, buffer);\n\n    int vowel_count = 0;\n    char *ptr = str; // Pointer to iterate through the string\n\n    while (*ptr != '\\0') {\n        char lower_char = tolower((unsigned char)*ptr); // Convert to lowercase for case-insensitive check\n        if (lower_char == 'a' || lower_char == 'e' || lower_char == 'i' ||\n            lower_char == 'o' || lower_char == 'u') {\n            vowel_count++;\n        }\n        ptr++; // Move to the next character\n    }\n\n    printf(\"%d\\n\", vowel_count);\n\n    free(str);\n    str = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Programming in C is fun",
+          "expected_output": "6"
+        },
+        {
+          "input": "AEIOUaeiou",
+          "expected_output": "10"
+        },
+        {
+          "input": "RHYTHM",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Programming in C is fun",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "AEIOUaeiou",
+            "expected": "10",
+            "actual": "10",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "RHYTHM",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Filter Odd Numbers into New Dynamic Array",
+      "description": "Data filtering is a common operation in programming, where elements meeting specific criteria are extracted from a larger set. When the size of the filtered output is unknown beforehand, dynamic memory allocation becomes essential to efficiently manage the resulting collection. Pointers facilitate both the traversal of the original data and the construction of the new, filtered array, allowing for flexible and memory-optimized data processing.\n\nYour task is to write a C program that reads a sequence of integers, filters out only the odd numbers, and stores them in a *new* dynamically allocated array. The program will first read a single integer `N` (1 <= N <= 100) from standard input, representing the number of elements in the initial sequence. Then, it will read `N` more integers. Create a new dynamically allocated array containing only the odd numbers from the input. Finally, print the elements of this new array to standard output, each separated by a space, followed by a newline. If no odd numbers are found, print nothing but a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: 5 10 1 20 3 30 \u2192 odd_count: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 2. Output: 1 3",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1) {\n        fprintf(stderr, \"Failed to read N.\\n\");\n        return 1;\n    }\n\n    if (N <= 0 || N > 100) {\n        fprintf(stderr, \"N must be between 1 and 100.\\n\");\n        return 1;\n    }\n\n    int *input_arr = (int *)malloc(N * sizeof(int));\n    if (input_arr == NULL) {\n        fprintf(stderr, \"Memory allocation for input array failed.\\n\");\n        return 1;\n    }\n\n    for (int i = 0; i < N; ++i) {\n        if (scanf(\"%d\", input_arr + i) != 1) {\n            fprintf(stderr, \"Failed to read element %d.\\n\", i);\n            free(input_arr);\n            return 1;\n        }\n    }\n\n    // First pass to count odd numbers\n    int odd_count = 0;\n    for (int i = 0; i < N; ++i) {\n        if (*(input_arr + i) % 2 != 0) { // Check if odd\n            odd_count++;\n        }\n    }\n\n    // Dynamically allocate memory for the new array of odd numbers\n    int *odd_arr = NULL;\n    if (odd_count > 0) { // Only allocate if there are odd numbers\n        odd_arr = (int *)malloc(odd_count * sizeof(int));\n        if (odd_arr == NULL) {\n            fprintf(stderr, \"Memory allocation for odd numbers array failed.\\n\");\n            free(input_arr);\n            return 1;\n        }\n\n        // Second pass to populate the new array\n        int current_odd_idx = 0;\n        for (int i = 0; i < N; ++i) {\n            if (*(input_arr + i) % 2 != 0) {\n                *(odd_arr + current_odd_idx) = *(input_arr + i);\n                current_odd_idx++;\n            }\n        }\n    }\n\n    // Print the odd numbers\n    for (int i = 0; i < odd_count; ++i) {\n        printf(\"%d%s\", *(odd_arr + i), (i == odd_count - 1) ? \"\" : \" \");\n    }\n    printf(\"\\n\"); // Always print a newline, even if no odd numbers\n\n    free(input_arr);\n    free(odd_arr); // Free the second array too\n    input_arr = NULL;\n    odd_arr = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "7 1 2 3 4 5 6 7",
+          "expected_output": "1 3 5 7"
+        },
+        {
+          "input": "3 2 4 6",
+          "expected_output": "Input: 4 9 8 7 6\nExpected Output: 9 7"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "7 1 2 3 4 5 6 7",
+            "expected": "1 3 5 7",
+            "actual": "1 3 5 7",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 2 4 6",
+            "expected": "Input: 4 9 8 7 6\nExpected Output: 9 7",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Swap Elements in Dynamic Array via Function",
+      "description": "Passing data by reference using pointers is a core concept in C programming, enabling functions to modify variables or array elements declared outside their scope. This is particularly powerful when working with dynamically allocated arrays, as it allows for efficient in-place modifications, such as sorting or rearranging elements, without incurring the overhead of copying large data structures. Functions that take pointers to modify content are fundamental building blocks for many algorithms.\n\nYour task is to write a C program that reads an initial sequence of integers into a dynamically allocated array, then reads two indices, and finally swaps the elements at these two indices using a separate function. The program will first read an integer `N` (1 <= N <= 100) representing the number of elements. Then, it will read `N` integers to populate the array. After that, read two integers `idx1` and `idx2` (0 <= idx1, idx2 < N), representing the 0-based indices of the elements to be swapped. Implement a `void swap_elements(int* arr, int index1, int index2)` function. Call this function, then print the modified array to standard output, with elements separated by a space, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: 4 10 20 30 40 0 3 \u2192 array: [10,20,30,40] \u2192 [40,20,30,10]. Output: 40 20 30 10",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n\n// Function to swap two elements in an array using pointers\nvoid swap_elements(int* arr, int index1, int index2) {\n    if (arr == NULL) {\n        return; // Handle null array case\n    }\n    // Access elements using pointer arithmetic and dereference\n    int temp = *(arr + index1);\n    *(arr + index1) = *(arr + index2);\n    *(arr + index2) = temp;\n}\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1) {\n        fprintf(stderr, \"Failed to read N.\\n\");\n        return 1;\n    }\n\n    if (N <= 0 || N > 100) {\n        fprintf(stderr, \"N must be between 1 and 100.\\n\");\n        return 1;\n    }\n\n    int *arr = (int *)malloc(N * sizeof(int));\n    if (arr == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1;\n    }\n\n    for (int i = 0; i < N; ++i) {\n        if (scanf(\"%d\", arr + i) != 1) {\n            fprintf(stderr, \"Failed to read element %d.\\n\", i);\n            free(arr);\n            return 1;\n        }\n    }\n\n    int idx1, idx2;\n    if (scanf(\"%d %d\", &idx1, &idx2) != 2) {\n        fprintf(stderr, \"Failed to read indices.\\n\");\n        free(arr);\n        return 1;\n    }\n\n    // Validate indices\n    if (idx1 < 0 || idx1 >= N || idx2 < 0 || idx2 >= N) {\n        fprintf(stderr, \"Invalid indices provided.\\n\");\n        free(arr);\n        return 1;\n    }\n\n    // Call the swap function\n    swap_elements(arr, idx1, idx2);\n\n    // Print the modified array\n    for (int i = 0; i < N; ++i) {\n        printf(\"%d%s\", *(arr + i), (i == N - 1) ? \"\" : \" \");\n    }\n    printf(\"\\n\");\n\n    free(arr);\n    arr = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 10 20 30 40 50 1 3",
+          "expected_output": "10 40 30 20 50"
+        },
+        {
+          "input": "3 1 2 3 0 0",
+          "expected_output": "1 2 3"
+        },
+        {
+          "input": "4 100 200 300 400 0 3",
+          "expected_output": "400 200 300 100"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 10 20 30 40 50 1 3",
+            "expected": "10 40 30 20 50",
+            "actual": "10 40 30 20 50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 1 2 3 0 0",
+            "expected": "1 2 3",
+            "actual": "1 2 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4 100 200 300 400 0 3",
+            "expected": "400 200 300 100",
+            "actual": "400 200 300 100",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Sum of Diagonals in Dynamic 2D Array",
+      "description": "Representing and manipulating matrices (2D arrays) is a fundamental task in various scientific and engineering applications. When the dimensions of a matrix are not fixed at compile time, dynamic memory allocation becomes necessary, typically involving an array of pointers to arrays. Pointers are crucial for allocating this non-contiguous memory and for accessing individual elements within such a dynamically structured matrix, enabling computations like summing diagonals or performing matrix transformations.\n\nYour task is to write a C program that dynamically allocates a 2D integer array (matrix) and calculates the sum of its main diagonal and anti-diagonal elements. The program will first read two integers `R` and `C` (1 <= R, C <= 10), representing the number of rows and columns, respectively. Then, it will read `R * C` integers to populate the matrix. If the matrix is square (R == C), compute the sum of the main diagonal and the sum of the anti-diagonal. Print both sums separated by a space, followed by a newline. If the matrix is not square, print \"Not a square matrix\" followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits.\n\nWORKED EXAMPLE:\nInput: 3 3 1 2 3 4 5 6 7 8 9 \u2192 main_diag_sum: 1 \u2192 6 \u2192 15, anti_diag_sum: 3 \u2192 8 \u2192 15. Output: 15 15",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n\nint main() {\n    int R, C;\n    if (scanf(\"%d %d\", &R, &C) != 2) {\n        fprintf(stderr, \"Failed to read R and C.\\n\");\n        return 1;\n    }\n\n    if (R < 1 || R > 10 || C < 1 || C > 10) {\n        fprintf(stderr, \"R and C must be between 1 and 10.\\n\");\n        return 1;\n    }\n\n    // Dynamically allocate a 2D array (array of pointers to int arrays)\n    int **matrix = (int **)malloc(R * sizeof(int *));\n    if (matrix == NULL) {\n        fprintf(stderr, \"Memory allocation for matrix rows failed.\\n\");\n        return 1;\n    }\n\n    for (int i = 0; i < R; ++i) {\n        matrix[i] = (int *)malloc(C * sizeof(int));\n        if (matrix[i] == NULL) {\n            fprintf(stderr, \"Memory allocation for matrix column %d failed.\\n\", i);\n            // Free previously allocated rows\n            for (int j = 0; j < i; ++j) {\n                free(matrix[j]);\n            }\n            free(matrix);\n            return 1;\n        }\n    }\n\n    // Read elements into the matrix\n    for (int i = 0; i < R; ++i) {\n        for (int j = 0; j < C; ++j) {\n            if (scanf(\"%d\", &matrix[i][j]) != 1) {\n                fprintf(stderr, \"Failed to read element at (%d, %d).\\n\", i, j);\n                // Free all allocated memory before exiting\n                for (int k = 0; k < R; ++k) {\n                    free(matrix[k]);\n                }\n                free(matrix);\n                return 1;\n            }\n        }\n    }\n\n    if (R != C) {\n        printf(\"Not a square matrix\\n\");\n    } else {\n        long long main_diag_sum = 0;\n        long long anti_diag_sum = 0;\n\n        for (int i = 0; i < R; ++i) {\n            main_diag_sum += matrix[i][i];         // Main diagonal: row == col\n            anti_diag_sum += matrix[i][R - 1 - i]; // Anti-diagonal: row + col = R - 1\n        }\n        printf(\"%lld %lld\\n\", main_diag_sum, anti_diag_sum);\n    }\n\n    // Free dynamically allocated memory\n    for (int i = 0; i < R; ++i) {\n        free(matrix[i]);\n    }\n    free(matrix);\n    matrix = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 3 1 2 3 4 5 6 7 8 9",
+          "expected_output": "15 15"
+        },
+        {
+          "input": "2 3 1 2 3 4 5 6",
+          "expected_output": "Not a square matrix"
+        },
+        {
+          "input": "1 1 50",
+          "expected_output": "50 50"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 3 1 2 3 4 5 6 7 8 9",
+            "expected": "15 15",
+            "actual": "15 15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "2 3 1 2 3 4 5 6",
+            "expected": "Not a square matrix",
+            "actual": "Not a square matrix",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1 1 50",
+            "expected": "50 50",
+            "actual": "50 50",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Words in Dynamic String",
+      "description": "Text processing often involves breaking down a larger string into meaningful units, such as words. When the input text can vary greatly in length, dynamic memory allocation allows programs to handle strings efficiently without imposing arbitrary size limits. Pointers are invaluable for iterating through these dynamically allocated character sequences, identifying word boundaries, and performing character-by-character analysis to accurately count distinct words.\n\nYour task is to write a C program that reads a single line of text from standard input, dynamically allocates memory to store it, and then counts the number of words in the string. Words are defined as sequences of non-space characters separated by one or more spaces. The input string will contain only printable ASCII characters and spaces, with a maximum length of 200 characters. Print the total word count to standard output, followed by a newline. Ensure all dynamically allocated memory is properly freed before the program exits. An empty line should result in a word count of 0.\n\nWORKED EXAMPLE:\nInput: Hello world, this is a test. \u2192 words: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 3 \u2192 4 \u2192 5. Output: 5",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // For malloc, free\n#include <string.h> // For strlen, strcpy, strcspn\n#include <ctype.h>  // For isspace\n\nint main() {\n    char buffer[202]; // Max 200 chars + null + newline\n    if (fgets(buffer, sizeof(buffer), stdin) == NULL) {\n        fprintf(stderr, \"Failed to read string.\\n\");\n        return 1;\n    }\n    buffer[strcspn(buffer, \"\\n\")] = 0; // Remove trailing newline\n\n    int len = strlen(buffer);\n    if (len == 0) { // Handle empty string case\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    // Dynamically allocate memory for the string\n    char *str = (char *)malloc((len + 1) * sizeof(char));\n    if (str == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1;\n    }\n    strcpy(str, buffer);\n\n    int word_count = 0;\n    int in_word = 0; // Flag to track if currently inside a word\n    char *ptr = str;\n\n    while (*ptr != '\\0') {\n        if (isspace((unsigned char)*ptr)) {\n            in_word = 0; // No longer in a word if a space is encountered\n        } else if (in_word == 0) { // Start of a new word\n            word_count++; \n            in_word = 1;\n        }\n        ptr++;\n    }\n\n    printf(\"%d\\n\", word_count);\n\n    free(str);\n    str = NULL;\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "This is a test sentence.",
+          "expected_output": "5"
+        },
+        {
+          "input": "Leading and trailing spaces.",
+          "expected_output": "4"
+        },
+        {
+          "input": "SingleWord",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "This is a test sentence.",
+            "expected": "5",
+            "actual": "5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Leading and trailing spaces.",
+            "expected": "4",
+            "actual": "4",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "SingleWord",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

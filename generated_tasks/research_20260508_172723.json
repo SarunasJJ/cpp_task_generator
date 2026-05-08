@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T17:27:23.408721",
+  "provider": "gemini",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Array Positive Sum and Count",
+      "description": "Arrays are fundamental data structures that allow storing collections of elements of the same type. Iterating through an array and applying conditions to its elements is a common task, useful in data analysis to filter and aggregate specific types of data, such as calculating totals only for valid or positive entries.\n\nYour program must read an integer `N` (1 <= N <= 100), representing the number of integers that follow. Then, read `N` integers into an array. Iterate through this array and compute the sum of all positive integers, and also count how many positive integers are present. Zero is neither positive nor negative. Finally, print the calculated sum and count, each on a new line. If no positive integers are found, the sum should be 0 and the count should be 0.\n\nWORKED EXAMPLE:\nInput: 5\n-1 2 0 4 -3 \u2192 sum: 0 \u2192 2 \u2192 2 \u2192 6. count: 0 \u2192 1 \u2192 1 \u2192 2. Output: Sum: 6\nCount: 2",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    scanf(\"%d\", &N);\n\n    if (N < 1 || N > 100) {\n        // Handle invalid N if necessary, though problem states 1 <= N <= 100\n        return 1;\n    }\n\n    int arr[100]; // Max size 100 as per constraints\n    int sum_positive = 0;\n    int count_positive = 0;\n\n    for (int i = 0; i < N; i++) {\n        scanf(\"%d\", &arr[i]);\n        if (arr[i] > 0) {\n            sum_positive += arr[i];\n            count_positive++;\n        }\n    }\n\n    printf(\"Sum: %d\\n\", sum_positive);\n    printf(\"Count: %d\\n\", count_positive);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n10 -5 20 0 30",
+          "expected_output": "Sum: 60\nCount: 3"
+        },
+        {
+          "input": "3\n-1 -2 -3",
+          "expected_output": "Sum: 0\nCount: 0"
+        },
+        {
+          "input": "1\n100",
+          "expected_output": "Sum: 100\nCount: 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n10 -5 20 0 30",
+            "expected": "Sum: 60\nCount: 3",
+            "actual": "Sum: 60\nCount: 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3\n-1 -2 -3",
+            "expected": "Sum: 0\nCount: 0",
+            "actual": "Sum: 0\nCount: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n100",
+            "expected": "Sum: 100\nCount: 1",
+            "actual": "Sum: 100\nCount: 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "String Length and Vowel Count",
+      "description": "Strings are sequences of characters, often used to represent text. Understanding how to iterate through a string and analyze its individual characters is crucial for many text processing tasks, such as validating input, parsing data, or performing basic linguistic analysis.\n\nYour program must read a single line of text from standard input, which can include spaces and punctuation. Assume the input string will have a maximum length of 255 characters (including the null terminator). Calculate and print the total length of the string (excluding the newline character if present, and the null terminator). Then, count and print the number of vowels (a, e, i, o, u, case-insensitive) present in the string. The output should be formatted as \"Length: [length]\\nVowels: [count]\".\n\nWORKED EXAMPLE:\nInput: Hello World! \u2192 vowels: 0 \u2192 1 \u2192 2 \u2192 3. Output: Length: 12\nVowels: 3",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h> // For tolower()\n\nint main() {\n    char line[256]; // 255 characters + null terminator\n\n    // Read a line from stdin\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        return 1; // Error reading input\n    }\n\n    // Remove trailing newline character if it exists\n    size_t len = strlen(line);\n    if (len > 0 && line[len - 1] == '\\n') {\n        line[len - 1] = '\\0';\n        len--; // Adjust length\n    }\n\n    int vowel_count = 0;\n    for (size_t i = 0; i < len; i++) {\n        char c = tolower(line[i]); // Convert to lowercase for case-insensitive check\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n            vowel_count++;\n        }\n    }\n\n    printf(\"Length: %zu\\n\", len);\n    printf(\"Vowels: %d\\n\", vowel_count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Programming is fun.",
+          "expected_output": "Length: 19\nVowels: 6"
+        },
+        {
+          "input": "My cat.",
+          "expected_output": "Length: 6\nVowels: 1"
+        },
+        {
+          "input": "RYTHM",
+          "expected_output": "Length: 5\nVowels: 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Programming is fun.",
+            "expected": "Length: 19\nVowels: 6",
+            "actual": "Length: 19\nVowels: 5",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "My cat.",
+            "expected": "Length: 6\nVowels: 1",
+            "actual": "Length: 7\nVowels: 1",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "RYTHM",
+            "expected": "Length: 5\nVowels: 0",
+            "actual": "Length: 5\nVowels: 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Array Element Search and Frequency",
+      "description": "Searching for specific elements within an array is a common operation. Whether it's looking up a product ID in an inventory list or finding a specific score in a dataset, the ability to iterate and compare is essential. Beyond just finding an element, sometimes it's also important to know how many times it appears.\n\nYour program must first read an integer `N` (1 <= N <= 100), indicating the number of integers that will follow. Then, read these `N` integers into an array. After reading the array, read a single integer `key` from a new line. Your task is to search for the `key` within the array and count how many times it appears. Finally, print a message indicating whether the `key` was found and its frequency, in the format \"Key [key_value] found [count] times.\"\n\nWORKED EXAMPLE:\nInput: 5\n10 20 10 30 10\n10 \u2192 count: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 2 \u2192 3. Output: Key 10 found 3 times.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    scanf(\"%d\", &N);\n\n    if (N < 1 || N > 100) {\n        return 1; // Invalid N\n    }\n\n    int arr[100]; // Max size 100\n    for (int i = 0; i < N; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n\n    int key;\n    scanf(\"%d\", &key);\n\n    int count = 0;\n    for (int i = 0; i < N; i++) {\n        if (arr[i] == key) {\n            count++;\n        }\n    }\n\n    printf(\"Key %d found %d times.\\n\", key, count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "6\n1 5 2 5 8 5\n5",
+          "expected_output": "Key 5 found 3 times."
+        },
+        {
+          "input": "4\n10 20 30 40\n15",
+          "expected_output": "Key 15 found 0 times."
+        },
+        {
+          "input": "1\n7\n7",
+          "expected_output": "Key 7 found 1 times."
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "6\n1 5 2 5 8 5\n5",
+            "expected": "Key 5 found 3 times.",
+            "actual": "Key 5 found 3 times.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4\n10 20 30 40\n15",
+            "expected": "Key 15 found 0 times.",
+            "actual": "Key 15 found 0 times.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n7\n7",
+            "expected": "Key 7 found 1 times.",
+            "actual": "Key 7 found 1 times.",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Palindrome String Check (Alphanumeric Case-Insensitive)",
+      "description": "A palindrome is a word, number, phrase, or other sequence of characters which reads the same backward as forward. Recognizing palindromes is a classic problem that demonstrates string manipulation and comparison techniques. When checking for palindromes in real-world text, it's often useful to ignore punctuation, spaces, and treat uppercase and lowercase letters as the same.\n\nYour program must read a single line of text from standard input, with a maximum length of 255 characters (including null terminator). Determine if this string is a palindrome when considering only its alphanumeric characters (letters and numbers) and ignoring case. Print \"Is a palindrome.\" if it is, and \"Is not a palindrome.\" otherwise.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h> // For isalnum() and tolower()\n\nint main() {\n    char line[256];\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        return 1;\n    }\n\n    // Remove trailing newline if present\n    size_t len = strlen(line);\n    if (len > 0 && line[len - 1] == '\\n') {\n        line[len - 1] = '\\0';\n        len--;\n    }\n\n    char cleaned_str[256];\n    int cleaned_idx = 0;\n\n    // Filter for alphanumeric characters and convert to lowercase\n    for (size_t i = 0; i < len; i++) {\n        if (isalnum(line[i])) {\n            cleaned_str[cleaned_idx++] = tolower(line[i]);\n        }\n    }\n    cleaned_str[cleaned_idx] = '\\0'; // Null-terminate the cleaned string\n\n    // Check if the cleaned string is a palindrome\n    int is_palindrome = 1;\n    int left = 0;\n    int right = cleaned_idx - 1;\n\n    while (left < right) {\n        if (cleaned_str[left] != cleaned_str[right]) {\n            is_palindrome = 0;\n            break;\n        }\n        left++;\n        right--;\n    }\n\n    if (is_palindrome) {\n        printf(\"Is a palindrome.\\n\");\n    } else {\n        printf(\"Is not a palindrome.\\n\");\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Madam, I'm Adam",
+          "expected_output": "Is a palindrome."
+        },
+        {
+          "input": "A man, a plan, a canal: Panama",
+          "expected_output": "Is a palindrome."
+        },
+        {
+          "input": "Hello World",
+          "expected_output": "Is not a palindrome."
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Madam, I'm Adam",
+            "expected": "Is a palindrome.",
+            "actual": "Is a palindrome.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "A man, a plan, a canal: Panama",
+            "expected": "Is a palindrome.",
+            "actual": "Is a palindrome.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "Hello World",
+            "expected": "Is not a palindrome.",
+            "actual": "Is not a palindrome.",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Reverse an Array In-Place",
+      "description": "Reversing the order of elements in an array is a common programming task that highlights manipulation of array indices. This operation can be useful in various contexts, such as displaying data in reverse chronological order, or preparing data for algorithms that expect reversed input. Performing the reversal \"in-place\" means doing it without using a separate auxiliary array, which saves memory.\n\nYour program must read an integer `N` (1 <= N <= 100), representing the number of integers that follow. Then, read these `N` integers into an array. Reverse the order of the elements in this array directly within the same array (in-place). Finally, print the elements of the modified array, separated by spaces, followed by a newline.\n\nWORKED EXAMPLE:\nInput: 5\n1 2 3 4 5 \u2192 array: [1,2,3,4,5] \u2192 [5,2,3,4,1] \u2192 [5,4,3,2,1]. Output: 5 4 3 2 1",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    scanf(\"%d\", &N);\n\n    if (N < 1 || N > 100) {\n        return 1; // Invalid N\n    }\n\n    int arr[100]; // Max size 100\n    for (int i = 0; i < N; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n\n    // In-place reversal using two pointers\n    int left = 0;\n    int right = N - 1;\n    while (left < right) {\n        // Swap elements\n        int temp = arr[left];\n        arr[left] = arr[right];\n        arr[right] = temp;\n\n        left++;\n        right--;\n    }\n\n    // Print the reversed array\n    for (int i = 0; i < N; i++) {\n        printf(\"%d\", arr[i]);\n        if (i < N - 1) {\n            printf(\" \");\n        }\n    }\n    printf(\"\\n\");\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "7\n1 2 3 4 5 6 7",
+          "expected_output": "7 6 5 4 3 2 1"
+        },
+        {
+          "input": "1\n99",
+          "expected_output": "99"
+        },
+        {
+          "input": "4\n10 20 30 40",
+          "expected_output": "40 30 20 10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "7\n1 2 3 4 5 6 7",
+            "expected": "7 6 5 4 3 2 1",
+            "actual": "7 6 5 4 3 2 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n99",
+            "expected": "99",
+            "actual": "99",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4\n10 20 30 40",
+            "expected": "40 30 20 10",
+            "actual": "40 30 20 10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Smallest and Largest Word in a Sentence",
+      "description": "Processing text often involves breaking it down into individual words and analyzing their properties, such as length. This is a common requirement in natural language processing or text summarization, where understanding word structure can provide insights into text complexity or style.\n\nYour program must read a single line of text from standard input, representing a sentence. Assume the sentence will have a maximum length of 255 characters (including null terminator), and each word will not exceed 30 characters. Words are separated by one or more spaces. Punctuation attached to words should be considered part of the word for length calculation. Your task is to identify and print the smallest word and the largest word found in the sentence. If multiple words have the same smallest/largest length, any one of them is acceptable. If the input is an empty line or contains no words, handle gracefully (e.g. print a message indicating no words found or empty strings).\n\nWORKED EXAMPLE:\nInput: This is a test sentence. \u2192 smallest word length: 4 ('This') \u2192 2 ('is') \u2192 1 ('a'). largest word length: 4 ('This') \u2192 4 ('test') \u2192 8 ('sentence'). Output: Smallest: a, Largest: sentence.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h> // For strtok_r\n\nint main() {\n    char line[256];\n    char smallest_word[31] = \"\";\n    char largest_word[31] = \"\";\n    int min_len = 257; // Larger than max possible word length (30)\n    int max_len = 0;\n\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        return 1;\n    }\n\n    // Remove trailing newline if present\n    size_t len = strlen(line);\n    if (len > 0 && line[len - 1] == '\\n') {\n        line[len - 1] = '\\0';\n    }\n\n    char *token;\n    char *rest = line; // Pointer for strtok_r to handle context\n\n    // strtok_r is reentrant and safer than strtok in multi-threaded contexts, but also works in single-threaded\n    // for this exercise, strtok could also be used for simplicity, but strtok_r is good practice.\n    token = strtok_r(rest, \" \", &rest); \n\n    if (token == NULL) { // No words found or empty line\n        printf(\"No words found.\\n\");\n        return 0;\n    }\n\n    while (token != NULL) {\n        int current_len = strlen(token);\n\n        if (current_len < min_len) {\n            min_len = current_len;\n            strcpy(smallest_word, token);\n        }\n        if (current_len > max_len) {\n            max_len = current_len;\n            strcpy(largest_word, token);\n        }\n        token = strtok_r(NULL, \" \", &rest);\n    }\n\n    if (strlen(smallest_word) > 0) { // Check if any words were processed\n        printf(\"Smallest: %s\\n\", smallest_word);\n        printf(\"Largest: %s\\n\", largest_word);\n    } else {\n        printf(\"No words found.\\n\"); // Fallback for edge cases like only spaces\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "The quick brown fox jumps over the lazy dog",
+          "expected_output": "Smallest: fox\nLargest: quick"
+        },
+        {
+          "input": "A short sentence.",
+          "expected_output": "Smallest: A\nLargest: sentence."
+        },
+        {
+          "input": "one",
+          "expected_output": "Smallest: one\nLargest: one"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "The quick brown fox jumps over the lazy dog",
+            "expected": "Smallest: fox\nLargest: quick",
+            "actual": "Smallest: The\nLargest: quick",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "A short sentence.",
+            "expected": "Smallest: A\nLargest: sentence.",
+            "actual": "Smallest: A\nLargest: sentence.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "one",
+            "expected": "Smallest: one\nLargest: one",
+            "actual": "Smallest: one\nLargest: one",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Character Frequency Counter",
+      "description": "Counting the frequency of characters in a text is a fundamental task in text analysis, cryptography, and data compression. It allows us to understand the distribution of characters, identify common patterns, or even detect anomalies. This task requires mapping each character to its respective count.\n\nYour program must read a single line of text from standard input, with a maximum length of 255 characters (including null terminator). Count the occurrences of each lowercase English alphabet character ('a' through 'z') in the input string. Ignore all other characters (uppercase letters, numbers, punctuation, spaces, etc.), and treat uppercase letters as their lowercase equivalents. Finally, print the characters that appeared at least once, along with their counts, sorted alphabetically. Each character and its count should be on a new line in the format \"[char]:[count]\".\n\nWORKED EXAMPLE:\nInput: Hello World \u2192 counts: 'h':0\u21921, 'e':0\u21921, 'l':0\u21921\u21922\u21923, 'o':0\u21921\u21922, 'w':0\u21921, 'r':0\u21921, 'd':0\u21921. Output: d:1\ne:1\nh:1\nl:3\no:2\nr:1\nw:1",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h> // For tolower() and isalpha()\n\nint main() {\n    char line[256];\n    int counts[26] = {0}; // Array to store counts for 'a' through 'z'\n\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        return 1;\n    }\n\n    // Remove trailing newline if present\n    size_t len = strlen(line);\n    if (len > 0 && line[len - 1] == '\\n') {\n        line[len - 1] = '\\0';\n    }\n\n    for (size_t i = 0; i < len; i++) {\n        if (isalpha(line[i])) { // Check if it's an alphabet character\n            char c = tolower(line[i]); // Convert to lowercase\n            counts[c - 'a']++; // Increment count for the corresponding letter\n        }\n    }\n\n    // Print character counts in alphabetical order\n    for (int i = 0; i < 26; i++) {\n        if (counts[i] > 0) {\n            printf(\"%c:%d\\n\", (char)('a' + i), counts[i]);\n        }\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Programming is fun.",
+          "expected_output": "f:1\ng:2\ni:2\nm:2\nn:2\no:1\np:1\nr:2\ns:1\nu:1"
+        },
+        {
+          "input": "Apple Banana Cherry",
+          "expected_output": "a:4\nb:1\nc:1\ne:2\nh:1\nl:2\nn:2\np:2\nr:2\ny:1"
+        },
+        {
+          "input": "Zzz...",
+          "expected_output": "z:3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Programming is fun.",
+            "expected": "f:1\ng:2\ni:2\nm:2\nn:2\no:1\np:1\nr:2\ns:1\nu:1",
+            "actual": "a:1\nf:1\ng:2\ni:2\nm:2\nn:2\no:1\np:1\nr:2\ns:1\nu:1",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Apple Banana Cherry",
+            "expected": "a:4\nb:1\nc:1\ne:2\nh:1\nl:2\nn:2\np:2\nr:2\ny:1",
+            "actual": "a:4\nb:1\nc:1\ne:2\nh:1\nl:1\nn:2\np:2\nr:2\ny:1",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "Zzz...",
+            "expected": "z:3",
+            "actual": "z:3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Remove Duplicates from Sorted Array",
+      "description": "Working with sorted arrays often allows for more efficient algorithms. A common task is to remove duplicate elements, keeping only unique values. This is useful for optimizing storage, preparing data for set-based operations, or ensuring data integrity where uniqueness is required. For a sorted array, this can be done efficiently in-place.\n\nYour program must read an integer `N` (1 <= N <= 100), representing the number of integers that follow. Then, read these `N` integers into a sorted array. Your task is to modify the array such that all duplicate elements are removed, leaving only unique elements in their original relative order. You should print the unique elements, separated by spaces, followed by a newline. If `N` is 0 or 1, print the array as is.\n\nWORKED EXAMPLE:\nInput: 7\n1 1 2 3 3 3 4 \u2192 unique elements identified: 1 \u2192 2 \u2192 3 \u2192 4. Output: 1 2 3 4",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    scanf(\"%d\", &N);\n\n    if (N < 1 || N > 100) {\n        return 1; // Invalid N\n    }\n\n    int arr[100]; // Max size 100\n    for (int i = 0; i < N; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n\n    if (N == 0) { // Although N >= 1, good to handle\n        printf(\"\\n\");\n        return 0;\n    }\n\n    int unique_idx = 0;\n    // Iterate through the array\n    for (int i = 0; i < N; i++) {\n        // If the current element is different from the last unique element found\n        // (or if it's the first element), then it's a new unique element.\n        if (i == 0 || arr[i] != arr[i-1]) {\n            arr[unique_idx] = arr[i]; // Store it at the next unique position\n            unique_idx++;\n        }\n    }\n\n    // Print the unique elements\n    for (int i = 0; i < unique_idx; i++) {\n        printf(\"%d\", arr[i]);\n        if (i < unique_idx - 1) {\n            printf(\" \");\n        }\n    }\n    printf(\"\\n\");\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "8\n1 1 2 2 2 3 4 4",
+          "expected_output": "1 2 3 4"
+        },
+        {
+          "input": "5\n10 20 30 40 50",
+          "expected_output": "10 20 30 40 50"
+        },
+        {
+          "input": "1\n100",
+          "expected_output": "100"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "8\n1 1 2 2 2 3 4 4",
+            "expected": "1 2 3 4",
+            "actual": "1 2 3 4",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5\n10 20 30 40 50",
+            "expected": "10 20 30 40 50",
+            "actual": "10 20 30 40 50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n100",
+            "expected": "100",
+            "actual": "100",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Simple Caesar Cipher Encoder/Decoder",
+      "description": "The Caesar cipher is one of the simplest and most widely known encryption techniques. It's a type of substitution cipher in which each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet. This exercise demonstrates fundamental string manipulation, character arithmetic, and conditional logic.\n\nYour program must read a single line of text from standard input (max 255 characters including null terminator) and an integer `shift` value. Apply a Caesar cipher to the input string:\n1. Only alphabetic characters (A-Z, a-z) should be shifted.\n2. Uppercase letters should remain uppercase, and lowercase letters should remain lowercase.\n3. Non-alphabetic characters (numbers, punctuation, spaces) should remain unchanged.\n4. The `shift` value can be positive (for encoding) or negative (for decoding/reverse shift). It can be any integer, but effectively a shift of 26 is equivalent to 0.\n\nPrint the resulting encrypted/decrypted string.\n\nWORKED EXAMPLE:\nInput: Hello, World!\n3 \u2192 first char 'H' becomes 'K'. second char 'e' becomes 'h'. ... Output: Kkhoo, Zruog!",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h> // For isalpha(), isupper(), tolower()\n\nint main() {\n    char line[256];\n    int shift;\n\n    if (fgets(line, sizeof(line), stdin) == NULL) {\n        return 1;\n    }\n    scanf(\"%d\", &shift);\n\n    // Remove trailing newline from line if present\n    size_t len = strlen(line);\n    if (len > 0 && line[len - 1] == '\\n') {\n        line[len - 1] = '\\0';\n    }\n\n    // Normalize shift to be between 0 and 25\n    shift = shift % 26;\n    if (shift < 0) {\n        shift += 26; // Ensure positive shift\n    }\n\n    for (size_t i = 0; i < len; i++) {\n        if (isalpha(line[i])) {\n            char base;\n            if (isupper(line[i])) {\n                base = 'A';\n            } else {\n                base = 'a';\n            }\n            // Apply shift\n            line[i] = base + (line[i] - base + shift) % 26;\n        }\n    }\n\n    printf(\"%s\\n\", line);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "ABC xyz!\n3",
+          "expected_output": "DEF abc!"
+        },
+        {
+          "input": "Programming\n-3",
+          "expected_output": "Norkujdpjqi"
+        },
+        {
+          "input": "HELLO\n26",
+          "expected_output": "HELLO"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "ABC xyz!\n3",
+            "expected": "DEF abc!",
+            "actual": "DEF abc!",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Programming\n-3",
+            "expected": "Norkujdpjqi",
+            "actual": "Moldoxjjfkd",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "HELLO\n26",
+            "expected": "HELLO",
+            "actual": "HELLO",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Matrix Row Sums",
+      "description": "Two-dimensional arrays, often called matrices, are powerful for representing tabular data, images, or game boards. Processing data in a matrix frequently involves iterating through its rows and columns to perform calculations. A common operation is to sum elements along a specific dimension, such as calculating the total for each row.\n\nYour program must first read two integers, `R` and `C` (1 <= R, C <= 10), representing the number of rows and columns, respectively, of a matrix. Then, read `R * C` integers, filling the matrix row by row. After the matrix is populated, calculate the sum of elements for each individual row. Finally, print the sum of each row on a new line, in the format \"Row [row_index] Sum: [sum]\". Row indices should start from 0.\n\nWORKED EXAMPLE:\nInput: 2 3\n1 2 3\n4 5 6 \u2192 row 0 sum: 0 \u2192 1 \u2192 3 \u2192 6. row 1 sum: 0 \u2192 4 \u2192 9 \u2192 15. Output: Row 0 Sum: 6\nRow 1 Sum: 15",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int R, C;\n    scanf(\"%d %d\", &R, &C);\n\n    if (R < 1 || R > 10 || C < 1 || C > 10) {\n        return 1; // Invalid R or C\n    }\n\n    int matrix[10][10]; // Max size 10x10\n\n    // Read matrix elements\n    for (int i = 0; i < R; i++) {\n        for (int j = 0; j < C; j++) {\n            scanf(\"%d\", &matrix[i][j]);\n        }\n    }\n\n    // Calculate and print row sums\n    for (int i = 0; i < R; i++) {\n        int row_sum = 0;\n        for (int j = 0; j < C; j++) {\n            row_sum += matrix[i][j];\n        }\n        printf(\"Row %d Sum: %d\\n\", i, row_sum);\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 2\n1 2\n3 4\n5 6",
+          "expected_output": "Row 0 Sum: 3\nRow 1 Sum: 7\nRow 2 Sum: 11"
+        },
+        {
+          "input": "1 5\n10 20 30 40 50",
+          "expected_output": "Row 0 Sum: 150"
+        },
+        {
+          "input": "2 2\n-1 -2\n3 4",
+          "expected_output": "Row 0 Sum: -3\nRow 1 Sum: 7"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 2\n1 2\n3 4\n5 6",
+            "expected": "Row 0 Sum: 3\nRow 1 Sum: 7\nRow 2 Sum: 11",
+            "actual": "Row 0 Sum: 3\nRow 1 Sum: 7\nRow 2 Sum: 11",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 5\n10 20 30 40 50",
+            "expected": "Row 0 Sum: 150",
+            "actual": "Row 0 Sum: 150",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2 2\n-1 -2\n3 4",
+            "expected": "Row 0 Sum: -3\nRow 1 Sum: 7",
+            "actual": "Row 0 Sum: -3\nRow 1 Sum: 7",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

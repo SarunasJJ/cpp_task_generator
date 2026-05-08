@@ -1,0 +1,493 @@
+{
+  "generated_at": "2026-05-08T18:59:40.938123",
+  "provider": "gpt",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Shift-Adjusted Average",
+      "description": "Pointers let programs work directly with values stored in memory, which is useful when processing data from sensors, spreadsheets, or arrays of measurements. Dynamic memory allocation makes it possible to handle a sequence whose length is known only at runtime.\n\nThe program reads an integer n (1 \u2264 n \u2264 1000), then reads n integers, then reads one integer shift. Allocate memory for the n integers, store them, and compute the average of the values after adding shift to each element. Print the average rounded to 2 digits after the decimal point. The program must free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: 3 2 4 6 1 \u2192 values after shift: 3 \u2192 5 \u2192 7 \u2192 average: 5.00. Output: 5.00",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n, shift;\n    if (scanf(\"%d\", &n) != 1) return 0;\n    if (n < 1 || n > 1000) return 0;\n\n    int *a = (int *)malloc((size_t)n * sizeof(int));\n    if (!a) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &a[i]) != 1) {\n            free(a);\n            return 0;\n        }\n    }\n    if (scanf(\"%d\", &shift) != 1) {\n        free(a);\n        return 0;\n    }\n\n    long long sum = 0;\n    for (int i = 0; i < n; i++) {\n        sum += (long long)a[i] + shift;\n    }\n\n    printf(\"%.2f\\n\", (double)sum / n);\n    free(a);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 2 4 6 1",
+          "expected_output": "5.00"
+        },
+        {
+          "input": "1 -5 3",
+          "expected_output": "-2.00"
+        },
+        {
+          "input": "4 10 0 -10 5 2",
+          "expected_output": "4.50"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 2 4 6 1",
+            "expected": "5.00",
+            "actual": "5.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 -5 3",
+            "expected": "-2.00",
+            "actual": "-2.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4 10 0 -10 5 2",
+            "expected": "4.50",
+            "actual": "3.25",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Reverse and Filter Negatives",
+      "description": "Arrays stored in dynamically allocated memory are often scanned from both ends, for example when cleaning imported data or preparing values for output. Pointers make it easy to walk through memory while applying conditions to each element.\n\nThe program reads an integer n (1 \u2264 n \u2264 1000), then reads n integers. Allocate memory for the array, then print the non-negative numbers in reverse order, separated by one space. If there are no non-negative numbers, print a single line containing 0. The program must free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: 5 -2 7 0 -1 4 \u2192 kept values in reverse: 4 \u2192 0 \u2192 7. Output: 4 0 7",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n    if (n < 1 || n > 1000) return 0;\n\n    int *a = (int *)malloc((size_t)n * sizeof(int));\n    if (!a) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &a[i]) != 1) {\n            free(a);\n            return 0;\n        }\n    }\n\n    int first = 1;\n    for (int i = n - 1; i >= 0; i--) {\n        if (a[i] >= 0) {\n            if (!first) printf(\" \");\n            printf(\"%d\", a[i]);\n            first = 0;\n        }\n    }\n\n    if (first) printf(\"0\");\n    printf(\"\\n\");\n\n    free(a);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 -2 7 0 -1 4",
+          "expected_output": "4 0 7"
+        },
+        {
+          "input": "3 -5 -1 -9",
+          "expected_output": "0"
+        },
+        {
+          "input": "6 1 -2 3 -4 5 -6",
+          "expected_output": "5 3 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 -2 7 0 -1 4",
+            "expected": "4 0 7",
+            "actual": "4 0 7",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 -5 -1 -9",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "6 1 -2 3 -4 5 -6",
+            "expected": "5 3 1",
+            "actual": "5 3 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Word Length Totals",
+      "description": "Strings are stored as arrays of characters, and pointers are commonly used to traverse them one character at a time. This is useful in text tools that need to measure or summarize input without relying on built-in helpers.\n\nThe program reads a line of text containing up to 200 characters, where words are separated by one or more spaces. Allocate enough memory for the line, count the number of words, and compute the total number of letters across all words, ignoring spaces. Print two integers on one line: the word count and the total letter count. If the line is empty or contains only spaces, print `0 0`. Free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: blue sky high \u2192 word count: 1 \u2192 2 \u2192 3, letters: 4 \u2192 7 \u2192 11. Output: 3 11",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char buffer[256];\n    if (!fgets(buffer, sizeof(buffer), stdin)) return 0;\n\n    size_t len = strlen(buffer);\n    while (len > 0 && (buffer[len - 1] == '\\n' || buffer[len - 1] == '\\r')) {\n        buffer[--len] = '\\0';\n    }\n\n    char *line = (char *)malloc(len + 1);\n    if (!line) return 0;\n    strcpy(line, buffer);\n\n    int words = 0;\n    int letters = 0;\n    int in_word = 0;\n\n    for (char *p = line; *p != '\\0'; p++) {\n        if (*p != ' ') {\n            letters++;\n            if (!in_word) {\n                words++;\n                in_word = 1;\n            }\n        } else {\n            in_word = 0;\n        }\n    }\n\n    printf(\"%d %d\\n\", words, letters);\n\n    free(line);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "blue sky high",
+          "expected_output": "3 11"
+        },
+        {
+          "input": "Expected Output: 0 0\n\nInput: abc de f",
+          "expected_output": "3 6"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "blue sky high",
+            "expected": "3 11",
+            "actual": "3 11",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Expected Output: 0 0\n\nInput: abc de f",
+            "expected": "3 6",
+            "actual": "4 17",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Reallocating the Running Total",
+      "description": "Sometimes a program does not know in advance how many numbers it will need to store, so it grows its memory block as input arrives. This is a common pattern when collecting a list of values until a stopping condition appears.\n\nThe program reads integers one by one until it reads -1, which is not part of the data. Store all earlier numbers in dynamically resized memory using realloc. Then print the running total after each stored number on one line, separated by spaces. If no numbers are entered before -1, print 0. All heap memory must be freed before exiting.\n\nWORKED EXAMPLE:\nInput: 3 5 -2 -1 \u2192 total: 3 \u2192 8 \u2192 6. Output: 3 8 6",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int *a = NULL;\n    int count = 0;\n    int x;\n\n    while (scanf(\"%d\", &x) == 1) {\n        if (x == -1) break;\n        int *tmp = (int *)realloc(a, (size_t)(count + 1) * sizeof(int));\n        if (!tmp) {\n            free(a);\n            return 0;\n        }\n        a = tmp;\n        a[count++] = x;\n    }\n\n    if (count == 0) {\n        printf(\"0\\n\");\n        free(a);\n        return 0;\n    }\n\n    long long sum = 0;\n    for (int i = 0; i < count; i++) {\n        sum += a[i];\n        if (i > 0) printf(\" \");\n        printf(\"%lld\", sum);\n    }\n    printf(\"\\n\");\n\n    free(a);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 5 -2 -1",
+          "expected_output": "3 8 6"
+        },
+        {
+          "input": "-1",
+          "expected_output": "0"
+        },
+        {
+          "input": "10 0 4 -3 -1",
+          "expected_output": "10 10 14 11"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 5 -2 -1",
+            "expected": "3 8 6",
+            "actual": "3 8 6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10 0 4 -3 -1",
+            "expected": "10 10 14 11",
+            "actual": "10 10 14 11",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Characters by Category",
+      "description": "Pointers can scan through a string while applying different rules to each character, which is useful in data validation and text analysis. Dynamic memory allows the program to store exactly the amount of input it receives.\n\nThe program reads one line of text up to 200 characters. Allocate memory for the line and count how many characters are uppercase letters, lowercase letters, digits, and everything else. Print the four counts in that order, separated by spaces. If the line is empty, print `0 0 0 0`. Free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: Ab3!z \u2192 uppercase: 1 \u2192 lowercase: 2, digits: 1, others: 1. Output: 1 2 1 1",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char buffer[256];\n    if (!fgets(buffer, sizeof(buffer), stdin)) return 0;\n\n    size_t len = strlen(buffer);\n    while (len > 0 && (buffer[len - 1] == '\\n' || buffer[len - 1] == '\\r')) {\n        buffer[--len] = '\\0';\n    }\n\n    char *s = (char *)malloc(len + 1);\n    if (!s) return 0;\n    strcpy(s, buffer);\n\n    int upper = 0, lower = 0, digit = 0, other = 0;\n    for (char *p = s; *p != '\\0'; p++) {\n        if (isupper((unsigned char)*p)) upper++;\n        else if (islower((unsigned char)*p)) lower++;\n        else if (isdigit((unsigned char)*p)) digit++;\n        else other++;\n    }\n\n    printf(\"%d %d %d %d\\n\", upper, lower, digit, other);\n\n    free(s);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Ab3!z",
+          "expected_output": "1 2 1 1"
+        },
+        {
+          "input": "Expected Output: 0 0 0 0\n\nInput: C0d3 x?",
+          "expected_output": "1 2 2 2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Ab3!z",
+            "expected": "1 2 1 1",
+            "actual": "1 2 1 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Expected Output: 0 0 0 0\n\nInput: C0d3 x?",
+            "expected": "1 2 2 2",
+            "actual": "2 12 4 6",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Duplicate Each Positive Value",
+      "description": "Dynamic arrays are useful when the output size can differ from the input size, such as when expanding or compressing a list of values. Pointers help move through stored numbers while building a new collection.\n\nThe program reads an integer n (1 \u2264 n \u2264 1000), then reads n integers. Allocate memory for the input and another dynamically allocated array for the result. For every positive input value, store that value twice in the result; for every zero or negative value, store it once. Print the result values on one line separated by spaces. Free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: 4 3 -2 0 5 \u2192 result size: 1 \u2192 2 \u2192 3 \u2192 5. Output: 3 3 -2 0 5 5",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n    if (n < 1 || n > 1000) return 0;\n\n    int *in = (int *)malloc((size_t)n * sizeof(int));\n    if (!in) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &in[i]) != 1) {\n            free(in);\n            return 0;\n        }\n    }\n\n    int out_size = 0;\n    for (int i = 0; i < n; i++) out_size += (in[i] > 0) ? 2 : 1;\n\n    int *out = (int *)malloc((size_t)out_size * sizeof(int));\n    if (!out) {\n        free(in);\n        return 0;\n    }\n\n    int k = 0;\n    for (int i = 0; i < n; i++) {\n        out[k++] = in[i];\n        if (in[i] > 0) out[k++] = in[i];\n    }\n\n    for (int i = 0; i < out_size; i++) {\n        if (i > 0) printf(\" \");\n        printf(\"%d\", out[i]);\n    }\n    printf(\"\\n\");\n\n    free(in);\n    free(out);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "4 3 -2 0 5",
+          "expected_output": "3 3 -2 0 5 5"
+        },
+        {
+          "input": "3 -1 -2 -3",
+          "expected_output": "-1 -2 -3"
+        },
+        {
+          "input": "5 1 2 0 -4 3",
+          "expected_output": "1 1 2 2 0 -4 3 3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "4 3 -2 0 5",
+            "expected": "3 3 -2 0 5 5",
+            "actual": "3 3 -2 0 5 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 -1 -2 -3",
+            "expected": "-1 -2 -3",
+            "actual": "-1 -2 -3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5 1 2 0 -4 3",
+            "expected": "1 1 2 2 0 -4 3 3",
+            "actual": "1 1 2 2 0 -4 3 3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Trimmed Minimum and Maximum",
+      "description": "Working with pointers is common when scanning a list of values to find summary information such as extremes. In many real systems, the first and last measurements may be unreliable, so data is sometimes summarized after trimming those ends.\n\nThe program reads an integer n (3 \u2264 n \u2264 1000), then reads n integers. Allocate memory for the n integers, ignore the first and last values, and find the minimum and maximum among the remaining values. Print the minimum and maximum on one line separated by a space. The input will always contain at least three numbers, and all heap memory must be freed before exiting.\n\nWORKED EXAMPLE:\nInput: 5 9 4 7 2 8 \u2192 scanned middle values: 4 \u2192 4, 7 \u2192 7, 2 \u2192 2 \u2192 min: 2 \u2192 max: 7. Output: 2 7",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n    if (n < 3 || n > 1000) return 0;\n\n    int *a = (int *)malloc((size_t)n * sizeof(int));\n    if (!a) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &a[i]) != 1) {\n            free(a);\n            return 0;\n        }\n    }\n\n    int mn = a[1], mx = a[1];\n    for (int i = 2; i <= n - 2; i++) {\n        if (a[i] < mn) mn = a[i];\n        if (a[i] > mx) mx = a[i];\n    }\n\n    printf(\"%d %d\\n\", mn, mx);\n    free(a);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 9 4 7 2 8",
+          "expected_output": "2 7"
+        },
+        {
+          "input": "3 10 5 1",
+          "expected_output": "5 5"
+        },
+        {
+          "input": "6 -1 8 3 12 0 7",
+          "expected_output": "0 12"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 9 4 7 2 8",
+            "expected": "2 7",
+            "actual": "2 7",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 10 5 1",
+            "expected": "5 5",
+            "actual": "5 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "6 -1 8 3 12 0 7",
+            "expected": "0 12",
+            "actual": "0 12",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Collapse Repeated Letters",
+      "description": "Strings are stored as character arrays, and pointers can be used to walk through them while building a cleaned-up version. This kind of processing is useful when normalizing text, such as compressing repeated symbols.\n\nThe program reads one line of text up to 200 characters. Allocate memory for the line, then create a second dynamically allocated string containing only the first character of each run of identical consecutive characters. Print the new string on one line. If the input line is empty, print a blank line. Free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: aaabbccccd \u2192 kept characters: a \u2192 b \u2192 c \u2192 d. Output: abcd",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main(void) {\n    char buffer[256];\n    if (!fgets(buffer, sizeof(buffer), stdin)) return 0;\n\n    size_t len = strlen(buffer);\n    while (len > 0 && (buffer[len - 1] == '\\n' || buffer[len - 1] == '\\r')) {\n        buffer[--len] = '\\0';\n    }\n\n    char *s = (char *)malloc(len + 1);\n    if (!s) return 0;\n    strcpy(s, buffer);\n\n    char *out = (char *)malloc(len + 1);\n    if (!out) {\n        free(s);\n        return 0;\n    }\n\n    size_t k = 0;\n    if (len > 0) {\n        out[k++] = s[0];\n        for (size_t i = 1; i < len; i++) {\n            if (s[i] != s[i - 1]) out[k++] = s[i];\n        }\n    }\n    out[k] = '\\0';\n\n    printf(\"%s\\n\", out);\n\n    free(s);\n    free(out);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "aaabbccccd",
+          "expected_output": "abcd"
+        },
+        {
+          "input": "a",
+          "expected_output": "a"
+        },
+        {
+          "input": "",
+          "expected_output": ""
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "aaabbccccd",
+            "expected": "abcd",
+            "actual": "abcd",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "a",
+            "expected": "a",
+            "actual": "a",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "",
+            "actual": "",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Scale Values Until Zero",
+      "description": "Pointers and memory allocation are often combined when reading values into a temporary array, then transforming the stored data before output. This is useful in pipelines that normalize measurements by a fixed factor.\n\nThe program reads an integer n (1 \u2264 n \u2264 1000), then reads n integers, then reads one integer factor. Allocate memory for the n integers, multiply every stored value by the factor, and print the transformed numbers on one line separated by spaces. If the factor is 0, every printed number must be 0. Free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: 4 2 -3 5 1 3 \u2192 values after scaling: 6 \u2192 -9 \u2192 15 \u2192 3. Output: 6 -9 15 3",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n, factor;\n    if (scanf(\"%d\", &n) != 1) return 0;\n    if (n < 1 || n > 1000) return 0;\n\n    int *a = (int *)malloc((size_t)n * sizeof(int));\n    if (!a) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &a[i]) != 1) {\n            free(a);\n            return 0;\n        }\n    }\n    if (scanf(\"%d\", &factor) != 1) {\n        free(a);\n        return 0;\n    }\n\n    for (int i = 0; i < n; i++) {\n        long long val = (long long)a[i] * factor;\n        if (i > 0) printf(\" \");\n        printf(\"%lld\", val);\n    }\n    printf(\"\\n\");\n\n    free(a);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "4 2 -3 5 1 3",
+          "expected_output": "6 -9 15 3"
+        },
+        {
+          "input": "2 7 -8 0",
+          "expected_output": "0 0"
+        },
+        {
+          "input": "5 1 2 3 4 5 -2",
+          "expected_output": "-2 -4 -6 -8 -10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "4 2 -3 5 1 3",
+            "expected": "6 -9 15 3",
+            "actual": "6 -9 15 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "2 7 -8 0",
+            "expected": "0 0",
+            "actual": "0 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5 1 2 3 4 5 -2",
+            "expected": "-2 -4 -6 -8 -10",
+            "actual": "-2 -4 -6 -8 -10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "First and Last Alphabetic Characters",
+      "description": "When processing text in memory, pointers can be used to scan for specific character types without copying the string character by character. This is helpful in tasks like extracting meaningful endpoints from a mixed input line.\n\nThe program reads one line of text up to 200 characters. Allocate memory for the line and find the first and last alphabetic characters in the line. Print them separated by one space. If there is only one alphabetic character, print it twice. If there are no alphabetic characters, print `NONE`. Free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: 7!aB?3c \u2192 first alphabetic: a \u2192 last alphabetic: c. Output: a c",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char buffer[256];\n    if (!fgets(buffer, sizeof(buffer), stdin)) return 0;\n\n    size_t len = strlen(buffer);\n    while (len > 0 && (buffer[len - 1] == '\\n' || buffer[len - 1] == '\\r')) {\n        buffer[--len] = '\\0';\n    }\n\n    char *s = (char *)malloc(len + 1);\n    if (!s) return 0;\n    strcpy(s, buffer);\n\n    char first = '\\0', last = '\\0';\n    for (char *p = s; *p != '\\0'; p++) {\n        if (isalpha((unsigned char)*p)) {\n            if (first == '\\0') first = *p;\n            last = *p;\n        }\n    }\n\n    if (first == '\\0') {\n        printf(\"NONE\\n\");\n    } else {\n        printf(\"%c %c\\n\", first, last);\n    }\n\n    free(s);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "7!aB?3c",
+          "expected_output": "a c"
+        },
+        {
+          "input": "12345",
+          "expected_output": "NONE"
+        },
+        {
+          "input": "x",
+          "expected_output": "x x"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "7!aB?3c",
+            "expected": "a c",
+            "actual": "a c",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "12345",
+            "expected": "NONE",
+            "actual": "NONE",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "x",
+            "expected": "x x",
+            "actual": "x x",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

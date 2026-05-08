@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:54:51.151997",
+  "provider": "gpt",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Cash Register Change",
+      "description": "When you compute change after a purchase, several arithmetic operations often happen in sequence: subtraction, division, and remainder. These calculations are a simple way to practice working with values stored in variables and combining operators carefully.\n\nRead two integers from stdin: the amount paid and the cost, both in cents. Assume the amount paid is greater than or equal to the cost and both are between 0 and 1,000,000 inclusive. Compute the change in cents, then print how many whole dollars and how many leftover cents are in that change, separated by one space.\n\nWORKED EXAMPLE:\nInput: 500 237 \u2192 change: 263 \u2192 dollars: 2 \u2192 cents: 63. Output: 2 63",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int paid, cost;\n    int change, dollars, cents;\n\n    scanf(\"%d %d\", &paid, &cost);\n\n    change = paid - cost;\n    dollars = change / 100;\n    cents = change % 100;\n\n    printf(\"%d %d\\n\", dollars, cents);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "500 237",
+          "expected_output": "2 63"
+        },
+        {
+          "input": "1000 1000",
+          "expected_output": "0 0"
+        },
+        {
+          "input": "42 5",
+          "expected_output": "0 37"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "500 237",
+            "expected": "2 63",
+            "actual": "2 63",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1000 1000",
+            "expected": "0 0",
+            "actual": "0 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "42 5",
+            "expected": "0 37",
+            "actual": "0 37",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Average With Remainder",
+      "description": "Many measurements are stored as whole numbers, but it is often useful to split a result into a quotient and a remainder. This appears in time calculations, packaging, and simple data summaries where exact averages are not whole numbers.\n\nRead three integers from stdin: a, b, and c. Each value is between -1,000,000 and 1,000,000 inclusive. Compute the sum of the three numbers, then print the integer part of the average followed by the remainder when the sum is divided by 3, separated by one space. Use C integer division rules, and assume the sum fits in a 32-bit signed integer.\n\nWORKED EXAMPLE:\nInput: 10 11 13 \u2192 sum: 10 \u2192 21 \u2192 34 \u2192 average: 11 \u2192 remainder: 1. Output: 11 1",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    int sum, average, remainder;\n\n    scanf(\"%d %d %d\", &a, &b, &c);\n\n    sum = a + b + c;\n    average = sum / 3;\n    remainder = sum % 3;\n\n    printf(\"%d %d\\n\", average, remainder);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10 11 13",
+          "expected_output": "11 1"
+        },
+        {
+          "input": "0 0 0",
+          "expected_output": "0 0"
+        },
+        {
+          "input": "-5 1 7",
+          "expected_output": "1 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 11 13",
+            "expected": "11 1",
+            "actual": "11 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 0 0",
+            "expected": "0 0",
+            "actual": "0 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-5 1 7",
+            "expected": "1 0",
+            "actual": "1 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Mixed Unit Distance",
+      "description": "Distances are often written using different units, and converting them into a single compact form requires careful use of division and remainder. This kind of calculation is common when working with seconds, minutes, meters, centimeters, or any other base-and-subunit system.\n\nRead one integer from stdin representing a total distance in centimeters. The value will be between 0 and 1,000,000 inclusive. Compute how many whole meters it contains and how many centimeters remain. Print the result as two integers separated by one space.\n\nWORKED EXAMPLE:\nInput: 347 \u2192 meters: 3 \u2192 centimeters: 47. Output: 3 47",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int cm;\n    int meters, rest;\n\n    scanf(\"%d\", &cm);\n\n    meters = cm / 100;\n    rest = cm % 100;\n\n    printf(\"%d %d\\n\", meters, rest);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "347",
+          "expected_output": "3 47"
+        },
+        {
+          "input": "0",
+          "expected_output": "0 0"
+        },
+        {
+          "input": "100",
+          "expected_output": "1 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "347",
+            "expected": "3 47",
+            "actual": "3 47",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "0 0",
+            "actual": "0 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "100",
+            "expected": "1 0",
+            "actual": "1 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Final Score After Penalties",
+      "description": "Scores in games and contests are often adjusted by adding bonuses and subtracting penalties. Working through a few updates in sequence is a good way to practice how expressions combine across multiple statements.\n\nRead three integers from stdin: the starting score, a bonus, and a penalty. Each value is between 0 and 1,000,000 inclusive. Compute the final score as starting score plus bonus minus penalty, then print the result as a single integer. The final score may be zero or negative.\n\nWORKED EXAMPLE:\nInput: 80 15 22 \u2192 score: 80 \u2192 95 \u2192 73. Output: 73",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int score, bonus, penalty;\n    int final_score;\n\n    scanf(\"%d %d %d\", &score, &bonus, &penalty);\n\n    final_score = score + bonus - penalty;\n\n    printf(\"%d\\n\", final_score);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "80 15 22",
+          "expected_output": "73"
+        },
+        {
+          "input": "0 0 0",
+          "expected_output": "0"
+        },
+        {
+          "input": "100 50 200",
+          "expected_output": "-50"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "80 15 22",
+            "expected": "73",
+            "actual": "73",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 0 0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "100 50 200",
+            "expected": "-50",
+            "actual": "-50",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Recipe Scaling",
+      "description": "Cooking and laboratory work both use proportional changes in quantities. When you scale several ingredients, you must apply multiplication, addition, and subtraction carefully so the final amount is correct.\n\nRead three integers from stdin: a base amount, a scale factor, and an adjustment. Each value is between -100000 and 100000 inclusive. Compute the result of multiplying the base amount by the scale factor and then subtracting the adjustment. Print the final integer value. Assume the intermediate result fits in a 32-bit signed integer.\n\nWORKED EXAMPLE:\nInput: 12 3 7 \u2192 amount: 12 \u2192 36 \u2192 29. Output: 29",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int base, scale, adjust;\n    int result;\n\n    scanf(\"%d %d %d\", &base, &scale, &adjust);\n\n    result = base * scale - adjust;\n\n    printf(\"%d\\n\", result);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12 3 7",
+          "expected_output": "29"
+        },
+        {
+          "input": "0 100 5",
+          "expected_output": "-5"
+        },
+        {
+          "input": "-4 6 10",
+          "expected_output": "-34"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12 3 7",
+            "expected": "29",
+            "actual": "29",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 100 5",
+            "expected": "-5",
+            "actual": "-5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-4 6 10",
+            "expected": "-34",
+            "actual": "-34",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Time Split Into Hours and Minutes",
+      "description": "Time values are often stored as a total number of minutes and then converted into a more readable format. This uses both division and remainder, which are fundamental tools for breaking one number into larger and smaller units.\n\nRead one integer from stdin representing a duration in minutes. The value will be between 0 and 1,000,000 inclusive. Print how many whole hours are contained in the duration and how many minutes remain, separated by one space.\n\nWORKED EXAMPLE:\nInput: 185 \u2192 hours: 1 \u2192 minutes: 45. Output: 3 25",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int total_minutes;\n    int hours, minutes;\n\n    scanf(\"%d\", &total_minutes);\n\n    hours = total_minutes / 60;\n    minutes = total_minutes % 60;\n\n    printf(\"%d %d\\n\", hours, minutes);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "185",
+          "expected_output": "3 5"
+        },
+        {
+          "input": "0",
+          "expected_output": "0 0"
+        },
+        {
+          "input": "60",
+          "expected_output": "1 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "185",
+            "expected": "3 5",
+            "actual": "3 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "0 0",
+            "actual": "0 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "60",
+            "expected": "1 0",
+            "actual": "1 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Simple Tax and Discount",
+      "description": "Prices in stores are often adjusted by applying a percentage and then subtracting a fixed amount. This kind of calculation is a practical use of multiplication, integer division, and several variables in one expression chain.\n\nRead two integers from stdin: a price in cents and a tax rate in percent. The price is between 0 and 1,000,000 inclusive, and the tax rate is between 0 and 100 inclusive. Compute the final price after adding tax and then subtracting 50 cents as a fixed discount. Use integer arithmetic, so any fractional cents from the tax are discarded by C rules. Print the final price in cents as a single integer.\n\nWORKED EXAMPLE:\nInput: 200 10 \u2192 tax: 20 \u2192 total: 220 \u2192 final: 170. Output: 170",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int price, tax_rate;\n    int final_price;\n\n    scanf(\"%d %d\", &price, &tax_rate);\n\n    final_price = price + (price * tax_rate) / 100 - 50;\n\n    printf(\"%d\\n\", final_price);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "200 10",
+          "expected_output": "170"
+        },
+        {
+          "input": "50 0",
+          "expected_output": "0"
+        },
+        {
+          "input": "999 5",
+          "expected_output": "998"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "200 10",
+            "expected": "170",
+            "actual": "170",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "50 0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "999 5",
+            "expected": "998",
+            "actual": "998",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Coordinate Shift",
+      "description": "In graphics and mapping, positions are often updated by adding movement in one direction and subtracting movement in another. Keeping track of these changes with variables helps build intuition for how values are transformed step by step.\n\nRead four integers from stdin: x, y, dx, and dy. Each value is between -100000 and 100000 inclusive. Compute the new position after moving x by dx and y by dy. Print the updated x and y coordinates separated by one space.\n\nWORKED EXAMPLE:\nInput: 10 20 -3 7 \u2192 x: 10 \u2192 7, y: 20 \u2192 27. Output: 7 27",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int x, y, dx, dy;\n\n    scanf(\"%d %d %d %d\", &x, &y, &dx, &dy);\n\n    x = x + dx;\n    y = y + dy;\n\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10 20 -3 7",
+          "expected_output": "7 27"
+        },
+        {
+          "input": "0 0 0 0",
+          "expected_output": "0 0"
+        },
+        {
+          "input": "-5 8 12 -2",
+          "expected_output": "7 6"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 20 -3 7",
+            "expected": "7 27",
+            "actual": "7 27",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 0 0 0",
+            "expected": "0 0",
+            "actual": "0 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-5 8 12 -2",
+            "expected": "7 6",
+            "actual": "7 6",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Packets and Leftovers",
+      "description": "Packaging problems often ask how many full boxes can be filled and how many items are left over. This is a classic case for quotient and remainder calculations using integer division.\n\nRead two integers from stdin: the number of items and the box capacity. Both values are between 1 and 1,000,000 inclusive. Compute how many full boxes can be made and how many items remain unpacked. Print the two results separated by one space.\n\nWORKED EXAMPLE:\nInput: 53 8 \u2192 boxes: 6 \u2192 leftovers: 5. Output: 6 5",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int items, capacity;\n    int boxes, leftovers;\n\n    scanf(\"%d %d\", &items, &capacity);\n\n    boxes = items / capacity;\n    leftovers = items % capacity;\n\n    printf(\"%d %d\\n\", boxes, leftovers);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "53 8",
+          "expected_output": "6 5"
+        },
+        {
+          "input": "1 1",
+          "expected_output": "1 0"
+        },
+        {
+          "input": "100 12",
+          "expected_output": "8 4"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "53 8",
+            "expected": "6 5",
+            "actual": "6 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 1",
+            "expected": "1 0",
+            "actual": "1 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "100 12",
+            "expected": "8 4",
+            "actual": "8 4",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Temperature Shift in Two Steps",
+      "description": "Measurements are frequently adjusted by first applying one change and then another. Doing the updates in order is useful when a value is corrected, calibrated, or converted between systems.\n\nRead three integers from stdin: a starting value, a first adjustment, and a second adjustment. Each integer is between -100000 and 100000 inclusive. First add the first adjustment to the starting value, then subtract the second adjustment from that result. Print the final value as a single integer.\n\nWORKED EXAMPLE:\nInput: 15 8 4 \u2192 value: 15 \u2192 23 \u2192 19. Output: 19",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int value, add, sub;\n\n    scanf(\"%d %d %d\", &value, &add, &sub);\n\n    value = value + add;\n    value = value - sub;\n\n    printf(\"%d\\n\", value);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "15 8 4",
+          "expected_output": "19"
+        },
+        {
+          "input": "0 0 0",
+          "expected_output": "0"
+        },
+        {
+          "input": "-10 5 20",
+          "expected_output": "-25"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "15 8 4",
+            "expected": "19",
+            "actual": "19",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 0 0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-10 5 20",
+            "expected": "-25",
+            "actual": "-25",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

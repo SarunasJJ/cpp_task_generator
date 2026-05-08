@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T17:25:55.477343",
+  "provider": "gemini",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Sum of Even Numbers in a Range",
+      "description": "Iterating through a range of numbers and selectively performing operations based on certain conditions is a fundamental programming concept. This is often used when processing data sets where only specific elements meet a criteria, such as filtering even numbers from a list or finding data points within a certain threshold.\n\nYour task is to write a C program that reads two integers, `A` and `B`, from standard input. The program should then calculate the sum of all even numbers (inclusive) within the range defined by `A` and `B`. If `A` is greater than `B`, the program should automatically swap them to ensure the range is always processed from the smaller to the larger number. Finally, print the calculated sum to standard output, followed by a newline. Assume `A` and `B` will be within the range of `int`.\n\nWORKED EXAMPLE:\nInput: 3 8 \u2192 sum: 0 \u2192 4 \u2192 4+6=10 \u2192 10+8=18. Output: 18",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n\n    int start, end;\n    if (a < b) {\n        start = a;\n        end = b;\n    } else {\n        start = b;\n        end = a;\n    }\n\n    int sum = 0;\n    for (int i = start; i <= end; i++) {\n        if (i % 2 == 0) {\n            sum += i;\n        }\n    }\n\n    printf(\"%d\\n\", sum);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1 10",
+          "expected_output": "30"
+        },
+        {
+          "input": "8 3",
+          "expected_output": "18"
+        },
+        {
+          "input": "7 7",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 10",
+            "expected": "30",
+            "actual": "30",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "8 3",
+            "expected": "18",
+            "actual": "18",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "7 7",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Multiples of 3 or 5",
+      "description": "Conditional logic is essential for decision-making within programs, allowing different actions based on whether certain conditions are met. This is particularly useful when filtering or categorizing data based on multiple criteria, such as identifying numbers that are divisible by either of two distinct factors.\n\nWrite a C program that reads a single positive integer `N` from standard input. The program should then count how many numbers between 1 and `N` (inclusive) are multiples of 3 OR multiples of 5. Print the total count to standard output, followed by a newline. `N` will be between 1 and 1000. Numbers divisible by both 3 and 5 should be counted only once.\n\nWORKED EXAMPLE:\nInput: 10 \u2192 count: 0 \u2192 1 (3) \u2192 2 (5) \u2192 3 (6) \u2192 4 (9) \u2192 5 (10). Output: 5",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int count = 0;\n    for (int i = 1; i <= n; i++) {\n        if (i % 3 == 0 || i % 5 == 0) {\n            count++;\n        }\n    }\n\n    printf(\"%d\\n\", count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "15",
+          "expected_output": "7"
+        },
+        {
+          "input": "1",
+          "expected_output": "0"
+        },
+        {
+          "input": "5",
+          "expected_output": "2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "15",
+            "expected": "7",
+            "actual": "7",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5",
+            "expected": "2",
+            "actual": "2",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Simple PIN Verification System",
+      "description": "Input validation and limited retry mechanisms are critical components in security systems, preventing brute-force attacks and ensuring data integrity. This involves using loops to allow multiple attempts and conditionals to check for correctness and manage the number of remaining tries.\n\nYour task is to implement a simple PIN verification system. The secret PIN is `1234`. The user is given exactly 3 attempts to enter the correct PIN. For each attempt, your program should prompt the user to enter a PIN, read their input, and check if it matches the secret PIN. If the PIN is correct, print \"PIN accepted.\" and terminate the program. If an incorrect PIN is entered, print \"Incorrect PIN. Try again.\" and allow another attempt. If all 3 attempts fail, print \"Account locked.\" and terminate.\n\nWORKED EXAMPLE:\nInput: 0000 \u2192 attempts: 3 \u2192 2. Input: 1111 \u2192 attempts: 2 \u2192 1. Input: 2222 \u2192 attempts: 1 \u2192 0. Output: Account locked.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int correct_pin = 1234;\n    int entered_pin;\n    int attempts = 0;\n\n    while (attempts < 3) {\n        printf(\"Enter PIN: \");\n        scanf(\"%d\", &entered_pin);\n\n        if (entered_pin == correct_pin) {\n            printf(\"PIN accepted.\\n\");\n            return 0; // Exit successfully\n        } else {\n            attempts++;\n            if (attempts < 3) {\n                printf(\"Incorrect PIN. Try again.\\n\");\n            }\n        }\n    }\n\n    printf(\"Account locked.\\n\"); // All 3 attempts failed\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1234",
+          "expected_output": "Enter PIN: PIN accepted."
+        },
+        {
+          "input": "0000\n1111\n1234",
+          "expected_output": "Enter PIN: Incorrect PIN. Try again.\nEnter PIN: Incorrect PIN. Try again.\nEnter PIN: PIN accepted."
+        },
+        {
+          "input": "9999\n8888\n7777",
+          "expected_output": "Enter PIN: Incorrect PIN. Try again.\nEnter PIN: Incorrect PIN. Try again.\nEnter PIN: Account locked."
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1234",
+            "expected": "Enter PIN: PIN accepted.",
+            "actual": "Enter PIN: PIN accepted.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0000\n1111\n1234",
+            "expected": "Enter PIN: Incorrect PIN. Try again.\nEnter PIN: Incorrect PIN. Try again.\nEnter PIN: PIN accepted.",
+            "actual": "Enter PIN: Incorrect PIN. Try again.\nEnter PIN: Incorrect PIN. Try again.\nEnter PIN: PIN accepted.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "9999\n8888\n7777",
+            "expected": "Enter PIN: Incorrect PIN. Try again.\nEnter PIN: Incorrect PIN. Try again.\nEnter PIN: Account locked.",
+            "actual": "Enter PIN: Incorrect PIN. Try again.\nEnter PIN: Incorrect PIN. Try again.\nEnter PIN: Account locked.",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Class Average and Pass/Fail Report",
+      "description": "Processing data for a group of items and generating individual reports along with an aggregate summary is a common task in data analysis. This combines looping to process each item with conditional logic for individual assessment and accumulation for overall statistics.\n\nWrite a C program that first reads a positive integer `num_students` (between 1 and 100), representing the number of students in a class. Then, for each student, the program should read their `score` (an integer between 0 and 100). For each student, print \"Student [X]: Pass\" if their score is 60 or higher, otherwise print \"Student [X]: Fail\". After processing all students, calculate and print the \"Class Average\" of all scores, formatted to two decimal places.\n\nWORKED EXAMPLE:\nInput: 2\\n50\\n70 \u2192 student 1 score: 50 \u2192 total score: 50. student 2 score: 70 \u2192 total score: 120. Output: 60.00",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num_students;\n    scanf(\"%d\", &num_students);\n\n    int total_score = 0;\n    for (int i = 1; i <= num_students; i++) {\n        int score;\n        scanf(\"%d\", &score);\n        total_score += score;\n\n        printf(\"Student %d: \", i);\n        if (score >= 60) {\n            printf(\"Pass\\n\");\n        } else {\n            printf(\"Fail\\n\");\n        }\n    }\n\n    double class_average = (double)total_score / num_students;\n    printf(\"Class Average: %.2f\\n\", class_average);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3\n75\n50\n90",
+          "expected_output": "Student 1: Pass\nStudent 2: Fail\nStudent 3: Pass\nClass Average: 71.67"
+        },
+        {
+          "input": "1\n60",
+          "expected_output": "Student 1: Pass\nClass Average: 60.00"
+        },
+        {
+          "input": "2\n30\n40",
+          "expected_output": "Student 1: Fail\nStudent 2: Fail\nClass Average: 35.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3\n75\n50\n90",
+            "expected": "Student 1: Pass\nStudent 2: Fail\nStudent 3: Pass\nClass Average: 71.67",
+            "actual": "Student 1: Pass\nStudent 2: Fail\nStudent 3: Pass\nClass Average: 71.67",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n60",
+            "expected": "Student 1: Pass\nClass Average: 60.00",
+            "actual": "Student 1: Pass\nClass Average: 60.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2\n30\n40",
+            "expected": "Student 1: Fail\nStudent 2: Fail\nClass Average: 35.00",
+            "actual": "Student 1: Fail\nStudent 2: Fail\nClass Average: 35.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Sum of Digits",
+      "description": "Manipulating individual digits of a number is a common task in various programming problems, from checksum calculations to digital root algorithms. This requires repeatedly extracting digits using the modulo operator and reducing the number using integer division, typically within a loop.\n\nWrite a C program that reads a single positive integer `N` from standard input. The program should then calculate the sum of all its digits. For example, if `N` is 123, the sum of its digits is 1 + 2 + 3 = 6. Print the calculated sum to standard output, followed by a newline. `N` will be a positive integer within the range of `int`.\n\nWORKED EXAMPLE:\nInput: 456 \u2192 sum: 0 \u2192 6 \u2192 6+5=11 \u2192 11+4=15. Output: 15",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int sum = 0;\n    int temp_n = n; // Use a temporary variable to modify\n\n    if (temp_n == 0) { // Handle case for input 0\n        sum = 0;\n    } else {\n        while (temp_n > 0) {\n            int digit = temp_n % 10;\n            sum += digit;\n            temp_n /= 10;\n        }\n    }\n\n    printf(\"%d\\n\", sum);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12345",
+          "expected_output": "15"
+        },
+        {
+          "input": "7",
+          "expected_output": "7"
+        },
+        {
+          "input": "900",
+          "expected_output": "9"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12345",
+            "expected": "15",
+            "actual": "15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "7",
+            "expected": "7",
+            "actual": "7",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "900",
+            "expected": "9",
+            "actual": "9",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Fibonacci Sequence up to a Limit",
+      "description": "The Fibonacci sequence is a classic example of a recursive pattern, where each number is the sum of the two preceding ones. Generating such sequences up to a specific limit or for a certain number of terms often involves loops and careful management of previous values.\n\nWrite a C program that reads a positive integer `N` from standard input. The program should then print all Fibonacci numbers that are less than or equal to `N`. The sequence starts with 0 and 1. Each number should be printed on the same line, separated by a single space. Do not print a trailing space after the last number. `N` will be between 1 and 1000.\n\nWORKED EXAMPLE:\nInput: 10 \u2192 current Fibonacci: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 3 \u2192 5 \u2192 8. Output: 0 1 1 2 3 5 8",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int a = 0, b = 1;\n    if (n >= 0) { // Fibonacci sequence typically starts with 0\n        printf(\"%d\", a);\n    }\n    if (n >= 1) { // Print 1 if N is 1 or greater\n        printf(\" %d\", b);\n    }\n\n    int next_fib;\n    while (1) {\n        next_fib = a + b;\n        if (next_fib > n) {\n            break;\n        }\n        printf(\" %d\", next_fib);\n        a = b;\n        b = next_fib;\n    }\n    printf(\"\\n\");\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "20",
+          "expected_output": "0 1 1 2 3 5 8 13"
+        },
+        {
+          "input": "1",
+          "expected_output": "0 1 1"
+        },
+        {
+          "input": "0",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "20",
+            "expected": "0 1 1 2 3 5 8 13",
+            "actual": "0 1 1 2 3 5 8 13",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1",
+            "expected": "0 1 1",
+            "actual": "0 1 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Largest of N Numbers",
+      "description": "Finding the maximum or minimum value in a collection of data is a fundamental operation in computer science, used in sorting algorithms, statistical analysis, and data validation. This typically involves iterating through the data and maintaining a running record of the largest (or smallest) value found so far.\n\nWrite a C program that first reads a positive integer `N` (between 1 and 100), representing how many numbers will follow. Then, the program should read `N` more integers from standard input. After reading all `N` numbers, your program must find and print the largest among them to standard output, followed by a newline. The numbers will be within the range of `int`.\n\nWORKED EXAMPLE:\nInput: 3\\n5\\n12\\n8 \u2192 current max: 5 \u2192 12 \u2192 12. Output: 12",
+      "solution": "#include <stdio.h>\n#include <limits.h> // For INT_MIN\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int max_val = INT_MIN; // Initialize with the smallest possible integer value\n\n    for (int i = 0; i < n; i++) {\n        int current_num;\n        scanf(\"%d\", &current_num);\n        if (current_num > max_val) {\n            max_val = current_num;\n        }\n    }\n\n    printf(\"%d\\n\", max_val);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n10\n-5\n20\n3\n15",
+          "expected_output": "20"
+        },
+        {
+          "input": "1\n100",
+          "expected_output": "100"
+        },
+        {
+          "input": "4\n-10\n-2\n-50\n-8",
+          "expected_output": "-2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n10\n-5\n20\n3\n15",
+            "expected": "20",
+            "actual": "20",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n100",
+            "expected": "100",
+            "actual": "100",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4\n-10\n-2\n-50\n-8",
+            "expected": "-2",
+            "actual": "-2",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Factorial Calculator",
+      "description": "The factorial function, denoted by `N!`, is a common mathematical operation used in combinatorics and probability. It represents the product of all positive integers less than or equal to `N`. Understanding how to compute factorials iteratively is a good exercise in using loops for accumulating products.\n\nWrite a C program that reads a single non-negative integer `N` from standard input. The program should then calculate its factorial. Remember that `0! = 1`. Print the calculated factorial to standard output, followed by a newline. Assume `N` will be small enough (e.g., up to 12) such that its factorial fits within an `int` data type.\n\nWORKED EXAMPLE:\nInput: 4 \u2192 factorial: 1 \u2192 1*1=1 \u2192 1*2=2 \u2192 2*3=6 \u2192 6*4=24. Output: 24",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    long long factorial = 1; // Use long long to prevent potential overflow for slightly larger N\n\n    if (n < 0) {\n        printf(\"Factorial is not defined for negative numbers.\\n\");\n        return 1; // Indicate error\n    } else if (n == 0) {\n        factorial = 1;\n    } else {\n        for (int i = 1; i <= n; i++) {\n            factorial *= i;\n        }\n    }\n\n    printf(\"%lld\\n\", factorial);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "120"
+        },
+        {
+          "input": "0",
+          "expected_output": "1"
+        },
+        {
+          "input": "1",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5",
+            "expected": "120",
+            "actual": "120",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Basic Interactive Menu System",
+      "description": "Interactive menu systems are fundamental to user interfaces, allowing programs to present options and respond to user choices. This involves continuous looping until an exit condition is met, and using conditional statements (like `if-else if-else` or `switch`) to execute different code paths based on user input.\n\nWrite a C program that implements a basic menu system. The program should continuously display the following menu:\n```\n1. Greet\n2. Exit\nEnter your choice:\n```\nIt should then read the user's integer choice. If the choice is `1`, print \"Hello!\" followed by a newline, and display the menu again. If the choice is `2`, print \"Exiting program.\" followed by a newline, and terminate the program. If any other choice is entered, print \"Invalid choice. Please try again.\" followed by a newline, and display the menu again.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int choice;\n\n    while (1) { // Loop indefinitely until an exit condition is met\n        printf(\"1. Greet\\n\");\n        printf(\"2. Exit\\n\");\n        printf(\"Enter your choice: \");\n        scanf(\"%d\", &choice);\n\n        if (choice == 1) {\n            printf(\"Hello!\\n\");\n        } else if (choice == 2) {\n            printf(\"Exiting program.\\n\");\n            break; // Exit the loop and terminate the program\n        } else {\n            printf(\"Invalid choice. Please try again.\\n\");\n        }\n        printf(\"\\n\"); // Add a newline for better readability between menu prompts\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1\n5\n2",
+          "expected_output": "1. Greet\n2. Exit\nEnter your choice: Hello!\n\n1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Exiting program."
+        },
+        {
+          "input": "2",
+          "expected_output": "1. Greet\n2. Exit\nEnter your choice: Exiting program."
+        },
+        {
+          "input": "9\n0\n1\n2",
+          "expected_output": "1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Hello!\n\n1. Greet\n2. Exit\nEnter your choice: Exiting program."
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1\n5\n2",
+            "expected": "1. Greet\n2. Exit\nEnter your choice: Hello!\n\n1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Exiting program.",
+            "actual": "1. Greet\n2. Exit\nEnter your choice: Hello!\n\n1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Exiting program.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "2",
+            "expected": "1. Greet\n2. Exit\nEnter your choice: Exiting program.",
+            "actual": "1. Greet\n2. Exit\nEnter your choice: Exiting program.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "9\n0\n1\n2",
+            "expected": "1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Hello!\n\n1. Greet\n2. Exit\nEnter your choice: Exiting program.",
+            "actual": "1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Invalid choice. Please try again.\n\n1. Greet\n2. Exit\nEnter your choice: Hello!\n\n1. Greet\n2. Exit\nEnter your choice: Exiting program.",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Number Reversal",
+      "description": "Reversing the digits of an integer is a common programming puzzle that demonstrates how to manipulate numbers digit by digit. It involves repeatedly extracting the last digit and constructing a new number by placing these digits in reverse order, which is a great application of loops and arithmetic operations.\n\nWrite a C program that reads a single positive integer `N` from standard input. The program should then print the number with its digits reversed. For example, if the input is 1234, the output should be 4321. Handle cases where the original number might have trailing zeros (e.g., 120 should output 21). Print the reversed number to standard output, followed by a newline. `N` will be a positive integer within the range of `int`.\n\nWORKED EXAMPLE:\nInput: 567 \u2192 reversed: 0 \u2192 7 \u2192 7*10+6=76 \u2192 76*10+5=765. Output: 765",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int reversed_n = 0;\n    int temp_n = n;\n\n    if (temp_n == 0) { // Special case for input 0\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    while (temp_n > 0) {\n        int digit = temp_n % 10;\n        reversed_n = reversed_n * 10 + digit;\n        temp_n /= 10;\n    }\n\n    printf(\"%d\\n\", reversed_n);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12345",
+          "expected_output": "54321"
+        },
+        {
+          "input": "7",
+          "expected_output": "7"
+        },
+        {
+          "input": "120",
+          "expected_output": "21"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12345",
+            "expected": "54321",
+            "actual": "54321",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "7",
+            "expected": "7",
+            "actual": "7",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "120",
+            "expected": "21",
+            "actual": "21",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

@@ -1,0 +1,267 @@
+{
+  "generated_at": "2026-05-08T18:48:29.431255",
+  "provider": "claude",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "** Sum of Divisors",
+      "description": "**\nWhen analyzing the factors of a positive integer, we often need to find the sum of all numbers that divide evenly into it (including 1 and the number itself). This calculation is useful in number theory, perfect number detection, and cryptographic algorithms. For example, the divisors of 6 are 1, 2, 3, and 6, which sum to 12.\n\nYour program must read a single positive integer, compute the sum of all its divisors (all numbers from 1 to itself that divide evenly into it), and print that sum.\n\n**WORKED EXAMPLE:**\nInput: 6 \u2192 checking 1 (divisor, sum: 1) \u2192 2 (divisor, sum: 3) \u2192 3 (divisor, sum: 6) \u2192 6 (divisor, sum: 12). Output: 12\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    scanf(\"%d\", &n);\n    \n    for (int i = 1; i <= n; i++) {\n        if (n % i == 0) {\n            sum += i;\n        }\n    }\n    \n    printf(\"%d\\n\", sum);\n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "6",
+          "expected_output": "12"
+        },
+        {
+          "input": "1",
+          "expected_output": "1"
+        },
+        {
+          "input": "12",
+          "expected_output": "28"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpbyo5p7f0\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpbyo5p7f0\\solution.c:20:1: error: expected identifier or '(' at end of input\n   20 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Password Strength Validator",
+      "description": "**\nPassword security policies typically require passwords to meet multiple criteria, such as minimum length, presence of uppercase and lowercase letters, and special characters. Evaluating whether a candidate password satisfies all these requirements involves checking each condition in sequence and combining the results logically.\n\nYour program must read a password string (no spaces), and determine if it is \"Strong\" or \"Weak\" based on the following criteria: (1) at least 8 characters long, (2) contains at least one uppercase letter, (3) contains at least one lowercase letter, and (4) contains at least one digit. A password is \"Strong\" only if all four criteria are met; otherwise it is \"Weak\".\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main() {\n    char password[100];\n    scanf(\"%s\", password);\n    \n    int length = strlen(password);\n    int has_upper = 0, has_lower = 0, has_digit = 0;\n    \n    for (int i = 0; i < length; i++) {\n        if (isupper(password[i])) has_upper = 1;\n        if (islower(password[i])) has_lower = 1;\n        if (isdigit(password[i])) has_digit = 1;\n    }\n    \n    if (length >= 8 && has_upper && has_lower && has_digit) {\n        printf(\"Strong\\n\");\n    } else {\n        printf(\"Weak\\n\");\n    }\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "MyPass123",
+          "expected_output": "Strong"
+        },
+        {
+          "input": "pass",
+          "expected_output": "Weak"
+        },
+        {
+          "input": "PASSWORD1",
+          "expected_output": "Weak"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmphk7fp8on\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmphk7fp8on\\solution.c:30:1: error: expected identifier or '(' at end of input\n   30 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Multiplication Table with Conditions",
+      "description": "**\nMultiplication tables are fundamental learning tools in arithmetic education. When customizing tables for specific pedagogical purposes, it's common to filter or modify entries based on conditions\u2014for instance, showing only products that fall within a certain range or satisfy divisibility properties.\n\nYour program must read two positive integers: `n` (the size of the table) and `threshold`. Print an n \u00d7 n multiplication table where each cell contains the product of its row and column indices (both starting from 1). However, only print the product if it is less than or equal to the threshold; otherwise print a dot (.).\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int n, threshold;\n    scanf(\"%d %d\", &n, &threshold);\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= n; j++) {\n            int product = i * j;\n            if (product <= threshold) {\n                printf(\"%d\", product);\n            } else {\n                printf(\".\");\n            }\n            if (j < n) printf(\" \");\n        }\n        printf(\"\\n\");\n    }\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "3 5",
+          "expected_output": "1 2 3\n2 4 .\n3 . ."
+        },
+        {
+          "input": "4 10",
+          "expected_output": "1 2 3 4\n2 4 6 8\n3 6 9 .\n4 8 . ."
+        },
+        {
+          "input": "2 2",
+          "expected_output": "1 2\n2 ."
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpp9fa535o\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpp9fa535o\\solution.c:26:1: error: expected identifier or '(' at end of input\n   26 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Fibonacci Sequence Terminator",
+      "description": "**\nThe Fibonacci sequence, where each term is the sum of the two preceding ones, appears in nature, art, and computer science. Often we need to compute Fibonacci numbers up to a specific constraint\u2014such as printing all Fibonacci numbers that do not exceed a given maximum value or stopping when a certain count is reached.\n\nYour program must read a positive integer `limit`. Print all Fibonacci numbers (starting from 1, 1, 2, 3, 5, ...) that do not exceed the limit, one per line.\n\n**WORKED EXAMPLE:**\nInput: 10 \u2192 1 \u2192 1 \u2192 2 \u2192 3 \u2192 5 \u2192 8 (next would be 13, exceeds 10). Output: 1, 1, 2, 3, 5, 8 each on separate lines.\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int limit;\n    scanf(\"%d\", &limit);\n    \n    int a = 1, b = 1;\n    \n    if (a <= limit) printf(\"%d\\n\", a);\n    if (b <= limit) printf(\"%d\\n\", b);\n    \n    while (1) {\n        int next = a + b;\n        if (next > limit) break;\n        printf(\"%d\\n\", next);\n        a = b;\n        b = next;\n    }\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "10",
+          "expected_output": "1\n1\n2\n3\n5\n8"
+        },
+        {
+          "input": "1",
+          "expected_output": "1\n1"
+        },
+        {
+          "input": "100",
+          "expected_output": "1\n1\n2\n3\n5\n8\n13\n21\n34\n55\n89"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpkyyamol3\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpkyyamol3\\solution.c:26:1: error: expected identifier or '(' at end of input\n   26 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Count Digits of Each Type",
+      "description": "**\nText analysis often requires categorizing characters into groups\u2014such as distinguishing vowels from consonants in linguistic processing, or classifying digits, spaces, and punctuation in general string parsing. When validating or analyzing numeric data, it's useful to count how many times each category of character appears.\n\nYour program must read a line of text (including spaces) and count how many digits, spaces, and other characters it contains. Print three integers on separate lines: the count of digits, the count of spaces, and the count of all other characters.\n\n**WORKED EXAMPLE:**\nInput: \"Hello 123\" \u2192 digits: 3, spaces: 1, others: 5. Output: 3, 1, 5 each on a separate line.\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char line[1000];\n    fgets(line, sizeof(line), stdin);\n    \n    int digit_count = 0, space_count = 0, other_count = 0;\n    \n    for (int i = 0; line[i] != '\\0'; i++) {\n        if (line[i] == '\\n') continue;\n        if (isdigit(line[i])) {\n            digit_count++;\n        } else if (line[i] == ' ') {\n            space_count++;\n        } else {\n            other_count++;\n        }\n    }\n    \n    printf(\"%d\\n%d\\n%d\\n\", digit_count, space_count, other_count);\n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "Hello 123",
+          "expected_output": "3\n1\n5"
+        },
+        {
+          "input": "999",
+          "expected_output": "3\n0\n0"
+        },
+        {
+          "input": "A B C",
+          "expected_output": "0\n2\n3"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpgumk8qd4\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpgumk8qd4\\solution.c:28:1: error: expected identifier or '(' at end of input\n   28 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Grade Statistics with Conditional Bounds",
+      "description": "**\nAcademic administrators need to analyze student performance by computing aggregate statistics that depend on score ranges. For instance, calculating the average of grades that fall within a \"passing\" range, or determining how many grades lie in different brackets, requires selective inclusion of scores based on conditional logic applied inside a loop.\n\nYour program must read pairs of name and grade until a termination signal is reached. Read integers representing student grades until the input is -1. For all grades strictly greater than 50 and strictly less than 100, compute and print the average (as a floating-point number with one decimal place) and the count of such grades.\n\n**WORKED EXAMPLE:**\nInput: 60, 45, 75, 100, 55, -1 \u2192 valid grades: 60 \u2192 75 \u2192 55 (count: 3, sum: 190). Output: Average: 63.3, Count: 3\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int grade;\n    int sum = 0, count = 0;\n    \n    while (1) {\n        scanf(\"%d\", &grade);\n        if (grade == -1) break;\n        if (grade > 50 && grade < 100) {\n            sum += grade;\n            count++;\n        }\n    }\n    \n    if (count > 0) {\n        printf(\"Average: %.1f\\n\", (double)sum / count);\n    }\n    printf(\"Count: %d\\n\", count);\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "60 45 75 100 55 -1",
+          "expected_output": "Average: 63.3\nCount: 3"
+        },
+        {
+          "input": "30 40 -1",
+          "expected_output": "Count: 0"
+        },
+        {
+          "input": "75 80 90 -1",
+          "expected_output": "Average: 81.7\nCount: 3"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmppfno_2se\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmppfno_2se\\solution.c:27:1: error: expected identifier or '(' at end of input\n   27 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Reverse a Number and Validate Palindrome",
+      "description": "**\nA palindromic number reads the same forwards and backwards, such as 121 or 1001. Checking whether a number is a palindrome requires extracting its digits, reversing the sequence, and comparing the original with its reverse. This operation is commonly used in number validation, pattern recognition, and recreational mathematics.\n\nYour program must read a positive integer, reverse its digits to form a new number, and print the reversed number. Additionally, print \"yes\" if the original number and its reverse are equal (i.e., it is a palindrome), and \"no\" otherwise.\n\n**WORKED EXAMPLE:**\nInput: 121 \u2192 digits: 1, 2, 1 \u2192 reversed: 121. Output: Reversed: 121, Palindrome: yes.\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int n, original = n;\n    scanf(\"%d\", &n);\n    original = n;\n    \n    int reversed = 0;\n    int temp = n;\n    \n    while (temp > 0) {\n        int digit = temp % 10;\n        reversed = reversed * 10 + digit;\n        temp /= 10;\n    }\n    \n    printf(\"Reversed: %d\\n\", reversed);\n    \n    if (original == reversed) {\n        printf(\"Palindrome: yes\\n\");\n    } else {\n        printf(\"Palindrome: no\\n\");\n    }\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "121",
+          "expected_output": "Reversed: 121\nPalindrome: yes"
+        },
+        {
+          "input": "123",
+          "expected_output": "Reversed: 321\nPalindrome: no"
+        },
+        {
+          "input": "1001",
+          "expected_output": "Reversed: 1001\nPalindrome: yes"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpq0yog1j8\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpq0yog1j8\\solution.c:31:1: error: expected identifier or '(' at end of input\n   31 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Nested Loop Pattern with Conditions",
+      "description": "**\nGenerating visual patterns programmatically\u2014such as triangles, diamonds, or grids\u2014is a classic way to master nested loops and conditional logic. Many such patterns involve different behavior for different rows and columns, requiring careful use of if-statements to decide what symbol to print at each position.\n\nYour program must read a positive integer `n` and print an n \u00d7 n grid. For each cell (row i, column j, both starting from 1), print \"#\" if i equals j (the main diagonal), print \"*\" if i + j equals n + 1 (the anti-diagonal), and print \".\" otherwise.\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (i == j) {\n                printf(\"#\");\n            } else if (i + j == n + 1) {\n                printf(\"*\");\n            } else {\n                printf(\".\");\n            }\n        }\n        printf(\"\\n\");\n    }\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "3",
+          "expected_output": "#.*\n.#.\n*.#"
+        },
+        {
+          "input": "4",
+          "expected_output": "#..*\n.#*.\n.*#.\n*.#"
+        },
+        {
+          "input": "1",
+          "expected_output": "#"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpia01y3kv\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpia01y3kv\\solution.c:26:1: error: expected identifier or '(' at end of input\n   26 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Interest Calculation with Monthly Compounding",
+      "description": "**\nCompound interest is the foundation of financial calculations in banking and investment. Unlike simple interest, compound interest accrues on both the principal and previously earned interest, and it can compound at different frequencies (annually, quarterly, monthly, or daily). Calculating the final balance requires applying a multiplicative factor repeatedly over a number of time periods.\n\nYour program must read an initial principal amount (in cents), an annual interest rate (as a percentage), and a number of months. Compute and print the final balance (in cents, as an integer) after applying monthly compound interest for the given duration. The monthly interest rate is the annual rate divided by 12, and each month the balance is multiplied by (1 + monthly_rate / 100).\n\n**WORKED EXAMPLE:**\nInput: 10000 cents, 12% annual, 2 months \u2192 month 1: 10000 \u00d7 1.01 = 10100 \u2192 month 2: 10100 \u00d7 1.01 = 10201. Output: 10201\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int principal, months;\n    double annual_rate;\n    scanf(\"%d %lf %d\", &principal, &annual_rate, &months);\n    \n    double monthly_rate = annual_rate / 12.0;\n    double balance = principal;\n    \n    for (int i = 0; i < months; i++) {\n        balance = balance * (1.0 + monthly_rate / 100.0);\n    }\n    \n    printf(\"%d\\n\", (int)(balance + 0.5));\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "10000 12 2",
+          "expected_output": "10201"
+        },
+        {
+          "input": "5000 10 1",
+          "expected_output": "5042"
+        },
+        {
+          "input": "100000 6 12",
+          "expected_output": "106168"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpogv0nz8i\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpogv0nz8i\\solution.c:23:1: error: expected identifier or '(' at end of input\n   23 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "** Digit Sum Until Single Digit",
+      "description": "**\nThe digital root of a number is obtained by repeatedly summing its digits until a single digit remains. This operation has applications in number theory, digital signature verification, and checksum algorithms. Computing the digital root requires a loop that continues until a termination condition is met, and inside each iteration, another loop that extracts and sums individual digits.\n\nYour program must read a positive integer and repeatedly sum its digits until only a single digit remains. Print all intermediate sums (including the original number) one per line, ending with the final single digit.\n\n**WORKED EXAMPLE:**\nInput: 38 \u2192 sum of digits: 3 + 8 = 11 \u2192 sum of digits: 1 + 1 = 2. Output: 38, 11, 2 each on separate lines.\n\n**",
+      "solution": "**\n\n#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    \n    printf(\"%d\\n\", n);\n    \n    while (n >= 10) {\n        int sum = 0;\n        while (n > 0) {\n            sum += n % 10;\n            n /= 10;\n        }\n        n = sum;\n        printf(\"%d\\n\", n);\n    }\n    \n    return 0;\n}\n\n\n**",
+      "test_cases": [
+        {
+          "input": "38",
+          "expected_output": "38\n11\n2"
+        },
+        {
+          "input": "9",
+          "expected_output": "9"
+        },
+        {
+          "input": "999",
+          "expected_output": "999\n27\n9"
+        }
+      ],
+      "validation": {
+        "compiled": false,
+        "compilation_error": "In file included from C:/msys64/mingw64/include/_mingw.h:289,\n                 from C:/msys64/mingw64/include/corecrt.h:10,\n                 from C:/msys64/mingw64/include/corecrt_stdio_config.h:10,\n                 from C:/msys64/mingw64/include/stdio.h:9,\n                 from C:\\Users\\saras\\AppData\\Local\\Temp\\tmpszfev114\\solution.c:3:\nC:/msys64/mingw64/include/vadefs.h:14:9: error: expected identifier or '(' before '#pragma'\n   14 | #pragma pack(push,_CRT_PACKING)\n      |         ^~~~\nC:/msys64/mingw64/include/vadefs.h:31:11: error: unknown type name '__gnuc_va_list'\n   31 |   typedef __gnuc_va_list va_list;\n      |           ^~~~~~~~~~~~~~\nC:\\Users\\saras\\AppData\\Local\\Temp\\tmpszfev114\\solution.c:25:1: error: expected identifier or '(' at end of input\n   25 | **\n      | ^\n",
+        "test_results": [],
+        "all_passed": false
+      },
+      "valid": false
+    }
+  ]
+}

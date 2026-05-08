@@ -1,0 +1,160 @@
+{
+  "generated_at": "2026-05-08T17:15:26.279699",
+  "provider": "gemini",
+  "num_tasks": 3,
+  "tasks": [
+    {
+      "title": "Sum of Multiples in a Range",
+      "description": "Conditionals allow programs to make decisions, and loops enable repetitive execution of code. Combining these, we can process sequences of data, checking a condition for each item and performing an action if the condition is met. This pattern is common in data filtering and aggregation tasks, such as calculating the total sales of specific product categories or summing up particular financial transactions.\n\nYour task is to write a C program that reads three integers from standard input: `start`, `end`, and `divisor`. The program should then calculate the sum of all integers within the inclusive range `[start, end]` that are perfectly divisible by `divisor`. Print the final sum to standard output, followed by a newline. Assume `start` is always less than or equal to `end` (`start <= end`), and `divisor` is always a positive integer (`divisor > 0`).\n\nWORKED EXAMPLE:\nInput: 1 10 3 \u2192 sum: 0 \u2192 3 \u2192 6 \u2192 9 \u2192 12 \u2192 15 \u2192 18. Output: 18.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int start, end, divisor;\n    long long sum = 0; // Use long long for sum to prevent overflow with large ranges/numbers\n\n    // Read input values\n    if (scanf(\"%d %d %d\", &start, &end, &divisor) != 3) {\n        // Handle potential input error, though problem statement implies valid input\n        return 1;\n    }\n\n    // Loop through the range\n    for (int i = start; i <= end; i++) {\n        // Check if the current number is divisible by the divisor\n        if (i % divisor == 0) {\n            sum += i; // Add to sum if divisible\n        }\n    }\n\n    // Print the final sum\n    printf(\"%lld\\n\", sum);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1 10 3",
+          "expected_output": "18"
+        },
+        {
+          "input": "5 25 5",
+          "expected_output": "75"
+        },
+        {
+          "input": "10 12 7",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 10 3",
+            "expected": "18",
+            "actual": "18",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 25 5",
+            "expected": "75",
+            "actual": "75",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10 12 7",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Character Type Counter",
+      "description": "When processing text input, it's often useful to categorize characters based on their type (e.g., letter, digit, punctuation). Conditionals, especially `if-else if` structures, are ideal for this classification, allowing different code paths for different character types. Loops enable us to process a stream of characters until a specific end condition, like the end-of-file, is encountered. This technique is fundamental in tasks like validating user input, simple text analysis, or even rudimentary lexical analysis in compilers.\n\nYour task is to write a C program that reads characters from standard input one by one until the end-of-file (EOF) is reached. The program should count the total number of uppercase letters, lowercase letters, digits, and all other characters. Finally, print these four counts on separate lines, in the order: uppercase, lowercase, digits, others. Each count should be preceded by a label (e.g., \"Uppercase: 5\").",
+      "solution": "#include <stdio.h>\n#include <ctype.h> // Required for isupper, islower, isdigit\n\nint main() {\n    int c;\n    int uppercase_count = 0;\n    int lowercase_count = 0;\n    int digit_count = 0;\n    int other_count = 0;\n\n    // Read characters until EOF\n    while ((c = getchar()) != EOF) {\n        if (isupper(c)) {\n            uppercase_count++;\n        } else if (islower(c)) {\n            lowercase_count++;\n        } else if (isdigit(c)) {\n            digit_count++;\n        } else {\n            other_count++;\n        }\n    }\n\n    // Print the counts\n    printf(\"Uppercase: %d\\n\", uppercase_count);\n    printf(\"Lowercase: %d\\n\", lowercase_count);\n    printf(\"Digits: %d\\n\", digit_count);\n    printf(\"Others: %d\\n\", other_count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello, World! 123",
+          "expected_output": "Uppercase: 2\nLowercase: 8\nDigits: 3\nOthers: 3"
+        },
+        {
+          "input": "Programming is FUN!",
+          "expected_output": "Uppercase: 4\nLowercase: 12\nDigits: 0\nOthers: 3"
+        },
+        {
+          "input": "A1B2c3",
+          "expected_output": "Uppercase: 2\nLowercase: 1\nDigits: 3\nOthers: 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello, World! 123",
+            "expected": "Uppercase: 2\nLowercase: 8\nDigits: 3\nOthers: 3",
+            "actual": "Uppercase: 2\nLowercase: 8\nDigits: 3\nOthers: 4",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Programming is FUN!",
+            "expected": "Uppercase: 4\nLowercase: 12\nDigits: 0\nOthers: 3",
+            "actual": "Uppercase: 4\nLowercase: 12\nDigits: 0\nOthers: 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "A1B2c3",
+            "expected": "Uppercase: 2\nLowercase: 1\nDigits: 3\nOthers: 0",
+            "actual": "Uppercase: 2\nLowercase: 1\nDigits: 3\nOthers: 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Grade Distribution Analyzer",
+      "description": "In educational settings, evaluating student performance often involves assigning grades based on numerical scores. This process typically uses a series of conditional checks to determine which grade range a score falls into. When analyzing the performance of an entire class, we often need to apply this grading logic repeatedly for each student's score, making loops an indispensable tool. This combination of loops and conditionals allows for efficient processing and summarization of data, such as calculating the distribution of grades in a course.\n\nYour task is to write a C program that first reads an integer `N`, representing the number of student scores that follow. Then, the program should read `N` integer scores, one by one. Each score will be between 0 and 100, inclusive. For each score, determine its grade category: 'A' (90-100), 'B' (80-89), 'C' (70-79), 'D' (60-69), or 'F' (0-59). After processing all `N` scores, print the total count for each grade category on separate lines, in the order: A, B, C, D, F. Each count should be preceded by a label (e.g., \"A: 5\").",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    int score;\n    int count_A = 0;\n    int count_B = 0;\n    int count_C = 0;\n    int count_D = 0;\n    int count_F = 0;\n\n    // Read the number of scores\n    if (scanf(\"%d\", &N) != 1) {\n        return 1; // Input error\n    }\n\n    // Loop N times to read and categorize each score\n    for (int i = 0; i < N; i++) {\n        if (scanf(\"%d\", &score) != 1) {\n            return 1; // Input error\n        }\n\n        // Categorize the score using if-else if ladder\n        if (score >= 90 && score <= 100) {\n            count_A++;\n        } else if (score >= 80 && score <= 89) {\n            count_B++;\n        } else if (score >= 70 && score <= 79) {\n            count_C++;\n        } else if (score >= 60 && score <= 69) {\n            count_D++;\n        } else if (score >= 0 && score <= 59) { // Explicitly check range for F\n            count_F++;\n        }\n        // Assuming scores are always within 0-100 as per description\n    }\n\n    // Print the final counts for each grade\n    printf(\"A: %d\\n\", count_A);\n    printf(\"B: %d\\n\", count_B);\n    printf(\"C: %d\\n\", count_C);\n    printf(\"D: %d\\n\", count_D);\n    printf(\"F: %d\\n\", count_F);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n95\n82\n70\n55\n90",
+          "expected_output": "A: 2\nB: 1\nC: 1\nD: 0\nF: 1"
+        },
+        {
+          "input": "3\n60\n65\n69",
+          "expected_output": "A: 0\nB: 0\nC: 0\nD: 3\nF: 0"
+        },
+        {
+          "input": "0",
+          "expected_output": "A: 0\nB: 0\nC: 0\nD: 0\nF: 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n95\n82\n70\n55\n90",
+            "expected": "A: 2\nB: 1\nC: 1\nD: 0\nF: 1",
+            "actual": "A: 2\nB: 1\nC: 1\nD: 0\nF: 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3\n60\n65\n69",
+            "expected": "A: 0\nB: 0\nC: 0\nD: 3\nF: 0",
+            "actual": "A: 0\nB: 0\nC: 0\nD: 3\nF: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0",
+            "expected": "A: 0\nB: 0\nC: 0\nD: 0\nF: 0",
+            "actual": "A: 0\nB: 0\nC: 0\nD: 0\nF: 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

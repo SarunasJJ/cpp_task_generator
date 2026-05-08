@@ -79,7 +79,10 @@ class ResponseParser:
 
             for inp, out in pairs:
                 test_cases.append(
-                    {"input": inp.strip(), "expected_output": out.strip()}
+                    {
+                        "input": inp.strip().strip("`"),
+                        "expected_output": out.strip().strip("`"),
+                    }
                 )
 
         return test_cases

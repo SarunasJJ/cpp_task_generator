@@ -1,0 +1,505 @@
+{
+  "generated_at": "2026-05-08T17:50:12.251081",
+  "provider": "claude",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Sum of Even Numbers in a Range",
+      "description": "When processing numerical data, we often need to filter values based on a condition and then aggregate them. For example, analyzing sales records might require summing only transactions above a certain threshold, or summing values that meet specific criteria. This filtering and accumulation pattern is fundamental to data processing.\n\nYour program must read a starting integer and an ending integer from stdin, then calculate and print the sum of all even integers (including the endpoints if they are even) that fall within that range. If no even numbers exist in the range, print 0. Both starting and ending integers can be negative or zero. The starting integer may be greater than, equal to, or less than the ending integer.\n\nWORKED EXAMPLE:\nInput: 2 8 \u2192 sum: 2 \u2192 4 \u2192 6 \u2192 8. Output: 20",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int start, end;\n    scanf(\"%d %d\", &start, &end);\n    \n    int min = (start < end) ? start : end;\n    int max = (start < end) ? end : start;\n    \n    int sum = 0;\n    for (int i = min; i <= max; i++) {\n        if (i % 2 == 0) {\n            sum += i;\n        }\n    }\n    \n    printf(\"%d\\n\", sum);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "2 8",
+          "expected_output": "20"
+        },
+        {
+          "input": "-5 -1",
+          "expected_output": "-6"
+        },
+        {
+          "input": "7 7",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "2 8",
+            "expected": "20",
+            "actual": "20",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-5 -1",
+            "expected": "-6",
+            "actual": "-6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "7 7",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Countdown with Condition",
+      "description": "Loops often need to terminate based on a condition rather than a fixed count. Monitoring systems, for instance, might count down from a starting value but stop early if a threshold is breached. Understanding how to combine a loop with conditional termination allows you to write flexible control structures.\n\nYour program must read a starting positive integer from stdin and count down by 1 each iteration, printing each value. However, if at any point the value becomes less than or equal to a multiple of 5, the countdown must stop immediately (before printing that value). Print each value on a separate line.\n\nWORKED EXAMPLE:\nInput: 12 \u2192 print: 12 \u2192 11 \u2192 10, stop before printing 10. Output: 12, 11 on separate lines",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    for (int i = n; i > 0; i--) {\n        if (i % 5 == 0) {\n            break;\n        }\n        printf(\"%d\\n\", i);\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12",
+          "expected_output": "12\n11"
+        },
+        {
+          "input": "5",
+          "expected_output": "Input: 23\nExpected Output: 23\n22\n21"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12",
+            "expected": "12\n11",
+            "actual": "12\n11",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5",
+            "expected": "Input: 23\nExpected Output: 23\n22\n21",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Password Strength Checker",
+      "description": "Security systems often validate passwords by checking multiple criteria: length, presence of uppercase letters, lowercase letters, and digits. A password is typically considered strong only if it meets all or most of these requirements. This decision-making based on accumulated evidence from a single input is a common pattern.\n\nYour program must read a single word (password string) from stdin and determine its strength. Count the password as strong if it contains at least 8 characters AND contains at least one digit. Otherwise, count it as weak. Print \"Strong\" if the password is strong, or \"Weak\" if it is not.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char password[100];\n    scanf(\"%s\", password);\n    \n    int length = strlen(password);\n    int has_digit = 0;\n    \n    for (int i = 0; password[i] != '\\0'; i++) {\n        if (isdigit(password[i])) {\n            has_digit = 1;\n            break;\n        }\n    }\n    \n    if (length >= 8 && has_digit) {\n        printf(\"Strong\\n\");\n    } else {\n        printf(\"Weak\\n\");\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "mypassword123",
+          "expected_output": "Strong"
+        },
+        {
+          "input": "short1",
+          "expected_output": "Weak"
+        },
+        {
+          "input": "pass1234",
+          "expected_output": "Strong"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "mypassword123",
+            "expected": "Strong",
+            "actual": "Strong",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "short1",
+            "expected": "Weak",
+            "actual": "Weak",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "pass1234",
+            "expected": "Strong",
+            "actual": "Strong",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Grade Converter",
+      "description": "Educational systems convert numerical scores into letter grades using a scale of ranges. For example, 90\u2013100 might be an A, 80\u201389 a B, and so on. Often, a program must read multiple scores and convert each one, accumulating the results or making decisions based on the grades received.\n\nYour program must read an integer representing a numerical score, then determine and print the corresponding letter grade. Use this scale: 90 or above is A; 80 to 89 is B; 70 to 79 is C; 60 to 69 is D; below 60 is F. Additionally, count how many scores fall into each grade category by reading scores repeatedly until the input ends (EOF). Print the letter grade of the first score, then on subsequent lines print how many scores of each grade were encountered in total.\n\nWORKED EXAMPLE:\nInput: 95 87 72 58 91 \u2192 grades A B C F A \u2192 counts: A=2, B=1, C=1, D=0, F=1",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int score;\n    int count_a = 0, count_b = 0, count_c = 0, count_d = 0, count_f = 0;\n    char first_grade = '\\0';\n    int first = 1;\n    \n    while (scanf(\"%d\", &score) == 1) {\n        char grade;\n        if (score >= 90) {\n            grade = 'A';\n            count_a++;\n        } else if (score >= 80) {\n            grade = 'B';\n            count_b++;\n        } else if (score >= 70) {\n            grade = 'C';\n            count_c++;\n        } else if (score >= 60) {\n            grade = 'D';\n            count_d++;\n        } else {\n            grade = 'F';\n            count_f++;\n        }\n        \n        if (first) {\n            first_grade = grade;\n            first = 0;\n        }\n    }\n    \n    printf(\"%c\\n\", first_grade);\n    printf(\"A: %d\\n\", count_a);\n    printf(\"B: %d\\n\", count_b);\n    printf(\"C: %d\\n\", count_c);\n    printf(\"D: %d\\n\", count_d);\n    printf(\"F: %d\\n\", count_f);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "95 87 72 58 91",
+          "expected_output": "A\nA: 2\nB: 1\nC: 1\nD: 0\nF: 1"
+        },
+        {
+          "input": "60",
+          "expected_output": "D\nA: 0\nB: 0\nC: 0\nD: 1\nF: 0"
+        },
+        {
+          "input": "45 55 65 75 85 95",
+          "expected_output": "F\nA: 1\nB: 1\nC: 0\nD: 1\nF: 2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "95 87 72 58 91",
+            "expected": "A\nA: 2\nB: 1\nC: 1\nD: 0\nF: 1",
+            "actual": "A\nA: 2\nB: 1\nC: 1\nD: 0\nF: 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "60",
+            "expected": "D\nA: 0\nB: 0\nC: 0\nD: 1\nF: 0",
+            "actual": "D\nA: 0\nB: 0\nC: 0\nD: 1\nF: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "45 55 65 75 85 95",
+            "expected": "F\nA: 1\nB: 1\nC: 0\nD: 1\nF: 2",
+            "actual": "F\nA: 1\nB: 1\nC: 1\nD: 1\nF: 2",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Divisor Counter",
+      "description": "Finding all divisors of a number is a common task in number theory and debugging. The algorithm iterates through potential divisors and tests each one. This combines iteration with conditional checking and counting, which builds the foundation for more complex mathematical operations.\n\nYour program must read a positive integer from stdin and count how many divisors it has (including 1 and the number itself). Print the count. A divisor is any positive integer that divides the number evenly with no remainder.\n\nWORKED EXAMPLE:\nInput: 12 \u2192 check 1, 2, 3, 4, 6, 12 \u2192 count: 6. Output: 6",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    int count = 0;\n    for (int i = 1; i <= n; i++) {\n        if (n % i == 0) {\n            count++;\n        }\n    }\n    \n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12",
+          "expected_output": "6"
+        },
+        {
+          "input": "1",
+          "expected_output": "1"
+        },
+        {
+          "input": "17",
+          "expected_output": "2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "17",
+            "expected": "2",
+            "actual": "2",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Digit Sum Calculator",
+      "description": "Processing individual digits of a number requires repeatedly extracting them and performing operations on each. This is useful in checksum calculations, number validation, and data analysis. By combining a loop with modulo and division operations, you can decompose a number into its parts and analyze them.\n\nYour program must read a non-negative integer and calculate the sum of all its digits. For example, the digits of 345 are 3, 4, and 5, and their sum is 12. Print the sum.\n\nWORKED EXAMPLE:\nInput: 345 \u2192 digit sum: 3 \u2192 7 \u2192 12. Output: 12",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    int sum = 0;\n    int temp = n;\n    \n    do {\n        int digit = temp % 10;\n        sum += digit;\n        temp /= 10;\n    } while (temp > 0);\n    \n    printf(\"%d\\n\", sum);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "345",
+          "expected_output": "12"
+        },
+        {
+          "input": "0",
+          "expected_output": "0"
+        },
+        {
+          "input": "1000",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "345",
+            "expected": "12",
+            "actual": "12",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1000",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Multiplication Table with Condition",
+      "description": "Tables and grids are often used to display computed values, but not all entries are always needed. For instance, a multiplication reference might skip certain rows or columns based on conditions. Combining nested loops with selective printing allows you to generate structured output that meets specific requirements.\n\nYour program must read a positive integer n from stdin and print an n \u00d7 n multiplication table. However, only print a cell (i, j) if both i and j are odd. Print the table with rows and columns separated by spaces, with each row on its own line.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (i % 2 == 1 && j % 2 == 1) {\n                printf(\"%d \", i * j);\n            }\n        }\n        printf(\"\\n\");\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3",
+          "expected_output": "1 3 \n 3 9"
+        },
+        {
+          "input": "5",
+          "expected_output": "1 3 5 \n 3 9 15 \n 5 15 25"
+        },
+        {
+          "input": "2",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3",
+            "expected": "1 3 \n 3 9",
+            "actual": "1 3 \n\n3 9",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5",
+            "expected": "1 3 5 \n 3 9 15 \n 5 15 25",
+            "actual": "1 3 5 \n\n3 9 15 \n\n5 15 25",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Fibonacci Sequence Printer",
+      "description": "The Fibonacci sequence, where each term is the sum of the two preceding ones, appears in nature and mathematics. Generating it requires maintaining two variables that are updated in lockstep, each iteration replacing them with new values. This pattern of state update is crucial for simulating processes and generating sequences.\n\nYour program must read a positive integer n from stdin and print the first n numbers of the Fibonacci sequence. The sequence starts with 0 and 1. Print each number on a separate line.\n\nWORKED EXAMPLE:\nInput: 5 \u2192 sequence: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 3. Output: 0, 1, 1, 2, 3 on separate lines",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    if (n <= 0) {\n        return 0;\n    }\n    \n    int a = 0, b = 1;\n    printf(\"%d\\n\", a);\n    \n    for (int i = 1; i < n; i++) {\n        printf(\"%d\\n\", b);\n        int temp = a + b;\n        a = b;\n        b = temp;\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "0\n1\n1\n2\n3"
+        },
+        {
+          "input": "1",
+          "expected_output": "0"
+        },
+        {
+          "input": "8",
+          "expected_output": "0\n1\n1\n2\n3\n5\n8\n13"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5",
+            "expected": "0\n1\n1\n2\n3",
+            "actual": "0\n1\n1\n2\n3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "8",
+            "expected": "0\n1\n1\n2\n3\n5\n8\n13",
+            "actual": "0\n1\n1\n2\n3\n5\n8\n13",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Vowel Counter",
+      "description": "Text analysis often requires scanning through a string and categorizing characters. Vowels are frequently extracted for tasks like syllable counting, readability scoring, or text processing. By iterating through a string and conditionally counting specific characters, you can extract meaningful statistics from text data.\n\nYour program must read a single word from stdin and count how many vowels it contains. Vowels are the letters a, e, i, o, and u (case-insensitive). Print the count.\n\nWORKED EXAMPLE:\nInput: beautiful \u2192 count: e \u2192 a \u2192 u \u2192 i \u2192 total 4. Output: 4",
+      "solution": "#include <stdio.h>\n#include <ctype.h>\n#include <string.h>\n\nint main(void) {\n    char word[100];\n    scanf(\"%s\", word);\n    \n    int count = 0;\n    for (int i = 0; word[i] != '\\0'; i++) {\n        char c = tolower(word[i]);\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n            count++;\n        }\n    }\n    \n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "beautiful",
+          "expected_output": "4"
+        },
+        {
+          "input": "xyz",
+          "expected_output": "0"
+        },
+        {
+          "input": "AEIOUaeiou",
+          "expected_output": "10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "beautiful",
+            "expected": "4",
+            "actual": "5",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "xyz",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "AEIOUaeiou",
+            "expected": "10",
+            "actual": "10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Reverse Number Printer",
+      "description": "Reversing a number is useful in palindrome checking, number validation, and some cryptographic operations. To reverse a number, you extract digits one by one from the end and reconstruct them in opposite order. This process combines digit extraction with accumulation into a new value, demonstrating the power of loops for transformation.\n\nYour program must read a positive integer and print its digits in reverse order, one digit per line. For example, 12345 should print 5, then 4, then 3, then 2, then 1.\n\nWORKED EXAMPLE:\nInput: 12345 \u2192 extract 5 \u2192 4 \u2192 3 \u2192 2 \u2192 1. Output: 5, 4, 3, 2, 1 on separate lines",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    while (n > 0) {\n        int digit = n % 10;\n        printf(\"%d\\n\", digit);\n        n /= 10;\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12345",
+          "expected_output": "5\n4\n3\n2\n1"
+        },
+        {
+          "input": "100",
+          "expected_output": "0\n0\n1"
+        },
+        {
+          "input": "7",
+          "expected_output": "7"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12345",
+            "expected": "5\n4\n3\n2\n1",
+            "actual": "5\n4\n3\n2\n1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100",
+            "expected": "0\n0\n1",
+            "actual": "0\n0\n1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "7",
+            "expected": "7",
+            "actual": "7",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

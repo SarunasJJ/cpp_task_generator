@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:38:37.397432",
+  "provider": "gemini",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Sum of Even or Odd Numbers in a Range",
+      "description": "Loops are fundamental constructs for repeating actions. Combining them with conditional statements allows programs to process data selectively, for example, by summing only numbers that meet specific criteria within a given range. This is useful in many applications, from data analysis to game development, where you might need to process subsets of information based on certain properties.\n\nYour program must read three inputs from standard input: two integers representing the start and end of a range (inclusive), and then a single character. The character will be 'E' (for even) or 'O' (for odd), case-insensitive. You must calculate the sum of all numbers within the specified range that satisfy the parity condition indicated by the character. The range will always be valid, with the start less than or equal to the end (1 <= start <= end <= 1000). Print the final sum to standard output, followed by a newline.\n\nWORKED EXAMPLE:\nInput: 1 5 E \u2192 sum: 0 \u2192 2 \u2192 6 \u2192 12. Output: 12.",
+      "solution": "#include <stdio.h>\n#include <ctype.h> // For tolower()\n\nint main() {\n    int start, end;\n    char parity_choice_char;\n    int sum = 0;\n\n    if (scanf(\"%d %d %c\", &start, &end, &parity_choice_char) != 3) {\n        // Handle input error\n        return 1;\n    }\n\n    char parity_choice = tolower(parity_choice_char);\n\n    if (parity_choice == 'e') {\n        for (int i = start; i <= end; i++) {\n            if (i % 2 == 0) {\n                sum += i;\n            }\n        }\n    } else if (parity_choice == 'o') {\n        for (int i = start; i <= end; i++) {\n            if (i % 2 != 0) {\n                sum += i;\n            }\n        }\n    }\n    // For any other parity_choice character, the sum remains 0.\n\n    printf(\"%d\\n\", sum);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1 10 E",
+          "expected_output": "30"
+        },
+        {
+          "input": "5 15 o",
+          "expected_output": "60"
+        },
+        {
+          "input": "7 7 E",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 10 E",
+            "expected": "30",
+            "actual": "30",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 15 o",
+            "expected": "60",
+            "actual": "60",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "7 7 E",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Check Primality for Several Numbers",
+      "description": "Determining if a number is prime is a classic problem in computer science and mathematics, essential for cryptography and number theory. A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. Efficiently checking for primality often involves loops and conditional logic to test for divisibility.\n\nYour program should first read an integer `N` (1 <= N <= 10) representing the count of numbers to check. Subsequently, it will read `N` more integers, each between 1 and 1000. For each of these `N` integers, your program must determine if it is a prime number. Print \"Prime\" for prime numbers and \"Not Prime\" for non-prime numbers, each followed by a newline.\n\nWORKED EXAMPLE:\nInput: 3 7 10 13 \u2192 For 7: is prime? Yes. For 10: is prime? No. For 13: is prime? Yes. Output: Prime\\nNot Prime\\nPrime\\n",
+      "solution": "#include <stdio.h>\n#include <math.h> // Required for sqrt function\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1) {\n        return 1; // Error reading N\n    }\n\n    for (int count = 0; count < N; count++) {\n        int num;\n        if (scanf(\"%d\", &num) != 1) {\n            return 1; // Error reading number\n        }\n\n        int is_prime = 1; // Assume prime until proven otherwise\n\n        if (num <= 1) {\n            is_prime = 0; // Numbers less than or equal to 1 are not prime\n        } else if (num == 2) {\n            is_prime = 1; // 2 is prime\n        } else if (num % 2 == 0) {\n            is_prime = 0; // Even numbers greater than 2 are not prime\n        } else {\n            // Check for odd divisors from 3 up to sqrt(num)\n            for (int i = 3; i * i <= num; i += 2) {\n                if (num % i == 0) {\n                    is_prime = 0;\n                    break; // Found a divisor, so not prime\n                }\n            }\n        }\n\n        if (is_prime) {\n            printf(\"Prime\\n\");\n        } else {\n            printf(\"Not Prime\\n\");\n        }\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 7 10 13",
+          "expected_output": "Prime\nNot Prime\nPrime"
+        },
+        {
+          "input": "1 97",
+          "expected_output": "Prime"
+        },
+        {
+          "input": "2 4 1",
+          "expected_output": "Not Prime\nNot Prime"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 7 10 13",
+            "expected": "Prime\nNot Prime\nPrime",
+            "actual": "Prime\nNot Prime\nPrime",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 97",
+            "expected": "Prime",
+            "actual": "Prime",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2 4 1",
+            "expected": "Not Prime\nNot Prime",
+            "actual": "Not Prime\nNot Prime",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Factorial with Input Validation",
+      "description": "The factorial function, denoted by `n!`, is a mathematical operation that multiplies an integer by all the positive integers below it (e.g., 5! = 5 * 4 * 3 * 2 * 1). It is frequently encountered in probability, combinatorics, and algorithm analysis. While the concept is simple, computing factorials requires careful handling of input, as factorials are only defined for non-negative integers.\n\nYour program must read a single integer `num` from standard input. If `num` is negative, print \"Error: Negative input.\" followed by a newline. If `num` is zero, print \"1\" (since 0! = 1) followed by a newline. Otherwise (for positive `num`, 1 <= num <= 12 to avoid `long long` overflow), calculate its factorial using a loop and print the result followed by a newline.\n\nWORKED EXAMPLE:\nInput: 4 \u2192 factorial: 1 \u2192 2 \u2192 6 \u2192 24. Output: 24.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num;\n    long long factorial = 1; // Use long long to handle larger factorial values\n\n    if (scanf(\"%d\", &num) != 1) {\n        // Handle input error\n        return 1;\n    }\n\n    if (num < 0) {\n        printf(\"Error: Negative input.\\n\");\n    } else if (num == 0) {\n        printf(\"1\\n\"); // 0! is defined as 1\n    } else {\n        // Calculate factorial for positive num\n        for (int i = 1; i <= num; i++) {\n            factorial *= i;\n        }\n        printf(\"%lld\\n\", factorial);\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "120"
+        },
+        {
+          "input": "0",
+          "expected_output": "1"
+        },
+        {
+          "input": "-3",
+          "expected_output": "Error: Negative input."
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5",
+            "expected": "120",
+            "actual": "120",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-3",
+            "expected": "Error: Negative input.",
+            "actual": "Error: Negative input.",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Reverse Digits of an Integer",
+      "description": "Manipulating the digits of a number is a common exercise that helps in understanding integer arithmetic and control flow. Reversing the digits of an integer can be useful in puzzles, data encoding, or generating palindromes. This process typically involves repeatedly extracting the last digit and constructing a new number.\n\nYour program must read a single integer from standard input. It should then reverse the order of its digits. For example, if the input is 123, the output should be 321. If the input is negative, the sign should be preserved (e.g., -123 becomes -321). Handle the case of zero correctly (0 remains 0). The input integer will be within the range [-1000000, 1000000]. Print the reversed integer followed by a newline.\n\nWORKED EXAMPLE:\nInput: 5432 \u2192 reversed_num: 0 \u2192 2 \u2192 23 \u2192 234 \u2192 2345. Output: 2345.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // Required for abs()\n\nint main() {\n    int num;\n    if (scanf(\"%d\", &num) != 1) {\n        // Handle input error\n        return 1;\n    }\n\n    int reversed_num = 0;\n    int sign = 1; // Stores the sign of the original number\n\n    if (num == 0) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    if (num < 0) {\n        sign = -1;\n        num = abs(num); // Work with the positive magnitude\n    }\n\n    // Loop to extract digits and build the reversed number\n    while (num > 0) {\n        int digit = num % 10;\n        reversed_num = reversed_num * 10 + digit;\n        num /= 10;\n    }\n\n    printf(\"%d\\n\", reversed_num * sign); // Apply the original sign\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12345",
+          "expected_output": "54321"
+        },
+        {
+          "input": "-987",
+          "expected_output": "-789"
+        },
+        {
+          "input": "0",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12345",
+            "expected": "54321",
+            "actual": "54321",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-987",
+            "expected": "-789",
+            "actual": "-789",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Digits and Parity in a Number",
+      "description": "Analyzing the structure of numbers is a common task in programming. For example, understanding how many digits a number has, or how many of those digits are even versus odd, can be useful for data validation, formatting, or certain cryptographic algorithms. This requires extracting each digit and applying conditional logic.\n\nYour program must read a single positive integer `N` (1 <= N <= 1000000000) from standard input. It should then count the total number of digits, the number of even digits, and the number of odd digits within `N`. For example, for the number 12345, there are 5 total digits, 2 even digits (2, 4), and 3 odd digits (1, 3, 5). Print these three counts, each on a new line, in the order: Total Digits, Even Digits, Odd Digits.\n\nWORKED EXAMPLE:\nInput: 123456 \u2192 total: 0 \u2192 1 \u2192 2 \u2192 3 \u2192 4 \u2192 5 \u2192 6. even: 0 \u2192 1 \u2192 2 \u2192 3. odd: 0 \u2192 1 \u2192 2 \u2192 3. Output: 6\\n3\\n3\\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1) {\n        // Handle input error\n        return 1;\n    }\n\n    int total_digits = 0;\n    int even_digits = 0;\n    int odd_digits = 0;\n\n    if (N == 0) { // Special case for 0 (though problem specifies N >= 1)\n        total_digits = 1;\n        even_digits = 1; // 0 is an even digit\n        odd_digits = 0;\n    } else {\n        int temp_N = N; // Use a temporary variable to modify\n        while (temp_N > 0) {\n            int digit = temp_N % 10;\n            total_digits++;\n\n            if (digit % 2 == 0) {\n                even_digits++;\n            } else {\n                odd_digits++;\n            }\n            temp_N /= 10;\n        }\n    }\n\n    printf(\"%d\\n\", total_digits);\n    printf(\"%d\\n\", even_digits);\n    printf(\"%d\\n\", odd_digits);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12345",
+          "expected_output": "5\n2\n3"
+        },
+        {
+          "input": "8642",
+          "expected_output": "4\n4\n0"
+        },
+        {
+          "input": "13579",
+          "expected_output": "5\n0\n5"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12345",
+            "expected": "5\n2\n3",
+            "actual": "5\n2\n3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "8642",
+            "expected": "4\n4\n0",
+            "actual": "4\n4\n0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "13579",
+            "expected": "5\n0\n5",
+            "actual": "5\n0\n5",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Calculate Greatest Common Divisor (GCD)",
+      "description": "The Greatest Common Divisor (GCD) of two non-zero integers is the largest positive integer that divides both numbers without leaving a remainder. The Euclidean algorithm is an efficient method for computing the GCD, relying on the principle that the GCD of two numbers also divides their difference, and that it can be found by repeatedly applying the modulo operation. This algorithm is fundamental in number theory and has applications in cryptography and simplifying fractions.\n\nYour program must read two positive integers, `a` and `b` (1 <= a, b <= 1000000), from standard input. Use the Euclidean algorithm with a loop to compute their GCD. Print the calculated GCD to standard output, followed by a newline.\n\nWORKED EXAMPLE:\nInput: 48 18 \u2192 a: 48 18 12 6. b: 18 12 6 0. Output: 6.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    if (scanf(\"%d %d\", &a, &b) != 2) {\n        // Handle input error\n        return 1;\n    }\n\n    // Euclidean algorithm using a while loop\n    while (b != 0) {\n        int temp = b;\n        b = a % b;\n        a = temp;\n    }\n\n    printf(\"%d\\n\", a); // When b becomes 0, a holds the GCD\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "48 18",
+          "expected_output": "6"
+        },
+        {
+          "input": "101 103",
+          "expected_output": "1"
+        },
+        {
+          "input": "7 7",
+          "expected_output": "7"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "48 18",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "101 103",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "7 7",
+            "expected": "7",
+            "actual": "7",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Generate Fibonacci Sequence",
+      "description": "The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. This sequence appears in nature, art, and computer science, modeling growth patterns and serving as a classic example of recursion or iteration. Understanding how to generate this sequence iteratively is a fundamental exercise in using loops and maintaining state.\n\nYour program must read a single non-negative integer `N` (0 <= N <= 20) from standard input, representing the number of Fibonacci terms to generate. Print the first `N` Fibonacci numbers, separated by spaces. If `N` is 0, print nothing (just a newline). If `N` is 1, print \"0\". If `N` is 2, print \"0 1\". Each number should be followed by a single space, and the entire sequence should end with a newline.\n\nWORKED EXAMPLE:\nInput: 5 \u2192 term: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 3. Output: 0 1 1 2 3\\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1) {\n        // Handle input error\n        return 1;\n    }\n\n    if (N == 0) {\n        printf(\"\\n\"); // Print only a newline for N=0\n    } else if (N == 1) {\n        printf(\"0\\n\"); // First term\n    } else {\n        long long a = 0; // Represents F(n-2)\n        long long b = 1; // Represents F(n-1)\n\n        printf(\"%lld\", a); // Print the first term\n        printf(\" %lld\", b); // Print the second term\n\n        // Generate and print subsequent terms\n        for (int i = 3; i <= N; i++) {\n            long long next_term = a + b;\n            printf(\" %lld\", next_term);\n            a = b;\n            b = next_term;\n        }\n        printf(\"\\n\");\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "8",
+          "expected_output": "0 1 1 2 3 5 8 13"
+        },
+        {
+          "input": "1",
+          "expected_output": "0"
+        },
+        {
+          "input": "0",
+          "expected_output": ""
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "8",
+            "expected": "0 1 1 2 3 5 8 13",
+            "actual": "0 1 1 2 3 5 8 13",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0",
+            "expected": "",
+            "actual": "",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Calculate Integer Power (Base to Exponent)",
+      "description": "Calculating the power of a number (base raised to an exponent) is a fundamental mathematical operation. For positive integer exponents, this simply means multiplying the base by itself the number of times indicated by the exponent. This concept is widely used in science, engineering, and finance. Implementing it with a loop provides an excellent way to practice iterative computation.\n\nYour program must read two positive integers from standard input: `base` and `exponent` (0 <= base <= 100, 0 <= exponent <= 10). Calculate `base` raised to the power of `exponent`. Handle the special case where any non-zero `base` raised to the power of 0 is 1. Also, 0 raised to any positive power is 0. 0 raised to 0 can be considered 1 for this problem. Print the result to standard output, followed by a newline.\n\nWORKED EXAMPLE:\nInput: 2 4 \u2192 result: 1 \u2192 2 \u2192 4 \u2192 8 \u2192 16. Output: 16.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int base, exponent;\n    long long result = 1; // Use long long for potential larger results\n\n    if (scanf(\"%d %d\", &base, &exponent) != 2) {\n        // Handle input error\n        return 1;\n    }\n\n    if (exponent == 0) {\n        result = 1; // Any base to the power of 0 is 1 (including 0^0 per problem statement)\n    } else if (base == 0) {\n        result = 0; // 0 to any positive power is 0\n    } else {\n        // Calculate base^exponent using a loop\n        for (int i = 0; i < exponent; i++) {\n            result *= base;\n        }\n    }\n\n    printf(\"%lld\\n\", result);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "2 5",
+          "expected_output": "32"
+        },
+        {
+          "input": "10 0",
+          "expected_output": "1"
+        },
+        {
+          "input": "0 3",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "2 5",
+            "expected": "32",
+            "actual": "32",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "10 0",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0 3",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Average of Positive Numbers Until Negative Input",
+      "description": "Many real-world data collection scenarios involve processing a stream of inputs until a specific \"sentinel\" value signals the end of input. For instance, a sensor might report positive readings, and a negative value could indicate a fault or the end of a measurement session. Using a loop that continues until a sentinel is encountered, combined with conditionals to filter data, is a robust way to handle such dynamic input.\n\nYour program must continuously read integers from standard input. It should calculate the average of all positive integers entered. The input sequence will terminate when a negative integer is entered (this negative integer itself should not be included in the average calculation). If no positive integers are entered before the negative sentinel, print \"No positive numbers entered.\" followed by a newline. Otherwise, print the calculated average (as a double with two decimal places) followed by a newline. The input integers will be within the range [-1000, 1000].\n\nWORKED EXAMPLE:\nInput: 10 20 -5 \u2192 sum: 0 \u2192 10 \u2192 30. count: 0 \u2192 1 \u2192 2. Output: 15.00\\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num;\n    int sum_positives = 0;\n    int count_positives = 0;\n\n    // Loop continues as long as scanf successfully reads an integer and it's non-negative\n    while (scanf(\"%d\", &num) == 1 && num >= 0) {\n        if (num > 0) { // Only count and sum strictly positive numbers\n            sum_positives += num;\n            count_positives++;\n        }\n    }\n    // The loop terminates if a negative number is read or if scanf fails.\n\n    if (count_positives == 0) {\n        printf(\"No positive numbers entered.\\n\");\n    } else {\n        double average = (double)sum_positives / count_positives;\n        printf(\"%.2f\\n\", average);\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10 20 30 -1",
+          "expected_output": "20.00"
+        },
+        {
+          "input": "0 0 0 -5",
+          "expected_output": "No positive numbers entered."
+        },
+        {
+          "input": "5 -2",
+          "expected_output": "5.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 20 30 -1",
+            "expected": "20.00",
+            "actual": "20.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 0 0 -5",
+            "expected": "No positive numbers entered.",
+            "actual": "No positive numbers entered.",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5 -2",
+            "expected": "5.00",
+            "actual": "5.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Analyze Multiple Character Types",
+      "description": "Character classification is a common task when processing text data, such as validating user input, parsing programming languages, or analyzing natural language. Identifying whether a character is a vowel, a digit, or something else often involves using conditional statements to compare character values and ranges.\n\nYour program must first read an integer `N` (1 <= N <= 10) representing the number of characters to analyze. Subsequently, it will read `N` single characters. For each character, classify it as a vowel (case-insensitive 'a', 'e', 'i', 'o', 'u'), a digit ('0'-'9'), or \"Other\". Count how many characters fall into each of these three categories. After processing all `N` characters, print the total count of Vowels, Digits, and Others, each on a new line.\n\nWORKED EXAMPLE:\nInput: 4 A 7 $ b \u2192 vowels: 0 \u2192 1. digits: 0 \u2192 1. others: 0 \u2192 1 \u2192 2. Output: 1\\n1\\n2\\n",
+      "solution": "#include <stdio.h>\n#include <ctype.h> // Required for tolower() and isdigit()\n\nint main() {\n    int N;\n    if (scanf(\"%d\", &N) != 1) {\n        // Handle input error\n        return 1;\n    }\n\n    int vowel_count = 0;\n    int digit_count = 0;\n    int other_count = 0;\n    char ch;\n\n    // Consume the leftover newline character after reading N\n    while (getchar() != '\\n' && getchar() != EOF);\n\n    for (int i = 0; i < N; i++) {\n        // Use a space before %c to skip any whitespace, including newlines\n        if (scanf(\" %c\", &ch) != 1) {\n            // Handle input error\n            return 1;\n        }\n\n        char lower_ch = tolower(ch); // Convert character to lowercase for vowel check\n\n        if (lower_ch == 'a' || lower_ch == 'e' || lower_ch == 'i' || lower_ch == 'o' || lower_ch == 'u') {\n            vowel_count++;\n        } else if (isdigit(ch)) { // Check if the character is a digit\n            digit_count++;\n        } else {\n            // If it's not a vowel and not a digit, it's categorized as \"Other\"\n            other_count++;\n        }\n    }\n\n    printf(\"%d\\n\", vowel_count);\n    printf(\"%d\\n\", digit_count);\n    printf(\"%d\\n\", other_count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 H e L L 0",
+          "expected_output": "1\n1\n3"
+        },
+        {
+          "input": "3 1 % A",
+          "expected_output": "1\n1\n1"
+        },
+        {
+          "input": "2 q w",
+          "expected_output": "0\n0\n2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 H e L L 0",
+            "expected": "1\n1\n3",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 1 % A",
+            "expected": "1\n1\n1",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2 q w",
+            "expected": "0\n0\n2",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    }
+  ]
+}

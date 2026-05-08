@@ -1,0 +1,469 @@
+{
+  "generated_at": "2026-05-08T18:58:44.773782",
+  "provider": "gpt",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Unique Values in a Dynamic List",
+      "description": "Pointers let a program manage data whose size is not known until runtime, which is common when reading user input or processing a file. Dynamic memory allocation makes it possible to create exactly as much storage as needed instead of guessing a fixed maximum size.\n\nRead an integer `n` (`1 <= n <= 1000`), followed by `n` integers. Store the values in dynamically allocated memory, count how many distinct integers appear, and print that count on its own line. Two integers are considered distinct if they have different values. All allocated memory must be released before the program exits.\n\nWORKED EXAMPLE:\nInput: 5 3 7 3 2 7 \u2192 distinct count: 0 \u2192 1 \u2192 2 \u2192 3. Output: 3",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1 || n < 1 || n > 1000) return 0;\n\n    int *arr = (int *)malloc((size_t)n * sizeof(int));\n    if (!arr) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &arr[i]) != 1) {\n            free(arr);\n            return 0;\n        }\n    }\n\n    int distinct = 0;\n    for (int i = 0; i < n; i++) {\n        int seen = 0;\n        for (int j = 0; j < i; j++) {\n            if (arr[j] == arr[i]) {\n                seen = 1;\n                break;\n            }\n        }\n        if (!seen) distinct++;\n    }\n\n    printf(\"%d\\n\", distinct);\n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 3 7 3 2 7",
+          "expected_output": "3"
+        },
+        {
+          "input": "1 42",
+          "expected_output": "1"
+        },
+        {
+          "input": "8 1 1 2 2 3 3 3 4",
+          "expected_output": "4"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 3 7 3 2 7",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 42",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "8 1 1 2 2 3 3 3 4",
+            "expected": "4",
+            "actual": "4",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Reverse a Line In Place",
+      "description": "A string can be stored in a buffer and manipulated directly through pointers, which is useful in text processing tools. Reversing characters in place is a classic example of swapping values through memory addresses.\n\nRead up to 200 characters of text on one line, not including the newline. Reverse the line in dynamically allocated memory and print the reversed text followed by a newline. The input line may be empty, and spaces must be treated as normal characters. All allocated memory must be freed before the program exits.\n\nWORKED EXAMPLE:\nInput: hello world \u2192 text: hello world \u2192 dlrow olleh. Output: dlrow olleh",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main(void) {\n    char buffer[201];\n    if (!fgets(buffer, sizeof(buffer), stdin)) return 0;\n\n    size_t len = strlen(buffer);\n    if (len > 0 && buffer[len - 1] == '\\n') {\n        buffer[len - 1] = '\\0';\n        len--;\n    }\n\n    char *text = (char *)malloc(len + 1);\n    if (!text) return 0;\n\n    for (size_t i = 0; i <= len; i++) {\n        text[i] = buffer[i];\n    }\n\n    for (size_t i = 0; i < len / 2; i++) {\n        char tmp = text[i];\n        text[i] = text[len - 1 - i];\n        text[len - 1 - i] = tmp;\n    }\n\n    printf(\"%s\\n\", text);\n    free(text);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello world",
+          "expected_output": "dlrow olleh"
+        },
+        {
+          "input": "a",
+          "expected_output": "a"
+        },
+        {
+          "input": "",
+          "expected_output": ""
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello world",
+            "expected": "dlrow olleh",
+            "actual": "dlrow olleh",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "a",
+            "expected": "a",
+            "actual": "a",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "",
+            "actual": "",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Running Sum Until Sentinel",
+      "description": "When data arrives one value at a time, pointers and dynamic arrays can help store the values while a loop processes them as they are read. A running sum is a simple cumulative total that changes after each new number is accepted.\n\nRead integers one by one until the value `-1` appears; the sentinel `-1` is not part of the data. There will be at least one number before `-1`, and at most 1000 numbers total. Store the numbers in dynamically allocated memory, compute their sum, and print the sum on its own line. If the first value read is `-1`, print `0`. Free all heap memory before exiting.\n\nWORKED EXAMPLE:\nInput: 4 2 9 -1 \u2192 sum: 0 \u2192 4 \u2192 6 \u2192 15. Output: 15",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int capacity = 8;\n    int count = 0;\n    int *arr = (int *)malloc((size_t)capacity * sizeof(int));\n    if (!arr) return 0;\n\n    while (1) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) {\n            free(arr);\n            return 0;\n        }\n        if (x == -1) break;\n\n        if (count == capacity) {\n            capacity *= 2;\n            int *tmp = (int *)realloc(arr, (size_t)capacity * sizeof(int));\n            if (!tmp) {\n                free(arr);\n                return 0;\n            }\n            arr = tmp;\n        }\n        arr[count++] = x;\n    }\n\n    long long sum = 0;\n    for (int i = 0; i < count; i++) {\n        sum += arr[i];\n    }\n\n    printf(\"%lld\\n\", sum);\n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "4 2 9 -1",
+          "expected_output": "15"
+        },
+        {
+          "input": "-1",
+          "expected_output": "0"
+        },
+        {
+          "input": "10 -5 8 0 -1",
+          "expected_output": "13"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "4 2 9 -1",
+            "expected": "15",
+            "actual": "15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10 -5 8 0 -1",
+            "expected": "13",
+            "actual": "13",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Characters by Class",
+      "description": "Character classification is a common task in text analysis, and pointers to buffers make it easy to inspect each character one at a time. By scanning a line of text, a program can separate letters, digits, spaces, and everything else.\n\nRead one line of text of up to 300 characters, not including the newline. Count how many characters are letters, how many are digits, how many are spaces, and how many are other characters, then print the four counts on one line in that order separated by spaces. The line may be empty. Use only dynamically allocated memory for any copied text, and free it before the program exits.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char temp[301];\n    if (!fgets(temp, sizeof(temp), stdin)) return 0;\n\n    size_t len = strlen(temp);\n    if (len > 0 && temp[len - 1] == '\\n') {\n        temp[len - 1] = '\\0';\n        len--;\n    }\n\n    char *s = (char *)malloc(len + 1);\n    if (!s) return 0;\n\n    for (size_t i = 0; i <= len; i++) s[i] = temp[i];\n\n    int letters = 0, digits = 0, spaces = 0, others = 0;\n    for (size_t i = 0; i < len; i++) {\n        unsigned char c = (unsigned char)s[i];\n        if (isalpha(c)) letters++;\n        else if (isdigit(c)) digits++;\n        else if (isspace(c)) spaces++;\n        else others++;\n    }\n\n    printf(\"%d %d %d %d\\n\", letters, digits, spaces, others);\n    free(s);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello 123!",
+          "expected_output": "5 3 1 1"
+        },
+        {
+          "input": "Expected Output: 0 0 0 0\n\nInput: A b9?",
+          "expected_output": "2 1 1 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello 123!",
+            "expected": "5 3 1 1",
+            "actual": "5 3 1 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Expected Output: 0 0 0 0\n\nInput: A b9?",
+            "expected": "2 1 1 1",
+            "actual": "14 4 5 1",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Expand a Number List with Realloc",
+      "description": "Dynamic arrays are useful when the final amount of data is not known in advance, because memory can be expanded as needed. This is a practical technique in programs that read a stream of values and keep only the meaningful ones.\n\nRead integers until `0` is encountered; the `0` is not part of the data. There will be at most 1000 nonzero integers. Store the nonzero values in a dynamically growing array, then print them in reverse order on one line separated by spaces. If no nonzero integers are read, print a blank line. Free all allocated memory before exiting.\n\nWORKED EXAMPLE:\nInput: 5 -2 8 0 \u2192 stored values: 0 \u2192 5 \u2192 5, -2 \u2192 5, -2, 8 \u2192 reversed: 8 -2 5. Output: 8 -2 5",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int capacity = 4;\n    int count = 0;\n    int *arr = (int *)malloc((size_t)capacity * sizeof(int));\n    if (!arr) return 0;\n\n    while (1) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) {\n            free(arr);\n            return 0;\n        }\n        if (x == 0) break;\n\n        if (count == capacity) {\n            capacity *= 2;\n            int *tmp = (int *)realloc(arr, (size_t)capacity * sizeof(int));\n            if (!tmp) {\n                free(arr);\n                return 0;\n            }\n            arr = tmp;\n        }\n        arr[count++] = x;\n    }\n\n    for (int i = count - 1; i >= 0; i--) {\n        printf(\"%d\", arr[i]);\n        if (i > 0) printf(\" \");\n    }\n    printf(\"\\n\");\n\n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 -2 8 0",
+          "expected_output": "8 -2 5"
+        },
+        {
+          "input": "0",
+          "expected_output": "Input: 1 2 3 4 0\nExpected Output: 4 3 2 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 -2 8 0",
+            "expected": "8 -2 5",
+            "actual": "8 -2 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "Input: 1 2 3 4 0\nExpected Output: 4 3 2 1",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Average of Positive Numbers",
+      "description": "Pointers are often used to pass around arrays so that a program can examine each value and decide whether it should contribute to a result. Filtering data with conditions is a useful foundation for many later problems in statistics and data cleaning.\n\nRead an integer `n` (`1 <= n <= 1000`), followed by `n` integers. Compute the average of the positive numbers only; ignore zeros and negative values. Print the result with exactly two digits after the decimal point, or print `0.00` if there are no positive numbers. Store the input values in dynamically allocated memory and free it before the program exits.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1 || n < 1 || n > 1000) return 0;\n\n    int *arr = (int *)malloc((size_t)n * sizeof(int));\n    if (!arr) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &arr[i]) != 1) {\n            free(arr);\n            return 0;\n        }\n    }\n\n    long long sum = 0;\n    int count = 0;\n    for (int i = 0; i < n; i++) {\n        if (arr[i] > 0) {\n            sum += arr[i];\n            count++;\n        }\n    }\n\n    if (count == 0) {\n        printf(\"0.00\\n\");\n    } else {\n        printf(\"%.2f\\n\", (double)sum / count);\n    }\n\n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 1 -2 3 0 6",
+          "expected_output": "3.33"
+        },
+        {
+          "input": "3 -1 0 -5",
+          "expected_output": "0.00"
+        },
+        {
+          "input": "4 10 10 10 10",
+          "expected_output": "10.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 1 -2 3 0 6",
+            "expected": "3.33",
+            "actual": "3.33",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 -1 0 -5",
+            "expected": "0.00",
+            "actual": "0.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4 10 10 10 10",
+            "expected": "10.00",
+            "actual": "10.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Trim and Copy a Word",
+      "description": "Strings are usually stored as character arrays, and pointers make it possible to walk through them one character at a time. This is useful when cleaning user input before it is stored or compared.\n\nRead one line of text of up to 200 characters, including spaces. Copy only the first contiguous word made of non-space characters into dynamically allocated memory, then print that word followed by a newline. If the line begins with spaces or is empty, print a blank line. Free all allocated memory before exiting.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char temp[201];\n    if (!fgets(temp, sizeof(temp), stdin)) return 0;\n\n    size_t len = strlen(temp);\n    if (len > 0 && temp[len - 1] == '\\n') {\n        temp[len - 1] = '\\0';\n        len--;\n    }\n\n    size_t start = 0;\n    while (start < len && isspace((unsigned char)temp[start])) start++;\n\n    size_t end = start;\n    while (end < len && !isspace((unsigned char)temp[end])) end++;\n\n    size_t word_len = end - start;\n    char *word = (char *)malloc(word_len + 1);\n    if (!word) return 0;\n\n    for (size_t i = 0; i < word_len; i++) {\n        word[i] = temp[start + i];\n    }\n    word[word_len] = '\\0';\n\n    printf(\"%s\\n\", word);\n    free(word);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello world",
+          "expected_output": "hello"
+        },
+        {
+          "input": "Expected Output: \n\nInput: single",
+          "expected_output": "single"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello world",
+            "expected": "hello",
+            "actual": "hello",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Expected Output: \n\nInput: single",
+            "expected": "single",
+            "actual": "Expected",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Compare Two Dynamic Arrays",
+      "description": "Pointer-based arrays allow a program to keep multiple sequences of values and compare them element by element. This is a common pattern in data validation, where two lists must be checked for agreement under simple rules.\n\nRead an integer `n` (`1 <= n <= 1000`), then read two lists of `n` integers each. Determine whether the lists are identical. Print `YES` if every corresponding pair of elements matches, otherwise print `NO`. Store both lists in dynamically allocated memory and free everything before the program exits.\n\nWORKED EXAMPLE:\nInput: 3 1 2 3 1 2 4 \u2192 match result: YES \u2192 NO. Output: NO",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1 || n < 1 || n > 1000) return 0;\n\n    int *a = (int *)malloc((size_t)n * sizeof(int));\n    int *b = (int *)malloc((size_t)n * sizeof(int));\n    if (!a || !b) {\n        free(a);\n        free(b);\n        return 0;\n    }\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &a[i]) != 1) {\n            free(a);\n            free(b);\n            return 0;\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &b[i]) != 1) {\n            free(a);\n            free(b);\n            return 0;\n        }\n    }\n\n    int same = 1;\n    for (int i = 0; i < n; i++) {\n        if (a[i] != b[i]) {\n            same = 0;\n            break;\n        }\n    }\n\n    printf(\"%s\\n\", same ? \"YES\" : \"NO\");\n    free(a);\n    free(b);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 1 2 3 1 2 3",
+          "expected_output": "YES"
+        },
+        {
+          "input": "1 7 8",
+          "expected_output": "NO"
+        },
+        {
+          "input": "5 4 5 6 7 8 4 5 0 7 8",
+          "expected_output": "NO"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 1 2 3 1 2 3",
+            "expected": "YES",
+            "actual": "YES",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 7 8",
+            "expected": "NO",
+            "actual": "NO",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5 4 5 6 7 8 4 5 0 7 8",
+            "expected": "NO",
+            "actual": "NO",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Remove Vowels from Text",
+      "description": "Character-by-character processing is a natural fit for pointers and dynamically allocated buffers. It is often used to filter text, for example when simplifying input before storage or search.\n\nRead one line of text of up to 300 characters, not including the newline. Remove all vowels `A E I O U a e i o u` from the line and print the remaining characters in their original order, followed by a newline. If the line becomes empty, print a blank line. Use dynamically allocated memory for the result and free it before exiting.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main(void) {\n    char temp[301];\n    if (!fgets(temp, sizeof(temp), stdin)) return 0;\n\n    size_t len = strlen(temp);\n    if (len > 0 && temp[len - 1] == '\\n') {\n        temp[len - 1] = '\\0';\n        len--;\n    }\n\n    char *out = (char *)malloc(len + 1);\n    if (!out) return 0;\n\n    size_t k = 0;\n    for (size_t i = 0; i < len; i++) {\n        char c = temp[i];\n        if (c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U' &&\n            c != 'a' && c != 'e' && c != 'i' && c != 'o' && c != 'u') {\n            out[k++] = c;\n        }\n    }\n    out[k] = '\\0';\n\n    printf(\"%s\\n\", out);\n    free(out);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Beautiful day",
+          "expected_output": "Btfl dy"
+        },
+        {
+          "input": "AEIOUaeiou",
+          "expected_output": "Input: C Programming\nExpected Output: C Prgrmmng"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Beautiful day",
+            "expected": "Btfl dy",
+            "actual": "Btfl dy",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "AEIOUaeiou",
+            "expected": "Input: C Programming\nExpected Output: C Prgrmmng",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Find the Last Occurrence",
+      "description": "A pointer can be used to scan through a sequence while remembering the most recent place where a condition was satisfied. This is a useful pattern in searching text or arrays when the last matching element matters more than the first.\n\nRead an integer `n` (`1 <= n <= 1000`), followed by `n` integers and then one target integer `x`. Find the last position where `x` appears in the list using 1-based indexing. Print that position, or print `-1` if `x` does not appear. Store the list in dynamically allocated memory and free it before the program exits.\n\nWORKED EXAMPLE:\nInput: 6 4 1 4 2 4 3 4 \u2192 last position: -1 \u2192 1 \u2192 3 \u2192 5. Output: 5",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1 || n < 1 || n > 1000) return 0;\n\n    int *arr = (int *)malloc((size_t)n * sizeof(int));\n    if (!arr) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &arr[i]) != 1) {\n            free(arr);\n            return 0;\n        }\n    }\n\n    int x;\n    if (scanf(\"%d\", &x) != 1) {\n        free(arr);\n        return 0;\n    }\n\n    int pos = -1;\n    for (int i = 0; i < n; i++) {\n        if (arr[i] == x) pos = i + 1;\n    }\n\n    printf(\"%d\\n\", pos);\n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "6 4 1 4 2 4 3 4",
+          "expected_output": "5"
+        },
+        {
+          "input": "3 1 2 3 9",
+          "expected_output": "-1"
+        },
+        {
+          "input": "5 7 7 8 7 9 7",
+          "expected_output": "4"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "6 4 1 4 2 4 3 4",
+            "expected": "5",
+            "actual": "5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 1 2 3 9",
+            "expected": "-1",
+            "actual": "-1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5 7 7 8 7 9 7",
+            "expected": "4",
+            "actual": "4",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

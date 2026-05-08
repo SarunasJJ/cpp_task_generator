@@ -42,7 +42,7 @@ function WorkedExample({ text }) {
   return (
     <div style={{ background: '#f0f4ff', border: '1px solid #c5d0e6', borderLeft: '4px solid #4a6cf7', borderRadius: '6px', padding: '16px', marginTop: '12px', marginBottom: '4px' }}>
       <div style={{ fontWeight: 'bold', fontSize: '0.85em', color: '#4a6cf7', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '8px' }}>
-        Worked Example
+        Example
       </div>
       <p style={{ margin: 0, color: '#333' }}>{parseInlineMarkdown(text)}</p>
     </div>
@@ -86,21 +86,28 @@ function TaskCard({ task, index }) {
       {(() => {
         const marker = 'WORKED EXAMPLE:';
         const idx = (task.description || '').indexOf(marker);
-        if (idx === -1) {
-          return <p style={{ marginTop: 0 }}><strong>Description:</strong> {task.description}</p>;
-        }
-        const mainDesc = task.description.slice(0, idx).trim();
-        const exampleText = task.description.slice(idx + marker.length).trim();
+        const mainDesc = idx === -1
+          ? (task.description || '').trim()
+          : task.description.slice(0, idx).trim();
+        const exampleText = idx !== -1
+          ? task.description.slice(idx + marker.length).trim()
+          : null;
+        const paragraphs = mainDesc.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
         return (
           <>
-            <p style={{ marginTop: 0 }}><strong>Description:</strong> {mainDesc}</p>
-            <WorkedExample text={exampleText} />
+            <div style={{ marginTop: 0, marginBottom: exampleText ? '4px' : '15px' }}>
+              <strong>Description:</strong>
+              {paragraphs.map((para, i) => (
+                <p key={i} style={{ margin: '8px 0 0 0' }}>{parseInlineMarkdown(para)}</p>
+              ))}
+            </div>
+            {exampleText && <WorkedExample text={exampleText} />}
           </>
         );
       })()}
 
       <div style={{ marginBottom: '15px' }}>
-        <strong>Expected test cases (from model):</strong>
+        <strong>Expected test cases:</strong>
         {Array.isArray(task.test_cases) && task.test_cases.length > 0 ? (
           <ul style={{ paddingLeft: '20px', margin: '8px 0' }}>
             {task.test_cases.map((tc, i) => (

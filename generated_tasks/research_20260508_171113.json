@@ -1,0 +1,160 @@
+{
+  "generated_at": "2026-05-08T17:11:13.422526",
+  "provider": "gemini",
+  "num_tasks": 3,
+  "tasks": [
+    {
+      "title": "Vowel Counter",
+      "description": "Strings are fundamental data structures in programming, representing text. Analyzing text often involves counting specific types of characters, such as vowels, which can be useful in linguistics, text processing, or even simple data validation tasks. Understanding how to iterate through a string and apply conditional logic to its characters is a core skill.\n\nYour program must read a single line of text from standard input, which will be treated as a string. It should then count the total number of vowels (a, e, i, o, u) present in the string, treating both uppercase and lowercase letters as the same (e.g., 'A' should count as 'a'). The input string will have a maximum length of 100 characters, including the null terminator. Finally, print the total count of vowels to standard output.\n\nWORKED EXAMPLE:\nInput: Hello World \u2192 count: 0 \u2192 1 ('e') \u2192 2 ('o') \u2192 3 ('o'). Output: 3",
+      "solution": "#include <stdio.h>\n#include <string.h> // For strlen\n#include <ctype.h>  // For tolower\n\nint main() {\n    char str[101]; // Max 100 chars + null terminator\n    int vowel_count = 0;\n    int i;\n\n    // Read a line of text\n    // Using fgets to safely read a line up to 100 characters\n    if (fgets(str, sizeof(str), stdin) == NULL) {\n        return 1; // Error reading input\n    }\n\n    // Remove trailing newline character if present\n    str[strcspn(str, \"\\n\")] = 0;\n\n    for (i = 0; str[i] != '\\0'; i++) {\n        // Convert character to lowercase for case-insensitive check\n        char c = tolower(str[i]);\n\n        // Check if the character is a vowel\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n            vowel_count++;\n        }\n    }\n\n    printf(\"%d\\n\", vowel_count);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello World",
+          "expected_output": "3"
+        },
+        {
+          "input": "Programming is Fun",
+          "expected_output": "6"
+        },
+        {
+          "input": "RHYTHM",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello World",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Programming is Fun",
+            "expected": "6",
+            "actual": "5",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "RHYTHM",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Max Element and First Index",
+      "description": "Arrays are powerful for organizing collections of related data, such as measurement series, sensor readings, or financial records. A common analytical task is to identify the largest element within such a collection and know its position, which can be critical for further processing, data analysis, or decision-making.\n\nYour program must first read an integer `N` from standard input (where `1 <= N <= 100`), representing the number of elements in an array. Subsequently, it will read `N` integers, one by one, into an array. Your program must then find the maximum integer in this array and output its value, followed by a single space, and then its *first* 0-based index.\n\nWORKED EXAMPLE:\nInput: 5\\n10\\n4\\n20\\n15\\n20 \u2192 max_val: 10 \u2192 20, max_idx: 0 \u2192 2. Output: 20 2",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int N;\n    int arr[100]; // Array to store up to 100 integers\n    int i;\n\n    // Read N\n    if (scanf(\"%d\", &N) != 1 || N < 1 || N > 100) {\n        fprintf(stderr, \"Invalid N. N must be between 1 and 100.\\n\");\n        return 1;\n    }\n\n    // Read N integers into the array\n    for (i = 0; i < N; i++) {\n        if (scanf(\"%d\", &arr[i]) != 1) {\n            fprintf(stderr, \"Error reading array element.\\n\");\n            return 1;\n        }\n    }\n\n    // Initialize max_val and max_idx with the first element\n    int max_val = arr[0];\n    int max_idx = 0;\n\n    // Iterate through the rest of the array to find the maximum value and its first index\n    for (i = 1; i < N; i++) {\n        if (arr[i] > max_val) {\n            max_val = arr[i];\n            max_idx = i; // Update index to the first occurrence\n        }\n    }\n\n    printf(\"%d %d\\n\", max_val, max_idx);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n10\n4\n20\n15\n20",
+          "expected_output": "20 2"
+        },
+        {
+          "input": "1\n-50",
+          "expected_output": "-50 0"
+        },
+        {
+          "input": "7\n3\n3\n3\n3\n3\n3\n3",
+          "expected_output": "3 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n10\n4\n20\n15\n20",
+            "expected": "20 2",
+            "actual": "20 2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n-50",
+            "expected": "-50 0",
+            "actual": "-50 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "7\n3\n3\n3\n3\n3\n3\n3",
+            "expected": "3 0",
+            "actual": "3 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Simple Caesar Cipher",
+      "description": "Strings are sequences of characters, and text manipulation is a core programming skill with applications ranging from data processing to cryptography. Encryption, even simple forms like the Caesar cipher, demonstrates how character arrays can be transformed systematically by applying a consistent rule to each character. The Caesar cipher shifts each letter in the plaintext by a certain number of places down or up the alphabet.\n\nYour program must read a single line of text (a string) from standard input, followed by an integer `shift` value (where `0 <= shift <= 25`). The input string will have a maximum length of 100 characters. It should then encrypt the input string using a Caesar cipher. Only alphabetic characters (A-Z, a-z) should be shifted. Non-alphabetic characters (numbers, spaces, punctuation) must remain unchanged. The shift should wrap around the alphabet (e.g., 'Z' shifted by 1 becomes 'A', 'z' shifted by 1 becomes 'a'). Finally, print the encrypted string to standard output.",
+      "solution": "#include <stdio.h>\n#include <string.h> // For strlen, strcspn\n#include <ctype.h>  // For isalpha, islower, isupper\n\nint main() {\n    char str[101]; // Max 100 chars + null terminator\n    int shift;\n    int i;\n\n    // Read the string\n    if (fgets(str, sizeof(str), stdin) == NULL) {\n        return 1; // Error reading input\n    }\n    // Remove trailing newline character if present\n    str[strcspn(str, \"\\n\")] = 0;\n\n    // Read the shift value\n    if (scanf(\"%d\", &shift) != 1 || shift < 0 || shift > 25) {\n        fprintf(stderr, \"Invalid shift value. Must be between 0 and 25.\\n\");\n        return 1;\n    }\n\n    for (i = 0; str[i] != '\\0'; i++) {\n        char current_char = str[i];\n\n        if (isalpha(current_char)) {\n            if (islower(current_char)) {\n                // Apply shift for lowercase letters\n                current_char = 'a' + (current_char - 'a' + shift) % 26;\n            } else if (isupper(current_char)) {\n                // Apply shift for uppercase letters\n                current_char = 'A' + (current_char - 'A' + shift) % 26;\n            }\n        }\n        // Non-alphabetic characters are left unchanged\n        str[i] = current_char;\n    }\n\n    printf(\"%s\\n\", str);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello, World!\n3",
+          "expected_output": "Khoor, Zruog!"
+        },
+        {
+          "input": "ABC XYZ abc xyz 123\n0",
+          "expected_output": "ABC XYZ abc xyz 123"
+        },
+        {
+          "input": "Aardvark\n25",
+          "expected_output": "Zzqeszuq"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello, World!\n3",
+            "expected": "Khoor, Zruog!",
+            "actual": "Khoor, Zruog!",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "ABC XYZ abc xyz 123\n0",
+            "expected": "ABC XYZ abc xyz 123",
+            "actual": "ABC XYZ abc xyz 123",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "Aardvark\n25",
+            "expected": "Zzqeszuq",
+            "actual": "Zzqcuzqj",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    }
+  ]
+}

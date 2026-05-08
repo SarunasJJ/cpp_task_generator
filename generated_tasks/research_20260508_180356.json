@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:03:56.686402",
+  "provider": "gpt",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Count Safe Sensor Readings",
+      "description": "Conditionals and loops are often used together when processing a stream of measurements. In monitoring systems, each reading may need to be checked against a threshold before it is counted, summed, or ignored.\n\nWrite a program that reads an integer `n` (`1 <= n <= 1000`), followed by `n` integers. Count how many of the readings are strictly between `10` and `50` inclusive, and print that count on its own line. If `n` is zero or any reading list is incomplete, no special handling is required beyond standard input behavior.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, x, count = 0;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x >= 10 && x <= 50) {\n            count++;\n        }\n    }\n\n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n9 10 20 50 51",
+          "expected_output": "3"
+        },
+        {
+          "input": "1\n10",
+          "expected_output": "1"
+        },
+        {
+          "input": "6\n-3 0 11 49 50 100",
+          "expected_output": "3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n9 10 20 50 51",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n10",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "6\n-3 0 11 49 50 100",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "First Non-Negative Balance",
+      "description": "Loops are useful for tracking how a quantity changes after a sequence of updates. In finance-like situations, a running total can cross important thresholds, and the first time that happens may be the answer you need.\n\nWrite a program that reads an integer `n` (`1 <= n <= 1000`), then reads `n` integers representing changes to a balance, starting from `0`. Print the 1-based position of the first change after which the balance becomes greater than or equal to `0`; if the balance never becomes non-negative, print `-1`. If the balance is already non-negative before any changes, still only consider positions after reading changes.\n\nWORKED EXAMPLE:\nInput: 4 -5 3 4 -2 \u2192 balance: 0 \u2192 -5 \u2192 -2 \u2192 2. Output: 3",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, delta;\n    long long balance = 0;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    for (int i = 1; i <= n; i++) {\n        if (scanf(\"%d\", &delta) != 1) return 0;\n        balance += delta;\n        if (balance >= 0) {\n            printf(\"%d\\n\", i);\n            return 0;\n        }\n    }\n\n    printf(\"-1\\n\");\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "4\n-5 3 4 -2",
+          "expected_output": "3"
+        },
+        {
+          "input": "3\n-1 -2 -3",
+          "expected_output": "-1"
+        },
+        {
+          "input": "1\n0",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "4\n-5 3 4 -2",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3\n-1 -2 -3",
+            "expected": "-1",
+            "actual": "-1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n0",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Sum of Even Digits Until Zero",
+      "description": "Conditionals inside loops are common when analyzing numbers digit by digit. This is useful in simple validation and scoring tasks where each digit contributes only if it meets a specific rule.\n\nWrite a program that reads a non-negative integer `x` (`0 <= x <= 10^18`) and computes the sum of its even decimal digits. If `x` is `0`, the sum is `0`. Print the sum as an integer on its own line.\n\nWORKED EXAMPLE:\nInput: 702468 \u2192 sum: 0 \u2192 2 \u2192 6 \u2192 10 \u2192 18. Output: 18",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    unsigned long long x;\n    int sum = 0;\n    if (scanf(\"%llu\", &x) != 1) return 0;\n\n    if (x == 0) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    while (x > 0) {\n        int digit = (int)(x % 10);\n        if (digit % 2 == 0) {\n            sum += digit;\n        }\n        x /= 10;\n    }\n\n    printf(\"%d\\n\", sum);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "702468",
+          "expected_output": "18"
+        },
+        {
+          "input": "0",
+          "expected_output": "0"
+        },
+        {
+          "input": "13579",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "702468",
+            "expected": "18",
+            "actual": "20",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "13579",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Temperature Streaks",
+      "description": "A sequence of daily measurements often contains patterns that matter more than any single value. A common task is to scan through the data and keep track of a longest streak that satisfies a condition.\n\nWrite a program that reads an integer `n` (`1 <= n <= 1000`), followed by `n` integers representing daily temperatures. Print the length of the longest consecutive run of days where the temperature is at least `30`. If no temperature reaches `30`, print `0`.\n\nWORKED EXAMPLE:\nInput: 8 29 30 31 28 30 30 30 27 \u2192 streak: 0 \u2192 1 \u2192 2 \u2192 0 \u2192 1 \u2192 2 \u2192 3 \u2192 0. Output: 3",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, t;\n    int current = 0, best = 0;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &t) != 1) return 0;\n        if (t >= 30) {\n            current++;\n            if (current > best) best = current;\n        } else {\n            current = 0;\n        }\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "8\n29 30 31 28 30 30 30 27",
+          "expected_output": "3"
+        },
+        {
+          "input": "4\n10 11 12 13",
+          "expected_output": "0"
+        },
+        {
+          "input": "5\n30 30 30 30 30",
+          "expected_output": "5"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "8\n29 30 31 28 30 30 30 27",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4\n10 11 12 13",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5\n30 30 30 30 30",
+            "expected": "5",
+            "actual": "5",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Filtered Product",
+      "description": "Sometimes a program must process only selected values from a larger list. This is common in data cleanup, where a subset of numbers contributes to a final result while the rest are ignored.\n\nWrite a program that reads an integer `n` (`1 <= n <= 1000`), followed by `n` integers. Multiply together all positive odd numbers in the input, and print the product. If there are no positive odd numbers, print `1`. Assume the product fits in a 64-bit signed integer for the given test data.\n\nWORKED EXAMPLE:\nInput: 6 2 3 -5 7 4 1 \u2192 product: 1 \u2192 3 \u2192 21 \u2192 21. Output: 21",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, x;\n    long long product = 1;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x > 0 && x % 2 != 0) {\n            product *= x;\n        }\n    }\n\n    printf(\"%lld\\n\", product);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "6\n2 3 -5 7 4 1",
+          "expected_output": "21"
+        },
+        {
+          "input": "4\n-1 -3 2 4",
+          "expected_output": "1"
+        },
+        {
+          "input": "3\n9 5 1",
+          "expected_output": "45"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "6\n2 3 -5 7 4 1",
+            "expected": "21",
+            "actual": "21",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4\n-1 -3 2 4",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "3\n9 5 1",
+            "expected": "45",
+            "actual": "45",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Ignore Repeated Commands",
+      "description": "Programs that read command sequences often need to compare each new value with the previous one. This appears in simple input compression, where repeated commands are skipped or counted differently.\n\nWrite a program that reads an integer `n` (`1 <= n <= 1000`), followed by `n` integers. Count how many times a number is different from the number immediately before it, including the first number as a change. Print the count on its own line.\n\nWORKED EXAMPLE:\nInput: 7 4 4 5 5 5 2 2 \u2192 count: 1 \u2192 1 \u2192 2 \u2192 2 \u2192 2 \u2192 3 \u2192 3. Output: 3",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, x, prev, count = 0;\n    if (scanf(\"%d\", &n) != 1) return 0;\n    if (n <= 0) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    if (scanf(\"%d\", &prev) != 1) return 0;\n    count = 1;\n\n    for (int i = 1; i < n; i++) {\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x != prev) {\n            count++;\n        }\n        prev = x;\n    }\n\n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "7\n4 4 5 5 5 2 2",
+          "expected_output": "3"
+        },
+        {
+          "input": "1\n8",
+          "expected_output": "1"
+        },
+        {
+          "input": "5\n1 2 3 4 5",
+          "expected_output": "5"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "7\n4 4 5 5 5 2 2",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n8",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5\n1 2 3 4 5",
+            "expected": "5",
+            "actual": "5",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Sum Until Negative",
+      "description": "A loop can stop a computation early when a stopping condition appears in the input. This is useful in situations like reading scores until a sentinel value indicates that the list is over.\n\nWrite a program that repeatedly reads integers until a negative number is encountered. Sum all non-negative numbers read before the first negative number and print the sum on its own line. The negative number itself must not be included in the sum, and there may be zero non-negative numbers before it.\n\nWORKED EXAMPLE:\nInput: 5 8 0 -3 10 \u2192 sum: 0 \u2192 5 \u2192 13 \u2192 13. Output: 13",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int x;\n    long long sum = 0;\n\n    while (scanf(\"%d\", &x) == 1) {\n        if (x < 0) break;\n        sum += x;\n    }\n\n    printf(\"%lld\\n\", sum);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 8 0 -3 10",
+          "expected_output": "13"
+        },
+        {
+          "input": "-1",
+          "expected_output": "0"
+        },
+        {
+          "input": "0 0 0 -5",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 8 0 -3 10",
+            "expected": "13",
+            "actual": "13",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0 0 0 -5",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Largest Prime in a List",
+      "description": "Testing each number against a condition inside a loop is a basic technique in number processing. Prime numbers are a classic example of values that must be checked using repeated divisibility tests.\n\nWrite a program that reads an integer `n` (`1 <= n <= 500`), followed by `n` integers. Among the positive prime numbers in the list, print the largest one; if there are no positive prime numbers, print `-1`. A prime number is an integer greater than `1` with no positive divisors other than `1` and itself.\n\nWORKED EXAMPLE:\nInput: 5 8 3 11 4 7 \u2192 best: -1 \u2192 3 \u2192 11 \u2192 11 \u2192 11. Output: 11",
+      "solution": "#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    int n, x, best = -1;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    for (int i = 0; i < n; i++) {\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x > 1) {\n            int prime = 1;\n            for (int d = 2; d <= (int)sqrt((double)x); d++) {\n                if (x % d == 0) {\n                    prime = 0;\n                    break;\n                }\n            }\n            if (prime && x > best) {\n                best = x;\n            }\n        }\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n8 3 11 4 7",
+          "expected_output": "11"
+        },
+        {
+          "input": "4\n1 4 6 8",
+          "expected_output": "-1"
+        },
+        {
+          "input": "6\n2 9 5 15 7 11",
+          "expected_output": "11"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n8 3 11 4 7",
+            "expected": "11",
+            "actual": "11",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4\n1 4 6 8",
+            "expected": "-1",
+            "actual": "-1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "6\n2 9 5 15 7 11",
+            "expected": "11",
+            "actual": "11",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Checksum of Alternating Positions",
+      "description": "When processing ordered data, it is common to treat alternating positions differently. This kind of pattern appears in simple checksums and parity-based calculations.\n\nWrite a program that reads an integer `n` (`1 <= n <= 1000`), followed by `n` integers. Add the numbers in odd-numbered positions and subtract the numbers in even-numbered positions, using 1-based indexing. Print the final result on its own line.\n\nWORKED EXAMPLE:\nInput: 5 10 3 7 2 1 \u2192 total: 10 \u2192 7 \u2192 14 \u2192 12 \u2192 13. Output: 13",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, x;\n    long long total = 0;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    for (int i = 1; i <= n; i++) {\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (i % 2 == 1) {\n            total += x;\n        } else {\n            total -= x;\n        }\n    }\n\n    printf(\"%lld\\n\", total);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n10 3 7 2 1",
+          "expected_output": "13"
+        },
+        {
+          "input": "2\n4 9",
+          "expected_output": "-5"
+        },
+        {
+          "input": "6\n1 1 1 1 1 1",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n10 3 7 2 1",
+            "expected": "13",
+            "actual": "13",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "2\n4 9",
+            "expected": "-5",
+            "actual": "-5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "6\n1 1 1 1 1 1",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Ascending Steps",
+      "description": "Comparing each new item with the previous one is a common pattern when looking for trends. In a sequence of measurements, you may want to know how often the sequence rises from one element to the next.\n\nWrite a program that reads an integer `n` (`1 <= n <= 1000`), followed by `n` integers. Count how many times a number is greater than the number immediately before it. The first number is not compared to anything. Print the count on its own line.\n\nWORKED EXAMPLE:\nInput: 6 2 5 5 8 1 3 \u2192 count: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 2 \u2192 3. Output: 3",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, prev, x, count = 0;\n    if (scanf(\"%d\", &n) != 1) return 0;\n    if (n <= 0) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    if (scanf(\"%d\", &prev) != 1) return 0;\n\n    for (int i = 1; i < n; i++) {\n        if (scanf(\"%d\", &x) != 1) return 0;\n        if (x > prev) {\n            count++;\n        }\n        prev = x;\n    }\n\n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "6\n2 5 5 8 1 3",
+          "expected_output": "3"
+        },
+        {
+          "input": "1\n7",
+          "expected_output": "0"
+        },
+        {
+          "input": "4\n9 8 7 6",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "6\n2 5 5 8 1 3",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n7",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4\n9 8 7 6",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

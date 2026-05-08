@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:50:40.158655",
+  "provider": "claude",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Reverse a String",
+      "description": "String reversal is a fundamental operation in text processing, used in applications ranging from palindrome detection to data validation. Understanding how to traverse and manipulate character sequences is essential for working with textual data.\n\nYour program must read a single line of text (up to 100 characters) from stdin and print it in reverse order to stdout. The input may contain spaces and punctuation. Do not use any string library functions that reverse strings directly; you must implement the logic yourself using loops and array indexing.\n\nWORKED EXAMPLE:\nInput: \"hello\" \u2192 Output: \"olleh\"",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char str[101];\n    fgets(str, sizeof(str), stdin);\n    \n    int len = strlen(str);\n    if (str[len - 1] == '\\n') {\n        str[len - 1] = '\\0';\n        len--;\n    }\n    \n    for (int i = len - 1; i >= 0; i--) {\n        printf(\"%c\", str[i]);\n    }\n    printf(\"\\n\");\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "olleh"
+        },
+        {
+          "input": "a",
+          "expected_output": "a"
+        },
+        {
+          "input": "race car",
+          "expected_output": "rac ecar"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "olleh",
+            "actual": "olleh",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "a",
+            "expected": "a",
+            "actual": "a",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "race car",
+            "expected": "rac ecar",
+            "actual": "rac ecar",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Vowels and Consonants",
+      "description": "Analyzing character composition in text is a common task in linguistics, cryptography, and data processing. Being able to categorize characters and maintain separate counters helps develop skills in conditional logic and loop-based accumulation.\n\nYour program must read a single line of text (up to 100 characters) from stdin and count how many vowels (a, e, i, o, u, both uppercase and lowercase) and consonants (all other letters) it contains. Non-letter characters should be ignored. Print two integers separated by a space: the vowel count first, then the consonant count.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[101];\n    fgets(str, sizeof(str), stdin);\n    \n    int vowels = 0, consonants = 0;\n    \n    for (int i = 0; str[i] != '\\0'; i++) {\n        char c = tolower(str[i]);\n        if (isalpha(str[i])) {\n            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n                vowels++;\n            } else {\n                consonants++;\n            }\n        }\n    }\n    \n    printf(\"%d %d\\n\", vowels, consonants);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "2 3"
+        },
+        {
+          "input": "aeiou",
+          "expected_output": "5 0"
+        },
+        {
+          "input": "xyz 123",
+          "expected_output": "0 3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "2 3",
+            "actual": "2 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "aeiou",
+            "expected": "5 0",
+            "actual": "5 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "xyz 123",
+            "expected": "0 3",
+            "actual": "0 3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Find Longest Word in a Sentence",
+      "description": "Text analysis often requires identifying patterns and properties of individual words within a sentence. This task trains the ability to parse sequences of characters, recognize word boundaries, and maintain state across loops to identify extremal values.\n\nYour program must read a single sentence (up to 200 characters) from stdin and identify the longest word. Words are sequences of alphabetic characters separated by spaces or punctuation. Print the longest word on a line by itself. If multiple words tie for longest, print the first one encountered. Assume the input contains at least one word.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[201];\n    fgets(str, sizeof(str), stdin);\n    \n    char longest[201] = \"\";\n    int maxLen = 0;\n    char currentWord[201] = \"\";\n    int currentLen = 0;\n    \n    for (int i = 0; str[i] != '\\0'; i++) {\n        if (isalpha(str[i])) {\n            currentWord[currentLen] = str[i];\n            currentLen++;\n        } else {\n            if (currentLen > maxLen) {\n                maxLen = currentLen;\n                for (int j = 0; j < currentLen; j++) {\n                    longest[j] = currentWord[j];\n                }\n                longest[currentLen] = '\\0';\n            }\n            currentLen = 0;\n        }\n    }\n    \n    if (currentLen > maxLen) {\n        for (int j = 0; j < currentLen; j++) {\n            longest[j] = currentWord[j];\n        }\n        longest[currentLen] = '\\0';\n    }\n    \n    printf(\"%s\\n\", longest);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "the quick brown fox",
+          "expected_output": "quick"
+        },
+        {
+          "input": "programming is fun",
+          "expected_output": "programming"
+        },
+        {
+          "input": "a bb ccc",
+          "expected_output": "ccc"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "the quick brown fox",
+            "expected": "quick",
+            "actual": "quick",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "programming is fun",
+            "expected": "programming",
+            "actual": "programming",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "a bb ccc",
+            "expected": "ccc",
+            "actual": "ccc",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Check if String is Palindrome",
+      "description": "A palindrome is a sequence that reads the same forwards and backwards. Palindrome detection appears in spell-checking, DNA analysis, and data validation. This exercise combines string traversal from both ends with character comparison, reinforcing the relationship between array indexing and string properties.\n\nYour program must read a single line of text (up to 100 characters) from stdin and determine whether it is a palindrome. Ignore spaces, punctuation, and case differences; only alphabetic characters matter. Print \"yes\" if the string is a palindrome, \"no\" otherwise.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[101];\n    fgets(str, sizeof(str), stdin);\n    \n    char clean[101];\n    int cleanLen = 0;\n    \n    for (int i = 0; str[i] != '\\0'; i++) {\n        if (isalpha(str[i])) {\n            clean[cleanLen] = tolower(str[i]);\n            cleanLen++;\n        }\n    }\n    clean[cleanLen] = '\\0';\n    \n    int isPalin = 1;\n    for (int i = 0; i < cleanLen / 2; i++) {\n        if (clean[i] != clean[cleanLen - 1 - i]) {\n            isPalin = 0;\n            break;\n        }\n    }\n    \n    printf(\"%s\\n\", isPalin ? \"yes\" : \"no\");\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "racecar",
+          "expected_output": "yes"
+        },
+        {
+          "input": "A man a plan a canal Panama",
+          "expected_output": "yes"
+        },
+        {
+          "input": "hello",
+          "expected_output": "no"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "racecar",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "A man a plan a canal Panama",
+            "expected": "yes",
+            "actual": "yes",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "hello",
+            "expected": "no",
+            "actual": "no",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Remove Duplicate Characters",
+      "description": "Data cleaning often requires eliminating redundant information while preserving order. Removing duplicate characters from a string is a practical application that appears in text compression, unique identifier generation, and data normalization pipelines.\n\nYour program must read a single line of text (up to 100 characters) from stdin and produce a new string where each character appears only once, in the order it first appeared in the input. Print the resulting string. All character types (letters, digits, spaces, punctuation) should be considered; the comparison is case-sensitive.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char str[101];\n    fgets(str, sizeof(str), stdin);\n    \n    char result[101];\n    int resultLen = 0;\n    \n    for (int i = 0; str[i] != '\\0'; i++) {\n        int found = 0;\n        for (int j = 0; j < resultLen; j++) {\n            if (str[i] == result[j]) {\n                found = 1;\n                break;\n            }\n        }\n        if (!found) {\n            result[resultLen] = str[i];\n            resultLen++;\n        }\n    }\n    result[resultLen] = '\\0';\n    \n    printf(\"%s\", result);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "helo"
+        },
+        {
+          "input": "aabbcc",
+          "expected_output": "abc"
+        },
+        {
+          "input": "aba caba",
+          "expected_output": "ab c"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "helo",
+            "actual": "helo",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "aabbcc",
+            "expected": "abc",
+            "actual": "abc",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "aba caba",
+            "expected": "ab c",
+            "actual": "ab c",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Sum of Digits in a String",
+      "description": "Extracting numerical information from mixed text is a common task in data extraction and form validation. Learning to identify digits within a string and accumulate their numeric values combines character classification with arithmetic accumulation.\n\nYour program must read a single line of text (up to 100 characters) from stdin, find all individual digit characters (0-9), convert each to its numeric value, and sum them. Print the total sum as a single integer. Non-digit characters should be ignored.\n\nWORKED EXAMPLE:\nInput: \"a1b2c3\" \u2192 sum: 1 \u2192 3 \u2192 6. Output: 6",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[101];\n    fgets(str, sizeof(str), stdin);\n    \n    int sum = 0;\n    \n    for (int i = 0; str[i] != '\\0'; i++) {\n        if (isdigit(str[i])) {\n            sum += (str[i] - '0');\n        }\n    }\n    \n    printf(\"%d\\n\", sum);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "a1b2c3",
+          "expected_output": "6"
+        },
+        {
+          "input": "abc123xyz",
+          "expected_output": "6"
+        },
+        {
+          "input": "no digits here",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "a1b2c3",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "abc123xyz",
+            "expected": "6",
+            "actual": "6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "no digits here",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Capitalize First Letter of Each Word",
+      "description": "Text formatting is essential in document generation, report creation, and user interface design. Title case\u2014where the first letter of each word is capitalized\u2014is a standard formatting convention. This exercise combines character classification, case conversion, and word boundary detection.\n\nYour program must read a single line of text (up to 100 characters) from stdin and print it back with the first letter of each word capitalized and all other letters in lowercase. A word is any sequence of alphabetic characters. Preserve spaces and non-alphabetic characters in their original positions.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[101];\n    fgets(str, sizeof(str), stdin);\n    \n    int startOfWord = 1;\n    \n    for (int i = 0; str[i] != '\\0'; i++) {\n        if (isalpha(str[i])) {\n            if (startOfWord) {\n                printf(\"%c\", toupper(str[i]));\n                startOfWord = 0;\n            } else {\n                printf(\"%c\", tolower(str[i]));\n            }\n        } else {\n            printf(\"%c\", str[i]);\n            startOfWord = 1;\n        }\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello world",
+          "expected_output": "Hello World"
+        },
+        {
+          "input": "tHE QUICK BROWN FOX",
+          "expected_output": "The Quick Brown Fox"
+        },
+        {
+          "input": "a1b2c3",
+          "expected_output": "A1B2C3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello world",
+            "expected": "Hello World",
+            "actual": "Hello World",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "tHE QUICK BROWN FOX",
+            "expected": "The Quick Brown Fox",
+            "actual": "The Quick Brown Fox",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "a1b2c3",
+            "expected": "A1B2C3",
+            "actual": "A1B2C3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Count Character Frequencies",
+      "description": "Frequency analysis is fundamental in cryptography, natural language processing, and data compression. Understanding the distribution of characters in text provides insights into language patterns and is the first step in many text transformation algorithms.\n\nYour program must read a single line of text (up to 100 characters) from stdin. For each unique alphabetic character (case-insensitive), count how many times it appears. Print each character (in lowercase) followed by a space and its count, in the order the characters are first encountered in the input. Non-alphabetic characters should be ignored.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char str[101];\n    fgets(str, sizeof(str), stdin);\n    \n    char chars[27];\n    int counts[27] = {0};\n    int charCount = 0;\n    \n    for (int i = 0; str[i] != '\\0'; i++) {\n        if (isalpha(str[i])) {\n            char c = tolower(str[i]);\n            int found = 0;\n            for (int j = 0; j < charCount; j++) {\n                if (chars[j] == c) {\n                    counts[j]++;\n                    found = 1;\n                    break;\n                }\n            }\n            if (!found) {\n                chars[charCount] = c;\n                counts[charCount] = 1;\n                charCount++;\n            }\n        }\n    }\n    \n    for (int i = 0; i < charCount; i++) {\n        printf(\"%c %d\\n\", chars[i], counts[i]);\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello",
+          "expected_output": "h 1\ne 1\nl 2\no 1"
+        },
+        {
+          "input": "aabbcc",
+          "expected_output": "a 2\nb 2\nc 2"
+        },
+        {
+          "input": "Programming",
+          "expected_output": "p 1\nr 2\no 1\ng 2\na 1\nm 2\ni 1\nn 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello",
+            "expected": "h 1\ne 1\nl 2\no 1",
+            "actual": "h 1\ne 1\nl 2\no 1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "aabbcc",
+            "expected": "a 2\nb 2\nc 2",
+            "actual": "a 2\nb 2\nc 2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "Programming",
+            "expected": "p 1\nr 2\no 1\ng 2\na 1\nm 2\ni 1\nn 1",
+            "actual": "p 1\nr 2\no 1\ng 2\na 1\nm 2\ni 1\nn 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Replace All Occurrences of a Substring",
+      "description": "String replacement is a cornerstone of text editing, template processing, and data transformation. While simple character replacement is straightforward, substring replacement requires scanning for patterns and reconstructing the string, building skills in pattern matching and array manipulation.\n\nYour program must read three items from stdin: a source string S (up to 100 characters), a pattern string P (up to 50 characters), and a replacement string R (up to 50 characters). Find all non-overlapping occurrences of P in S and replace them with R. Print the resulting string. If P is not found, print S unchanged. Assume P is not empty.",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char source[101];\n    char pattern[51];\n    char replacement[51];\n    \n    fgets(source, sizeof(source), stdin);\n    fgets(pattern, sizeof(pattern), stdin);\n    fgets(replacement, sizeof(replacement), stdin);\n    \n    int slen = strlen(source);\n    if (source[slen - 1] == '\\n') source[slen - 1] = '\\0';\n    \n    int plen = strlen(pattern);\n    if (pattern[plen - 1] == '\\n') pattern[plen - 1] = '\\0';\n    \n    int rlen = strlen(replacement);\n    if (replacement[rlen - 1] == '\\n') replacement[rlen - 1] = '\\0';\n    \n    char result[301] = \"\";\n    int resultLen = 0;\n    \n    for (int i = 0; source[i] != '\\0'; i++) {\n        int match = 1;\n        for (int j = 0; j < plen && source[i + j] != '\\0'; j++) {\n            if (source[i + j] != pattern[j]) {\n                match = 0;\n                break;\n            }\n        }\n        \n        if (match) {\n            for (int j = 0; j < rlen; j++) {\n                result[resultLen] = replacement[j];\n                resultLen++;\n            }\n            i += plen - 1;\n        } else {\n            result[resultLen] = source[i];\n            resultLen++;\n        }\n    }\n    result[resultLen] = '\\0';\n    \n    printf(\"%s\\n\", result);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello world\nhello\nhi",
+          "expected_output": "hi world"
+        },
+        {
+          "input": "aaa\naa\nb",
+          "expected_output": "ba"
+        },
+        {
+          "input": "abcdef\nxyz\n123",
+          "expected_output": "abcdef"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello world\nhello\nhi",
+            "expected": "hi world",
+            "actual": "hello world",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "aaa\naa\nb",
+            "expected": "ba",
+            "actual": "ab",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "abcdef\nxyz\n123",
+            "expected": "abcdef",
+            "actual": "abcdef",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Interleave Two Strings",
+      "description": "String interleaving is used in applications ranging from data shuffling to generating interlaced display patterns. Combining elements from multiple sequences in a controlled manner reinforces understanding of multiple loop counters and array indexing patterns.\n\nYour program must read two strings A and B (up to 50 characters each) from stdin. Create a new string by alternately taking one character from A, then one from B, repeating until one string is exhausted. If one string is shorter, append the remaining characters from the longer string. Print the resulting interleaved string.\n\nWORKED EXAMPLE:\nInput: \"ab\" and \"xyz\" \u2192 result: a \u2192 ax \u2192 axy \u2192 axyb \u2192 axyb \u2192 axyb. Output: axyb",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char strA[51];\n    char strB[51];\n    \n    fgets(strA, sizeof(strA), stdin);\n    fgets(strB, sizeof(strB), stdin);\n    \n    int lenA = strlen(strA);\n    if (strA[lenA - 1] == '\\n') strA[lenA - 1] = '\\0';\n    lenA = strlen(strA);\n    \n    int lenB = strlen(strB);\n    if (strB[lenB - 1] == '\\n') strB[lenB - 1] = '\\0';\n    lenB = strlen(strB);\n    \n    char result[101] = \"\";\n    int resultLen = 0;\n    \n    int i = 0, j = 0;\n    while (i < lenA && j < lenB) {\n        result[resultLen] = strA[i];\n        resultLen++;\n        i++;\n        result[resultLen] = strB[j];\n        resultLen++;\n        j++;\n    }\n    \n    while (i < lenA) {\n        result[resultLen] = strA[i];\n        resultLen++;\n        i++;\n    }\n    \n    while (j < lenB) {\n        result[resultLen] = strB[j];\n        resultLen++;\n        j++;\n    }\n    \n    result[resultLen] = '\\0';\n    \n    printf(\"%s\\n\", result);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "ab\nxyz",
+          "expected_output": "axyb"
+        },
+        {
+          "input": "hello\nhi",
+          "expected_output": "hhiellollao"
+        },
+        {
+          "input": "x\nabcde",
+          "expected_output": "xabcde"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "ab\nxyz",
+            "expected": "axyb",
+            "actual": "axbyz",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "hello\nhi",
+            "expected": "hhiellollao",
+            "actual": "hheillo",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "x\nabcde",
+            "expected": "xabcde",
+            "actual": "xabcde",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    }
+  ]
+}

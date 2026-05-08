@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:53:21.703673",
+  "provider": "claude",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Reverse an Array Using Pointers",
+      "description": "Arrays are stored contiguously in memory, and pointers allow us to navigate and manipulate that memory directly. In many applications\u2014from image processing to data compression\u2014reversing sequences of data is a fundamental operation that requires careful pointer arithmetic to access elements in order.\n\nWrite a program that reads an integer n, then n floating-point numbers into a dynamically allocated array. Using pointer arithmetic (not array indexing), reverse the array in-place and print each element on a separate line. You must use pointers to swap elements, not the array subscript operator.\n\nWORKED EXAMPLE:\nInput: 4 numbers 1.5, 2.5, 3.5, 4.5 \u2192 swap via pointers: 1.5 \u2194 4.5, 2.5 \u2194 3.5 \u2192 Output: 4.5, 3.5, 2.5, 1.5",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    double *arr = (double *)malloc(n * sizeof(double));\n    if (arr == NULL) {\n        return 1;\n    }\n    \n    for (int i = 0; i < n; i++) {\n        scanf(\"%lf\", arr + i);\n    }\n    \n    double *left = arr;\n    double *right = arr + n - 1;\n    \n    while (left < right) {\n        double temp = *left;\n        *left = *right;\n        *right = temp;\n        left++;\n        right--;\n    }\n    \n    for (int i = 0; i < n; i++) {\n        printf(\"%.1f\\n\", *(arr + i));\n    }\n    \n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "4\n1.5 2.5 3.5 4.5",
+          "expected_output": "4.5\n3.5\n2.5\n1.5"
+        },
+        {
+          "input": "1\n9.9",
+          "expected_output": "9.9"
+        },
+        {
+          "input": "5\n-1.0 0.0 2.5 -3.5 10.0",
+          "expected_output": "10.0\n-3.5\n2.5\n0.0\n-1.0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "4\n1.5 2.5 3.5 4.5",
+            "expected": "4.5\n3.5\n2.5\n1.5",
+            "actual": "4.5\n3.5\n2.5\n1.5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n9.9",
+            "expected": "9.9",
+            "actual": "9.9",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5\n-1.0 0.0 2.5 -3.5 10.0",
+            "expected": "10.0\n-3.5\n2.5\n0.0\n-1.0",
+            "actual": "10.0\n-3.5\n2.5\n0.0\n-1.0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Sum of Pointer-Offset Elements",
+      "description": "Pointer arithmetic is the foundation for efficiently traversing memory. By incrementing pointers, we can walk through arrays and perform calculations without relying on traditional loop indices. This technique is essential when working with large datasets or when implementing low-level algorithms that must minimize overhead.\n\nWrite a program that reads an integer n, then n integers into a dynamically allocated array. Compute the sum of all elements using only pointer arithmetic (no array subscripting). Print the sum as a single integer.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    int *arr = (int *)malloc(n * sizeof(int));\n    if (arr == NULL) {\n        return 1;\n    }\n    \n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", arr + i);\n    }\n    \n    int sum = 0;\n    int *ptr = arr;\n    \n    for (int i = 0; i < n; i++) {\n        sum += *ptr;\n        ptr++;\n    }\n    \n    printf(\"%d\\n\", sum);\n    \n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3\n5 10 15",
+          "expected_output": "30"
+        },
+        {
+          "input": "1\n42",
+          "expected_output": "42"
+        },
+        {
+          "input": "5\n-10 20 -5 15 10",
+          "expected_output": "30"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3\n5 10 15",
+            "expected": "30",
+            "actual": "30",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n42",
+            "expected": "42",
+            "actual": "42",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5\n-10 20 -5 15 10",
+            "expected": "30",
+            "actual": "30",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Copy Strings Using malloc and Pointer Iteration",
+      "description": "String manipulation is a core task in many programs. When copying strings, we must allocate memory on the heap and carefully manage that allocation to avoid buffer overflows and memory leaks. Understanding how to navigate string data with pointers\u2014character by character\u2014is critical for writing secure and efficient string-handling code.\n\nWrite a program that reads one line of text (up to 200 characters) from stdin. Allocate memory on the heap and create a copy of the string by iterating through it with a pointer, copying each character. Print both the original string (read from stdin) and the dynamically allocated copy on separate lines, then free all allocated memory.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main(void) {\n    char original[201];\n    fgets(original, sizeof(original), stdin);\n    \n    int len = strlen(original);\n    char *copy = (char *)malloc((len + 1) * sizeof(char));\n    if (copy == NULL) {\n        return 1;\n    }\n    \n    char *src = original;\n    char *dst = copy;\n    \n    while (*src != '\\0') {\n        *dst = *src;\n        src++;\n        dst++;\n    }\n    *dst = '\\0';\n    \n    printf(\"%s\", original);\n    printf(\"%s\", copy);\n    \n    free(copy);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello World",
+          "expected_output": "Hello World\nHello World"
+        },
+        {
+          "input": "C Programming",
+          "expected_output": "C Programming\nC Programming"
+        },
+        {
+          "input": "a",
+          "expected_output": "a\na"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello World",
+            "expected": "Hello World\nHello World",
+            "actual": "Hello WorldHello World",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "C Programming",
+            "expected": "C Programming\nC Programming",
+            "actual": "C ProgrammingC Programming",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "a",
+            "expected": "a\na",
+            "actual": "aa",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Allocate and Fill a 2D Array (via Pointer of Pointers)",
+      "description": "Two-dimensional arrays can be represented in memory as pointers to pointers. This representation is valuable when rows have different sizes or when we need dynamic growth. By allocating memory for an array of row pointers, then allocating each row individually, we gain flexibility and can model complex data structures like matrices or image grids.\n\nWrite a program that reads two integers m (rows) and n (columns). Allocate a 2D array of integers using a pointer-to-pointer approach: allocate an array of m pointers, then allocate n integers for each row. Read m\u00d7n integers in row-major order and fill the array. Print the array row by row, with elements separated by spaces. Free all allocated memory.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int m, n;\n    scanf(\"%d %d\", &m, &n);\n    \n    int **array = (int **)malloc(m * sizeof(int *));\n    if (array == NULL) {\n        return 1;\n    }\n    \n    for (int i = 0; i < m; i++) {\n        array[i] = (int *)malloc(n * sizeof(int));\n        if (array[i] == NULL) {\n            return 1;\n        }\n    }\n    \n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            scanf(\"%d\", &array[i][j]);\n        }\n    }\n    \n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            printf(\"%d\", array[i][j]);\n            if (j < n - 1) {\n                printf(\" \");\n            }\n        }\n        printf(\"\\n\");\n    }\n    \n    for (int i = 0; i < m; i++) {\n        free(array[i]);\n    }\n    free(array);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "2 3\n1 2 3 4 5 6",
+          "expected_output": "1 2 3\n4 5 6"
+        },
+        {
+          "input": "3 2\n10 20 30 40 50 60",
+          "expected_output": "10 20\n30 40\n50 60"
+        },
+        {
+          "input": "1 4\n7 8 9 10",
+          "expected_output": "7 8 9 10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "2 3\n1 2 3 4 5 6",
+            "expected": "1 2 3\n4 5 6",
+            "actual": "1 2 3\n4 5 6",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 2\n10 20 30 40 50 60",
+            "expected": "10 20\n30 40\n50 60",
+            "actual": "10 20\n30 40\n50 60",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1 4\n7 8 9 10",
+            "expected": "7 8 9 10",
+            "actual": "7 8 9 10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Find Maximum Element and Store Its Address",
+      "description": "Pointers not only allow us to traverse memory but also to store references to important locations. In data analysis and optimization algorithms, we often need to remember where a particular value\u2014such as the maximum or minimum\u2014resides in memory. By storing pointers to these locations, we can reference them later without storing the entire structure.\n\nWrite a program that reads an integer n, then n real numbers into a dynamically allocated array. Find the maximum value and store a pointer to it. Print the maximum value and its position (index) in the array. Free all allocated memory.\n\nWORKED EXAMPLE:\nInput: 5 numbers 3.2, 7.1, 5.0, 9.8, 2.3 \u2192 iterate through with pointers, tracking maximum \u2192 max found at index 3 \u2192 Output: 9.8 at position 3",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    double *arr = (double *)malloc(n * sizeof(double));\n    if (arr == NULL) {\n        return 1;\n    }\n    \n    for (int i = 0; i < n; i++) {\n        scanf(\"%lf\", arr + i);\n    }\n    \n    double *maxPtr = arr;\n    int maxIndex = 0;\n    \n    for (int i = 1; i < n; i++) {\n        if (*(arr + i) > *maxPtr) {\n            maxPtr = arr + i;\n            maxIndex = i;\n        }\n    }\n    \n    printf(\"%.1f at position %d\\n\", *maxPtr, maxIndex);\n    \n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n3.2 7.1 5.0 9.8 2.3",
+          "expected_output": "9.8 at position 3"
+        },
+        {
+          "input": "3\n10.0 10.0 10.0",
+          "expected_output": "10.0 at position 0"
+        },
+        {
+          "input": "4\n-5.5 -1.1 -3.3 -2.2",
+          "expected_output": "-1.1 at position 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n3.2 7.1 5.0 9.8 2.3",
+            "expected": "9.8 at position 3",
+            "actual": "9.8 at position 3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3\n10.0 10.0 10.0",
+            "expected": "10.0 at position 0",
+            "actual": "10.0 at position 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4\n-5.5 -1.1 -3.3 -2.2",
+            "expected": "-1.1 at position 1",
+            "actual": "-1.1 at position 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Realloc to Dynamically Grow an Array",
+      "description": "Often we do not know the final size of a dataset at allocation time. The `realloc` function allows us to resize an existing heap allocation, preserving its contents while expanding capacity. This is the basis for dynamic data structures like resizable arrays (vectors), which grow as needed without wasting memory or requiring the programmer to guess an upper bound.\n\nWrite a program that reads integers from stdin until EOF. Start with an array capacity of 10 elements. When the array fills up, use `realloc` to double the capacity and continue reading. After all integers are read, print them in the order they were entered. Print the final count and final capacity. Free all allocated memory.\n\nWORKED EXAMPLE:\nInput: 5 integers read (capacity starts at 10) \u2192 read 10 more (capacity realloc'd to 20) \u2192 read 5 more \u2192 count: 20, capacity: 20 \u2192 Output: all 20 integers, then \"Count: 20, Capacity: 20\"",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int capacity = 10;\n    int count = 0;\n    int *arr = (int *)malloc(capacity * sizeof(int));\n    if (arr == NULL) {\n        return 1;\n    }\n    \n    int num;\n    while (scanf(\"%d\", &num) == 1) {\n        if (count == capacity) {\n            capacity *= 2;\n            int *temp = (int *)realloc(arr, capacity * sizeof(int));\n            if (temp == NULL) {\n                free(arr);\n                return 1;\n            }\n            arr = temp;\n        }\n        arr[count] = num;\n        count++;\n    }\n    \n    for (int i = 0; i < count; i++) {\n        printf(\"%d\\n\", arr[i]);\n    }\n    printf(\"Count: %d, Capacity: %d\\n\", count, capacity);\n    \n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1 2 3 4 5",
+          "expected_output": "1\n2\n3\n4\n5\nCount: 5, Capacity: 10"
+        },
+        {
+          "input": "1 2 3 4 5 6 7 8 9 10 11 12",
+          "expected_output": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\nCount: 12, Capacity: 20"
+        },
+        {
+          "input": "42",
+          "expected_output": "42\nCount: 1, Capacity: 10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 2 3 4 5",
+            "expected": "1\n2\n3\n4\n5\nCount: 5, Capacity: 10",
+            "actual": "1\n2\n3\n4\n5\nCount: 5, Capacity: 10",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 2 3 4 5 6 7 8 9 10 11 12",
+            "expected": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\nCount: 12, Capacity: 20",
+            "actual": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\nCount: 12, Capacity: 20",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "42",
+            "expected": "42\nCount: 1, Capacity: 10",
+            "actual": "42\nCount: 1, Capacity: 10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Compare Two Dynamically Allocated Strings",
+      "description": "String comparison is a fundamental operation in text processing and search algorithms. While standard library functions exist, understanding how to manually compare strings using pointer arithmetic reinforces control over memory and character-level operations. This knowledge is essential when working in embedded systems or when implementing custom string-handling routines.\n\nWrite a program that reads two lines of text (up to 200 characters each). Allocate memory for both strings and store them. Compare the two strings character-by-character using pointers (not strcmp). Print \"Equal\" if they match exactly, or print \"Not equal\" if they differ. Also print the position of the first difference, or -1 if they are equal. Free all allocated memory.\n\nWORKED EXAMPLE:\nInput: \"hello\" and \"hello\" \u2192 compare via pointers, all characters match \u2192 Output: \"Equal\" at position -1. Input: \"hello\" and \"hallo\" \u2192 mismatch at index 1 \u2192 Output: \"Not equal\" at position 1",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main(void) {\n    char buffer1[201], buffer2[201];\n    fgets(buffer1, sizeof(buffer1), stdin);\n    fgets(buffer2, sizeof(buffer2), stdin);\n    \n    int len1 = strlen(buffer1);\n    int len2 = strlen(buffer2);\n    \n    char *str1 = (char *)malloc((len1 + 1) * sizeof(char));\n    char *str2 = (char *)malloc((len2 + 1) * sizeof(char));\n    if (str1 == NULL || str2 == NULL) {\n        return 1;\n    }\n    \n    strcpy(str1, buffer1);\n    strcpy(str2, buffer2);\n    \n    char *ptr1 = str1;\n    char *ptr2 = str2;\n    int position = 0;\n    int equal = 1;\n    \n    while (*ptr1 != '\\0' && *ptr2 != '\\0') {\n        if (*ptr1 != *ptr2) {\n            equal = 0;\n            break;\n        }\n        ptr1++;\n        ptr2++;\n        position++;\n    }\n    \n    if (*ptr1 != *ptr2) {\n        equal = 0;\n    }\n    \n    if (equal) {\n        printf(\"Equal\\n\");\n        printf(\"%d\\n\", -1);\n    } else {\n        printf(\"Not equal\\n\");\n        printf(\"%d\\n\", position);\n    }\n    \n    free(str1);\n    free(str2);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "hello\nhello",
+          "expected_output": "Equal\n-1"
+        },
+        {
+          "input": "hello\nhallo",
+          "expected_output": "Not equal\n1"
+        },
+        {
+          "input": "test\ntesting",
+          "expected_output": "Not equal\n4"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "hello\nhello",
+            "expected": "Equal\n-1",
+            "actual": "Not equal\n5",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "hello\nhallo",
+            "expected": "Not equal\n1",
+            "actual": "Not equal\n1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "test\ntesting",
+            "expected": "Not equal\n4",
+            "actual": "Not equal\n4",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Allocate and Sum a Jagged 2D Array",
+      "description": "In many applications, data is not always rectangular. A jagged (ragged) array has rows of different lengths\u2014imagine a spreadsheet where each row contains a different number of entries. Memory management becomes more sophisticated when each row requires its own heap allocation with a custom size, and pointers become essential for navigating this irregular structure.\n\nWrite a program that reads an integer m (number of rows). For each row i, read an integer n_i (the number of elements in that row), then read n_i integers for that row. Store all rows in a dynamically allocated array of pointers. For each row, calculate and print the sum of its elements on a separate line. Free all allocated memory.\n\nWORKED EXAMPLE:\nInput: 3 rows; row 1 has 2 elements (3, 5) sum=8; row 2 has 3 elements (1, 2, 3) sum=6; row 3 has 1 element (10) sum=10 \u2192 Output: 8, 6, 10",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int m;\n    scanf(\"%d\", &m);\n    \n    int **rows = (int **)malloc(m * sizeof(int *));\n    int *sizes = (int *)malloc(m * sizeof(int));\n    if (rows == NULL || sizes == NULL) {\n        return 1;\n    }\n    \n    for (int i = 0; i < m; i++) {\n        scanf(\"%d\", &sizes[i]);\n        rows[i] = (int *)malloc(sizes[i] * sizeof(int));\n        if (rows[i] == NULL) {\n            return 1;\n        }\n        \n        for (int j = 0; j < sizes[i]; j++) {\n            scanf(\"%d\", &rows[i][j]);\n        }\n    }\n    \n    for (int i = 0; i < m; i++) {\n        int sum = 0;\n        for (int j = 0; j < sizes[i]; j++) {\n            sum += rows[i][j];\n        }\n        printf(\"%d\\n\", sum);\n    }\n    \n    for (int i = 0; i < m; i++) {\n        free(rows[i]);\n    }\n    free(rows);\n    free(sizes);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3\n2 3 5\n3 1 2 3\n1 10",
+          "expected_output": "8\n6\n10"
+        },
+        {
+          "input": "2\n4 1 2 3 4\n2 5 6",
+          "expected_output": "10\n11"
+        },
+        {
+          "input": "1\n5 10 20 30 40 50",
+          "expected_output": "150"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3\n2 3 5\n3 1 2 3\n1 10",
+            "expected": "8\n6\n10",
+            "actual": "8\n6\n10",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "2\n4 1 2 3 4\n2 5 6",
+            "expected": "10\n11",
+            "actual": "10\n11",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n5 10 20 30 40 50",
+            "expected": "150",
+            "actual": "150",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Swap Array Elements Using Pointers to Pointers",
+      "description": "A function that modifies pointers often requires a pointer to a pointer (double indirection). This is common in linked list implementations, tree manipulations, and dynamic array operations. Understanding double pointers is critical for writing functions that can reassign pointers themselves, not just the values they point to.\n\nWrite a program that reads an integer n, then n integers into a dynamically allocated array. Create a function `swap(int **a, int **b)` that takes two pointers to integer pointers and exchanges the values they point to. Read two indices i and j, then call your swap function to exchange array[i] and array[j]. Print the modified array. Free all allocated memory.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nvoid swap(int **a, int **b) {\n    int temp = **a;\n    **a = **b;\n    **b = temp;\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    int *arr = (int *)malloc(n * sizeof(int));\n    if (arr == NULL) {\n        return 1;\n    }\n    \n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n    \n    int i, j;\n    scanf(\"%d %d\", &i, &j);\n    \n    swap(&arr[i], &arr[j]);\n    \n    for (int k = 0; k < n; k++) {\n        printf(\"%d\", arr[k]);\n        if (k < n - 1) {\n            printf(\" \");\n        }\n    }\n    printf(\"\\n\");\n    \n    free(arr);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n10 20 30 40 50\n0 4",
+          "expected_output": "50 20 30 40 10"
+        },
+        {
+          "input": "4\n1 2 3 4\n1 2",
+          "expected_output": "1 3 2 4"
+        },
+        {
+          "input": "3\n7 8 9\n0 1",
+          "expected_output": "8 7 9"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n10 20 30 40 50\n0 4",
+            "expected": "50 20 30 40 10",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "4\n1 2 3 4\n1 2",
+            "expected": "1 3 2 4",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "3\n7 8 9\n0 1",
+            "expected": "8 7 9",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Build and Print a List via Pointer Traversal",
+      "description": "A singly linked list is a fundamental data structure where each node points to the next node via a pointer. Unlike arrays, linked lists allow efficient insertion and deletion. Understanding how to dynamically allocate nodes, link them together with pointers, and traverse the resulting structure is essential for implementing many advanced data structures and algorithms.\n\nWrite a program that reads an integer n, then n integers. Create a simple linked list where each node contains an integer value and a pointer to the next node. The last node's next pointer must be NULL. Traverse the list using pointers and print each value on a separate line. Free all allocated memory by traversing the list with a pointer and deallocating each node.\n\nWORKED EXAMPLE:\nInput: 3 integers 5, 10, 15 \u2192 allocate node1(5)\u2192node2(10)\u2192node3(15)\u2192NULL \u2192 traverse with pointer from head \u2192 Output: 5, 10, 15",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct Node {\n    int value;\n    struct Node *next;\n} Node;\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    \n    Node *head = NULL;\n    Node *current = NULL;\n    \n    for (int i = 0; i < n; i++) {\n        int val;\n        scanf(\"%d\", &val);\n        \n        Node *newNode = (Node *)malloc(sizeof(Node));\n        if (newNode == NULL) {\n            return 1;\n        }\n        \n        newNode->value = val;\n        newNode->next = NULL;\n        \n        if (head == NULL) {\n            head = newNode;\n            current = newNode;\n        } else {\n            current->next = newNode;\n            current = newNode;\n        }\n    }\n    \n    Node *ptr = head;\n    while (ptr != NULL) {\n        printf(\"%d\\n\", ptr->value);\n        ptr = ptr->next;\n    }\n    \n    ptr = head;\n    while (ptr != NULL) {\n        Node *temp = ptr;\n        ptr = ptr->next;\n        free(temp);\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3\n5 10 15",
+          "expected_output": "5\n10\n15"
+        },
+        {
+          "input": "5\n1 2 3 4 5",
+          "expected_output": "1\n2\n3\n4\n5"
+        },
+        {
+          "input": "1\n42",
+          "expected_output": "42"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3\n5 10 15",
+            "expected": "5\n10\n15",
+            "actual": "5\n10\n15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5\n1 2 3 4 5",
+            "expected": "1\n2\n3\n4\n5",
+            "actual": "1\n2\n3\n4\n5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n42",
+            "expected": "42",
+            "actual": "42",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

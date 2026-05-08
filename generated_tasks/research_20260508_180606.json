@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:06:06.453522",
+  "provider": "gpt",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Count Vowels in Each Word",
+      "description": "Strings are often processed one character at a time, especially when you need to classify letters or ignore punctuation. This is useful in text tools, search filters, and simple language processing, where a program must inspect every character and make decisions based on its type.\n\nRead a line of text with at most 200 characters, which may contain spaces. Count how many vowels appear in the line, treating both uppercase and lowercase English vowels as vowels. Print the total count as a single integer followed by a newline. If the line is empty, print 0.\n\nWORKED EXAMPLE:\nInput: `Hello, World!` \u2192 count: 0 \u2192 1 \u2192 2 \u2192 3. Output: `3`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    int count = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = (char)tolower((unsigned char)s[i]);\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n            count++;\n        }\n    }\n\n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "Hello, World!",
+          "expected_output": "3"
+        },
+        {
+          "input": "AEIOU",
+          "expected_output": "5"
+        },
+        {
+          "input": "",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "Hello, World!",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "AEIOU",
+            "expected": "5",
+            "actual": "5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "0",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Reverse Each Word in a Sentence",
+      "description": "Working with strings often means transforming text while preserving its structure. Reversing words is a common operation in text editing and formatting tasks, where each token must be processed without losing spaces between them.\n\nRead one line of text with at most 200 characters, including spaces. Reverse the characters inside each word, but keep the words in the same order and keep every space exactly as it appears in the input. Print the transformed line followed by a newline. Words are maximal sequences of non-space characters.\n\nWORKED EXAMPLE:\nInput: `ab cd ef` \u2192 output text changes from `ba cd fe`. Output: `ba cd fe`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    for (size_t i = 0; s[i] != '\\0'; ) {\n        if (s[i] == ' ') {\n            putchar(' ');\n            i++;\n        } else {\n            size_t start = i;\n            while (s[i] != '\\0' && s[i] != ' ') i++;\n            for (size_t j = i; j > start; j--) {\n                putchar(s[j - 1]);\n            }\n        }\n    }\n    putchar('\\n');\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "ab cd ef",
+          "expected_output": "ba dc fe"
+        },
+        {
+          "input": "hello",
+          "expected_output": "olleh"
+        },
+        {
+          "input": "a b  c",
+          "expected_output": "a b  c"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "ab cd ef",
+            "expected": "ba dc fe",
+            "actual": "ba dc fe",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "hello",
+            "expected": "olleh",
+            "actual": "olleh",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "a b  c",
+            "expected": "a b  c",
+            "actual": "a b  c",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "First Repeated Character",
+      "description": "Searching through strings is a basic form of pattern detection. Programs that validate input, detect anomalies, or compress data often need to remember what has been seen before while scanning from left to right.\n\nRead a line of text with at most 200 characters, including spaces. Find the first character that appears at least twice when scanning from left to right, and print that character followed by a newline. If no character repeats, print `NONE`. Spaces are valid characters and may be the repeated character.\n\nWORKED EXAMPLE:\nInput: `abca` \u2192 seen sequence: `a \u2192 b \u2192 c \u2192 a` and the first repeat is `a`. Output: `a`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    int seen[256] = {0};\n    for (size_t i = 0; s[i] != '\\0'; i++) {\n        unsigned char c = (unsigned char)s[i];\n        if (seen[c]) {\n            printf(\"%c\\n\", s[i]);\n            return 0;\n        }\n        seen[c] = 1;\n    }\n\n    printf(\"NONE\\n\");\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "abca",
+          "expected_output": "a"
+        },
+        {
+          "input": "a bcda",
+          "expected_output": "a"
+        },
+        {
+          "input": "abcdef",
+          "expected_output": "NONE"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "abca",
+            "expected": "a",
+            "actual": "a",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "a bcda",
+            "expected": "a",
+            "actual": "a",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "abcdef",
+            "expected": "NONE",
+            "actual": "NONE",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Compress Consecutive Letters",
+      "description": "String compression is useful when repeated characters appear in logs, codes, or simple data storage. A run-length style representation replaces long stretches of the same symbol with a shorter description, which makes repeated patterns easier to summarize.\n\nRead one line of text with at most 200 characters, including spaces. Compress each maximal block of identical characters into the character followed immediately by the number of times it appears in that block. Print the compressed result followed by a newline. If the input line is empty, print nothing except the newline.\n\nWORKED EXAMPLE:\nInput: `aaabbc` \u2192 blocks become `a3 \u2192 b2 \u2192 c1`. Output: `a3b2c1`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    if (s[0] == '\\0') {\n        putchar('\\n');\n        return 0;\n    }\n\n    for (size_t i = 0; s[i] != '\\0'; ) {\n        char c = s[i];\n        int count = 0;\n        while (s[i] != '\\0' && s[i] == c) {\n            count++;\n            i++;\n        }\n        putchar(c);\n        printf(\"%d\", count);\n    }\n    putchar('\\n');\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "aaabbc",
+          "expected_output": "a3b2c1"
+        },
+        {
+          "input": "a",
+          "expected_output": "a1"
+        },
+        {
+          "input": "",
+          "expected_output": "4"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "aaabbc",
+            "expected": "a3b2c1",
+            "actual": "a3b2c1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "a",
+            "expected": "a1",
+            "actual": "a1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "4",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Palindrome Ignoring Spaces and Case",
+      "description": "Palindrome checks are common in text validation and word games. A palindrome is a string that reads the same forward and backward, and many applications need to compare text while ignoring formatting differences such as capitalization and spaces.\n\nRead one line of text with at most 200 characters. Consider only alphabetic letters, ignore spaces and case, and determine whether the resulting sequence is a palindrome. Print `YES` if it is, otherwise print `NO`, followed by a newline. An empty filtered sequence should be considered a palindrome.\n\nWORKED EXAMPLE:\nInput: `A man a plan a canal Panama` \u2192 filtered comparison moves inward and matches throughout. Output: `YES`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    char t[205];\n    int m = 0;\n    for (size_t i = 0; s[i] != '\\0'; i++) {\n        if (isalpha((unsigned char)s[i])) {\n            t[m++] = (char)tolower((unsigned char)s[i]);\n        }\n    }\n\n    int ok = 1;\n    for (int i = 0, j = m - 1; i < j; i++, j--) {\n        if (t[i] != t[j]) {\n            ok = 0;\n            break;\n        }\n    }\n\n    printf(\"%s\\n\", ok ? \"YES\" : \"NO\");\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "A man a plan a canal Panama",
+          "expected_output": "YES"
+        },
+        {
+          "input": "Hello",
+          "expected_output": "NO"
+        },
+        {
+          "input": "",
+          "expected_output": "YES"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "A man a plan a canal Panama",
+            "expected": "YES",
+            "actual": "YES",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "Hello",
+            "expected": "NO",
+            "actual": "NO",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "YES",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Count Words Starting and Ending with a Vowel",
+      "description": "Text scanners often need to analyze words individually rather than as a whole line. This matters in document processing and simple search tools, where letters at the beginning and end of each word can influence formatting, filtering, or statistics.\n\nRead one line of text with at most 200 characters, including spaces. Count how many words start and end with a vowel, where vowels are `a`, `e`, `i`, `o`, `u` in either case. Words are maximal sequences of non-space characters. Print the count followed by a newline. If there are no words, print 0.\n\nWORKED EXAMPLE:\nInput: `apple ice orange` \u2192 word checks lead to counts of 1 \u2192 2 \u2192 3. Output: `3`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint is_vowel(char c) {\n    c = (char)tolower((unsigned char)c);\n    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';\n}\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    int count = 0;\n    for (size_t i = 0; s[i] != '\\0'; ) {\n        while (s[i] == ' ') i++;\n        if (s[i] == '\\0') break;\n\n        size_t start = i;\n        while (s[i] != '\\0' && s[i] != ' ') i++;\n        size_t end = i - 1;\n\n        if (is_vowel(s[start]) && is_vowel(s[end])) {\n            count++;\n        }\n    }\n\n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "apple ice orange",
+          "expected_output": "3"
+        },
+        {
+          "input": "sky try my",
+          "expected_output": "0"
+        },
+        {
+          "input": "",
+          "expected_output": "0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "apple ice orange",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "sky try my",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "0",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Remove Duplicate Characters, Keep First Occurrence",
+      "description": "Deduplication is a common string-processing task in data cleaning and user-input handling. When text contains repeated letters or symbols, programs may need to keep only the first appearance of each character while preserving the original order.\n\nRead one line of text with at most 200 characters, including spaces. Print a new line containing each distinct character from the input exactly once, in the order of its first appearance. Spaces are treated like ordinary characters and may appear in the output at most once. Finish with a newline. If the input line is empty, print just a newline.\n\nWORKED EXAMPLE:\nInput: `banana` \u2192 output builds as `b \u2192 ba \u2192 ban`. Output: `ban`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    int seen[256] = {0};\n    for (size_t i = 0; s[i] != '\\0'; i++) {\n        unsigned char c = (unsigned char)s[i];\n        if (!seen[c]) {\n            seen[c] = 1;\n            putchar(s[i]);\n        }\n    }\n    putchar('\\n');\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "banana",
+          "expected_output": "ban"
+        },
+        {
+          "input": "aaaa",
+          "expected_output": "a"
+        },
+        {
+          "input": "a b a c",
+          "expected_output": "a bc"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "banana",
+            "expected": "ban",
+            "actual": "ban",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "aaaa",
+            "expected": "a",
+            "actual": "a",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "a b a c",
+            "expected": "a bc",
+            "actual": "a bc",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Shift Letters by a Given Amount",
+      "description": "Character-by-character transformation is used in simple encoding, scrambling, and formatting tasks. When letters are shifted within the alphabet, the program must preserve the difference between letters and non-letters while handling wrap-around correctly.\n\nRead an integer `k` followed by one line of text with at most 200 characters. Shift every English letter forward by `k` positions in the alphabet, wrapping around after `z` or `Z`. Preserve case and leave all non-letter characters unchanged. The integer `k` may be any value from 0 to 1000. Print the transformed line followed by a newline.\n\nWORKED EXAMPLE:\nInput: `2 abc XYZ` \u2192 letters change to `cde ZAB`. Output: `cde ZAB`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\nint main(void) {\n    int k;\n    if (scanf(\"%d\", &k) != 1) return 0;\n    int ch;\n    while ((ch = getchar()) != '\\n' && ch != EOF) {}\n\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) s[0] = '\\0';\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    k %= 26;\n    for (size_t i = 0; s[i] != '\\0'; i++) {\n        if (isupper((unsigned char)s[i])) {\n            s[i] = (char)('A' + (s[i] - 'A' + k) % 26);\n        } else if (islower((unsigned char)s[i])) {\n            s[i] = (char)('a' + (s[i] - 'a' + k) % 26);\n        }\n    }\n\n    printf(\"%s\\n\", s);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "2 abc XYZ",
+          "expected_output": "cde ZAB"
+        },
+        {
+          "input": "26 Hello, World!",
+          "expected_output": "Hello, World!"
+        },
+        {
+          "input": "1 z Z",
+          "expected_output": "a A"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "2 abc XYZ",
+            "expected": "cde ZAB",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "26 Hello, World!",
+            "expected": "Hello, World!",
+            "actual": "",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1 z Z",
+            "expected": "a A",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Longest Word in a Sentence",
+      "description": "Finding the longest word is a simple form of text analysis used in document statistics and input validation. To do it correctly, a program must separate words, compare their lengths, and remember the best candidate seen so far.\n\nRead one line of text with at most 200 characters, including spaces. Words are maximal sequences of non-space characters. Print the longest word in the line; if several words have the same maximum length, print the one that appears first. If the line contains no words, print `NONE`. End with a newline.\n\nWORKED EXAMPLE:\nInput: `one three seven` \u2192 lengths compare as `3 \u2192 5 \u2192 5`, so the first longest word remains. Output: `three`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[205];\n    if (!fgets(s, sizeof(s), stdin)) return 0;\n\n    size_t n = strlen(s);\n    if (n > 0 && s[n - 1] == '\\n') s[n - 1] = '\\0';\n\n    int best_len = 0;\n    int best_start = -1;\n\n    for (size_t i = 0; s[i] != '\\0'; ) {\n        while (s[i] == ' ') i++;\n        if (s[i] == '\\0') break;\n\n        size_t start = i;\n        while (s[i] != '\\0' && s[i] != ' ') i++;\n        int len = (int)(i - start);\n\n        if (len > best_len) {\n            best_len = len;\n            best_start = (int)start;\n        }\n    }\n\n    if (best_start == -1) {\n        printf(\"NONE\\n\");\n    } else {\n        for (int i = best_start; i < best_start + best_len; i++) {\n            putchar(s[i]);\n        }\n        putchar('\\n');\n    }\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "one three seven",
+          "expected_output": "three"
+        },
+        {
+          "input": "cat dog",
+          "expected_output": "cat"
+        },
+        {
+          "input": "",
+          "expected_output": "NONE"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "one three seven",
+            "expected": "three",
+            "actual": "three",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "cat dog",
+            "expected": "cat",
+            "actual": "cat",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "",
+            "expected": "NONE",
+            "actual": "",
+            "passed": false,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Count Occurrences of a Pattern in a String",
+      "description": "Pattern matching is a core idea in text processing, from searching documents to analyzing DNA-like symbol sequences. Even a simple count of matches requires examining neighboring characters repeatedly and handling overlapping occurrences carefully.\n\nRead two lines: the first line contains a text string with at most 200 characters, and the second line contains a non-empty pattern with at most 200 characters. Count how many times the pattern appears in the text, including overlapping matches. Print the count followed by a newline. If the pattern is longer than the text, the answer is 0.\n\nWORKED EXAMPLE:\nInput: `aaaa` and `aa` \u2192 matches occur starting at positions 1, 2, and 3. Output: `3`",
+      "solution": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char text[205], pat[205];\n\n    if (!fgets(text, sizeof(text), stdin)) return 0;\n    if (!fgets(pat, sizeof(pat), stdin)) return 0;\n\n    size_t nt = strlen(text), np = strlen(pat);\n    if (nt > 0 && text[nt - 1] == '\\n') text[--nt] = '\\0';\n    if (np > 0 && pat[np - 1] == '\\n') pat[--np] = '\\0';\n\n    int count = 0;\n    if (np == 0 || np > nt) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    for (size_t i = 0; i + np <= nt; i++) {\n        if (strncmp(&text[i], pat, np) == 0) {\n            count++;\n        }\n    }\n\n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "aaaa\naa",
+          "expected_output": "3"
+        },
+        {
+          "input": "abcde\nf",
+          "expected_output": "0"
+        },
+        {
+          "input": "banana\nana",
+          "expected_output": "2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "aaaa\naa",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "abcde\nf",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "banana\nana",
+            "expected": "2",
+            "actual": "2",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

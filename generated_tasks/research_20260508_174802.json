@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T17:48:02.735096",
+  "provider": "claude",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Temperature Conversion with Range Check",
+      "description": "Temperature conversion is a fundamental task in scientific and everyday applications. Converting between Celsius and Fahrenheit requires both arithmetic and decision-making to determine which direction the conversion should go.\n\nYour program reads a single floating-point number representing a temperature and a character indicating the source scale ('C' for Celsius, 'F' for Fahrenheit). Convert the temperature to the other scale using the formula F = C \u00d7 9/5 + 32 (or rearranged for the reverse). Print the result rounded to one decimal place. If the converted temperature is below absolute zero (\u2212273.15\u00b0C or \u2212459.67\u00b0F), print an error message instead.",
+      "solution": "#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    double temp;\n    char scale;\n    double converted;\n    \n    scanf(\"%lf %c\", &temp, &scale);\n    \n    if (scale == 'C') {\n        converted = temp * 9.0 / 5.0 + 32.0;\n        if (converted < -459.67) {\n            printf(\"Error: Temperature below absolute zero\\n\");\n        } else {\n            printf(\"%.1f\\n\", converted);\n        }\n    } else if (scale == 'F') {\n        converted = (temp - 32.0) * 5.0 / 9.0;\n        if (converted < -273.15) {\n            printf(\"Error: Temperature below absolute zero\\n\");\n        } else {\n            printf(\"%.1f\\n\", converted);\n        }\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "0 C",
+          "expected_output": "32.0"
+        },
+        {
+          "input": "100 F",
+          "expected_output": "37.8"
+        },
+        {
+          "input": "-300 C",
+          "expected_output": "Error: Temperature below absolute zero"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "0 C",
+            "expected": "32.0",
+            "actual": "32.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100 F",
+            "expected": "37.8",
+            "actual": "37.8",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-300 C",
+            "expected": "Error: Temperature below absolute zero",
+            "actual": "Error: Temperature below absolute zero",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Digit Sum Calculator",
+      "description": "Summing digits is a common operation in number theory and data validation. It involves repeatedly extracting individual digits from a number and adding them together, which exercises loop control and modular arithmetic.\n\nYour program reads a single non-negative integer. Calculate and print the sum of all its digits. For example, the digits of 4829 are 4, 8, 2, and 9, which sum to 23.\n\nWORKED EXAMPLE:\nInput: 4829 \u2192 digit sum: 4 \u2192 12 \u2192 14 \u2192 23. Output: 23",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int num;\n    int sum = 0;\n    int digit;\n    \n    scanf(\"%d\", &num);\n    \n    while (num > 0) {\n        digit = num % 10;\n        sum = sum + digit;\n        num = num / 10;\n    }\n    \n    printf(\"%d\\n\", sum);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "4829",
+          "expected_output": "23"
+        },
+        {
+          "input": "0",
+          "expected_output": "0"
+        },
+        {
+          "input": "12345",
+          "expected_output": "15"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "4829",
+            "expected": "23",
+            "actual": "23",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "12345",
+            "expected": "15",
+            "actual": "15",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Even/Odd Pattern Counter",
+      "description": "Detecting patterns in sequences is useful for analyzing data and understanding properties of number sequences. A simple pattern to identify is whether consecutive integers alternate between even and odd, or remain in the same parity group.\n\nYour program reads a sequence of integers (one per line) until EOF. Count how many of them are even and how many are odd. Print both counts on separate lines. An even number is divisible by 2; an odd number is not.\n\nWORKED EXAMPLE:\nInput: 5 3 2 4 \u2192 even count: 0 \u2192 0 \u2192 1 \u2192 2. Output: 2, 3",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int num;\n    int even_count = 0;\n    int odd_count = 0;\n    \n    while (scanf(\"%d\", &num) == 1) {\n        if (num % 2 == 0) {\n            even_count = even_count + 1;\n        } else {\n            odd_count = odd_count + 1;\n        }\n    }\n    \n    printf(\"%d\\n\", even_count);\n    printf(\"%d\\n\", odd_count);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5\n3\n2\n4",
+          "expected_output": "2\n3"
+        },
+        {
+          "input": "10\n20\n30",
+          "expected_output": "3\n0"
+        },
+        {
+          "input": "1",
+          "expected_output": "0\n1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n3\n2\n4",
+            "expected": "2\n3",
+            "actual": "2\n2",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "10\n20\n30",
+            "expected": "3\n0",
+            "actual": "3\n0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1",
+            "expected": "0\n1",
+            "actual": "0\n1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Multiplication Table with Conditional Formatting",
+      "description": "Multiplication tables are often printed with specific formatting rules to make them easier to read. Applying different formatting based on the values computed helps develop skills in combining arithmetic operations with conditional logic.\n\nYour program reads two positive integers: a size n and a threshold t. Print an n \u00d7 n multiplication table where entry (i, j) is the product i \u00d7 j. However, if a product is less than the threshold t, print the product in square brackets; otherwise, print it without brackets. Use tab characters to separate columns.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, t;\n    \n    scanf(\"%d %d\", &n, &t);\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= n; j++) {\n            int product = i * j;\n            if (product < t) {\n                printf(\"[%d]\", product);\n            } else {\n                printf(\"%d\", product);\n            }\n            if (j < n) {\n                printf(\"\\t\");\n            }\n        }\n        printf(\"\\n\");\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "3 5",
+          "expected_output": "[1]\t[2]\t[3]\n[2]\t[4]\t[6]\n[3]\t[6]\t9"
+        },
+        {
+          "input": "2 10",
+          "expected_output": "[1]\t[2]\n[2]\t4"
+        },
+        {
+          "input": "4 8",
+          "expected_output": "[1]\t[2]\t[3]\t[4]\n[2]\t[4]\t[6]\t8\n[3]\t[6]\t9\t12\n[4]\t8\t12\t16"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "3 5",
+            "expected": "[1]\t[2]\t[3]\n[2]\t[4]\t[6]\n[3]\t[6]\t9",
+            "actual": "[1]\t[2]\t[3]\n[2]\t[4]\t6\n[3]\t6\t9",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "2 10",
+            "expected": "[1]\t[2]\n[2]\t4",
+            "actual": "[1]\t[2]\n[2]\t[4]",
+            "passed": false,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4 8",
+            "expected": "[1]\t[2]\t[3]\t[4]\n[2]\t[4]\t[6]\t8\n[3]\t[6]\t9\t12\n[4]\t8\t12\t16",
+            "actual": "[1]\t[2]\t[3]\t[4]\n[2]\t[4]\t[6]\t8\n[3]\t[6]\t9\t12\n[4]\t8\t12\t16",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": false
+      },
+      "valid": false
+    },
+    {
+      "title": "Running Average Tracker",
+      "description": "Calculating a running average\u2014the average of all values seen so far\u2014is used in monitoring systems, quality control, and data analysis. This requires accumulating both a sum and a count, and dividing to produce an updated average after each new value.\n\nYour program reads floating-point numbers (one per line) until EOF. After reading each number, print the running average (average of all numbers read so far) to two decimal places. Do not print anything until the first number has been read.\n\nWORKED EXAMPLE:\nInput: 10 20 30 \u2192 average: 10.00 \u2192 15.00 \u2192 20.00. Output: 10.00, 15.00, 20.00",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    double num;\n    double sum = 0.0;\n    int count = 0;\n    \n    while (scanf(\"%lf\", &num) == 1) {\n        sum = sum + num;\n        count = count + 1;\n        double average = sum / count;\n        printf(\"%.2f\\n\", average);\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10\n20\n30",
+          "expected_output": "10.00\n15.00\n20.00"
+        },
+        {
+          "input": "5\n5\n5",
+          "expected_output": "5.00\n5.00\n5.00"
+        },
+        {
+          "input": "100",
+          "expected_output": "100.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10\n20\n30",
+            "expected": "10.00\n15.00\n20.00",
+            "actual": "10.00\n15.00\n20.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5\n5\n5",
+            "expected": "5.00\n5.00\n5.00",
+            "actual": "5.00\n5.00\n5.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "100",
+            "expected": "100.00",
+            "actual": "100.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Absolute Difference Sequence",
+      "description": "Analyzing differences between consecutive values in a sequence is useful for detecting changes and trends in data. Computing the absolute difference ensures all values are treated with the same magnitude, regardless of direction of change.\n\nYour program reads a sequence of integers (one per line) until EOF. For each pair of consecutive integers, compute and print the absolute difference. Print one result per line.\n\nWORKED EXAMPLE:\nInput: 10 3 8 5 \u2192 differences: |10\u22123| \u2192 |3\u22128| \u2192 |8\u22125|. Output: 7, 5, 3",
+      "solution": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int prev, curr;\n    \n    scanf(\"%d\", &prev);\n    \n    while (scanf(\"%d\", &curr) == 1) {\n        int diff = abs(prev - curr);\n        printf(\"%d\\n\", diff);\n        prev = curr;\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10\n3\n8\n5",
+          "expected_output": "7\n5\n3"
+        },
+        {
+          "input": "5\n5\n5",
+          "expected_output": "0\n0"
+        },
+        {
+          "input": "1\n10",
+          "expected_output": "9"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10\n3\n8\n5",
+            "expected": "7\n5\n3",
+            "actual": "7\n5\n3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5\n5\n5",
+            "expected": "0\n0",
+            "actual": "0\n0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1\n10",
+            "expected": "9",
+            "actual": "9",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Grade Letter Assignment with Range Boundaries",
+      "description": "Converting numerical scores to letter grades is a common task in educational and assessment systems. This requires understanding inclusive and exclusive range boundaries and using nested or chained conditionals to assign appropriate categories.\n\nYour program reads a single integer score between 0 and 100. Assign and print a letter grade according to the following scale: A (90\u2013100), B (80\u201389), C (70\u201379), D (60\u201369), F (below 60). If the score is outside the range 0\u2013100, print an error message.",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int score;\n    \n    scanf(\"%d\", &score);\n    \n    if (score < 0 || score > 100) {\n        printf(\"Error: Score out of range\\n\");\n    } else if (score >= 90) {\n        printf(\"A\\n\");\n    } else if (score >= 80) {\n        printf(\"B\\n\");\n    } else if (score >= 70) {\n        printf(\"C\\n\");\n    } else if (score >= 60) {\n        printf(\"D\\n\");\n    } else {\n        printf(\"F\\n\");\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "95",
+          "expected_output": "A"
+        },
+        {
+          "input": "75",
+          "expected_output": "C"
+        },
+        {
+          "input": "105",
+          "expected_output": "Error: Score out of range"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "95",
+            "expected": "A",
+            "actual": "A",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "75",
+            "expected": "C",
+            "actual": "C",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "105",
+            "expected": "Error: Score out of range",
+            "actual": "Error: Score out of range",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Least Common Multiple Finder",
+      "description": "The least common multiple (LCM) of two integers is the smallest positive integer divisible by both. Computing the LCM is useful in scheduling, synchronization, and fraction operations. A common approach is to use the relationship: LCM(a, b) = (a \u00d7 b) / GCD(a, b), where GCD is the greatest common divisor.\n\nYour program reads two positive integers. Compute and print their least common multiple. You may compute the GCD using the Euclidean algorithm: repeatedly replace the pair (a, b) with (b, a mod b) until b becomes 0; then a is the GCD.\n\nWORKED EXAMPLE:\nInput: 12 18 \u2192 GCD steps: (12, 18) \u2192 (18, 12) \u2192 (12, 6) \u2192 (6, 0) \u2192 GCD = 6 \u2192 LCM = 12 \u00d7 18 / 6 = 36. Output: 36",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    \n    scanf(\"%d %d\", &a, &b);\n    \n    int a_copy = a;\n    int b_copy = b;\n    \n    while (b_copy != 0) {\n        int temp = b_copy;\n        b_copy = a_copy % b_copy;\n        a_copy = temp;\n    }\n    \n    int gcd = a_copy;\n    int lcm = (a / gcd) * b;\n    \n    printf(\"%d\\n\", lcm);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "12 18",
+          "expected_output": "36"
+        },
+        {
+          "input": "5 7",
+          "expected_output": "35"
+        },
+        {
+          "input": "10 10",
+          "expected_output": "10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "12 18",
+            "expected": "36",
+            "actual": "36",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 7",
+            "expected": "35",
+            "actual": "35",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10 10",
+            "expected": "10",
+            "actual": "10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Coin Change Counter",
+      "description": "Coin change is a practical problem used in cash registers and vending machines. Given a monetary amount, the goal is to determine how many coins of each type are needed when using the greedy algorithm\u2014always take as many of the largest denomination as possible before moving to smaller ones.\n\nYour program reads a single integer representing an amount in cents. Using coins of denominations 25\u00a2 (quarter), 10\u00a2 (dime), 5\u00a2 (nickel), and 1\u00a2 (penny), determine the minimum number of coins needed and print the count of each denomination in order: quarters, dimes, nickels, pennies (each on its own line).\n\nWORKED EXAMPLE:\nInput: 41 \u2192 quarters: 1, remainder 16 \u2192 dimes: 1, remainder 6 \u2192 nickels: 1, remainder 1 \u2192 pennies: 1. Output: 1, 1, 1, 1",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int amount;\n    \n    scanf(\"%d\", &amount);\n    \n    int quarters = amount / 25;\n    amount = amount % 25;\n    \n    int dimes = amount / 10;\n    amount = amount % 10;\n    \n    int nickels = amount / 5;\n    amount = amount % 5;\n    \n    int pennies = amount;\n    \n    printf(\"%d\\n\", quarters);\n    printf(\"%d\\n\", dimes);\n    printf(\"%d\\n\", nickels);\n    printf(\"%d\\n\", pennies);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "41",
+          "expected_output": "1\n1\n1\n1"
+        },
+        {
+          "input": "99",
+          "expected_output": "3\n2\n0\n4"
+        },
+        {
+          "input": "5",
+          "expected_output": "0\n0\n1\n0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "41",
+            "expected": "1\n1\n1\n1",
+            "actual": "1\n1\n1\n1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "99",
+            "expected": "3\n2\n0\n4",
+            "actual": "3\n2\n0\n4",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5",
+            "expected": "0\n0\n1\n0",
+            "actual": "0\n0\n1\n0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Power and Remainder Analyzer",
+      "description": "Computing powers and remainders is fundamental in cryptography, number theory, and modular arithmetic. These operations help verify divisibility properties and analyze patterns in sequences of numbers raised to powers.\n\nYour program reads three positive integers: a base, an exponent, and a modulus. Compute base^exponent (base raised to the power of exponent), then print both the full result and the remainder when that result is divided by the modulus. The exponent may be large, so the intermediate result may overflow standard integer types\u2014compute and print the remainder separately using modular arithmetic.\n\nWORKED EXAMPLE:\nInput: 2 10 7 \u2192 2^10 = 1024, 1024 mod 7 = 2. Output: 1024, 2",
+      "solution": "#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    long long base, exponent, modulus;\n    \n    scanf(\"%lld %lld %lld\", &base, &exponent, &modulus);\n    \n    long long result = 1;\n    for (long long i = 0; i < exponent; i++) {\n        result = result * base;\n    }\n    \n    long long remainder = result % modulus;\n    \n    printf(\"%lld\\n\", result);\n    printf(\"%lld\\n\", remainder);\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "2 10 7",
+          "expected_output": "1024\n2"
+        },
+        {
+          "input": "3 5 13",
+          "expected_output": "243\n9"
+        },
+        {
+          "input": "5 3 6",
+          "expected_output": "125\n5"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "2 10 7",
+            "expected": "1024\n2",
+            "actual": "1024\n2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3 5 13",
+            "expected": "243\n9",
+            "actual": "243\n9",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5 3 6",
+            "expected": "125\n5",
+            "actual": "125\n5",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

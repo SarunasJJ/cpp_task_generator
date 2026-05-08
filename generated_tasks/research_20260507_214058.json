@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-05-07T21:40:58.504361",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Discounted Price with Conditional Shipping",
+      "description": "Variables and operators are fundamental to performing calculations and making decisions in C programming. They allow us to store different types of data, such as numbers or characters, and manipulate them using arithmetic, relational, and logical operations to derive meaningful results. These concepts are crucial for tasks like calculating costs, applying discounts, or determining eligibility based on specific criteria in real-world applications.\n\nYour task is to write a program that calculates the final price of an item after applying a percentage discount, and then conditionally adds a fixed shipping fee. The program will read four integers: the original item price, the discount percentage (0-100), a shipping threshold price, and a fixed shipping fee. Calculate the price after the discount. If this discounted price is strictly less than the shipping threshold, add the fixed shipping fee to get the final total. Otherwise, the shipping is free. Print the final total, formatted to two decimal places. All input values will be positive integers; the discount percentage will be between 0 and 100, inclusive.\n\nWORKED EXAMPLE:\nInput: 40 20 50 5 \u2192 price after discount: 32.00 \u2192 final amount: 37.00. Output: 37.00",
+      "solution": "#include <stdio.h> // Required for printf and scanf\n\nint main() {\n    // Declare integer variables to store the inputs\n    int original_price_int;\n    int discount_percentage_int;\n    int shipping_threshold_int;\n    int fixed_shipping_fee_int;\n\n    // Read the four integer inputs from stdin\n    // It's good practice to check the return value of scanf,\n    // though the problem assumes valid input for this exercise.\n    if (scanf(\"%d %d %d %d\", &original_price_int, &discount_percentage_int, \n               &shipping_threshold_int, &fixed_shipping_fee_int) != 4) {\n        // Simple error handling: exit if input fails\n        return 1; \n    }\n\n    // Convert integer inputs to double for precise floating-point calculations\n    double original_price = (double)original_price_int;\n    double discount_percentage = (double)discount_percentage_int;\n    double shipping_threshold = (double)shipping_threshold_int;\n    double fixed_shipping_fee = (double)fixed_shipping_fee_int;\n\n    // Calculate the discount amount using arithmetic operators\n    // Note: 100.0 is used to ensure floating-point division\n    double discount_amount = original_price * (discount_percentage / 100.0);\n\n    // Calculate the price after applying the discount\n    double price_after_discount = original_price - discount_amount;\n\n    // Initialize the final amount with the discounted price\n    double final_amount = price_after_discount;\n\n    // Use a conditional statement (if) to check if shipping fee needs to be added\n    if (price_after_discount < shipping_threshold) {\n        // Add the fixed shipping fee if the condition is met\n        final_amount = final_amount + fixed_shipping_fee;\n    }\n\n    // Print the final calculated amount, formatted to two decimal places\n    printf(\"%.2f\\n\", final_amount);\n\n    return 0; // Indicate successful execution\n}",
+      "test_cases": [
+        {
+          "input": "100 10 50 5",
+          "expected_output": "90.00"
+        },
+        {
+          "input": "40 20 50 5",
+          "expected_output": "37.00"
+        },
+        {
+          "input": "200 0 100 10",
+          "expected_output": "200.00"
+        },
+        {
+          "input": "75 50 100 20",
+          "expected_output": "57.50"
+        },
+        {
+          "input": "50 0 50 10",
+          "expected_output": "50.00"
+        },
+        {
+          "input": "49 0 50 10",
+          "expected_output": "59.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "100 10 50 5",
+            "expected": "90.00",
+            "actual": "90.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "40 20 50 5",
+            "expected": "37.00",
+            "actual": "37.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "200 0 100 10",
+            "expected": "200.00",
+            "actual": "200.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 4,
+            "input": "75 50 100 20",
+            "expected": "57.50",
+            "actual": "57.50",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 5,
+            "input": "50 0 50 10",
+            "expected": "50.00",
+            "actual": "50.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 6,
+            "input": "49 0 50 10",
+            "expected": "59.00",
+            "actual": "59.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

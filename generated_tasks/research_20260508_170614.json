@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-08T17:06:14.180470",
+  "provider": "gemini",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Dynamic Array Summation",
+      "description": "In C programming, dynamic memory allocation allows programs to request memory from the operating system during runtime, rather than reserving a fixed amount at compile time. This is particularly useful when dealing with data structures like arrays whose sizes are not known in advance, such as when processing user input of varying lengths, enabling more flexible and efficient memory usage.\n\nYour task is to write a C program that dynamically allocates memory for an array of integers, reads a specified number of integers into this array from standard input, calculates their sum, and then properly frees the allocated memory. The program must first read an integer `N` (1 <= N <= 1000), which represents the number of elements. Following `N`, it will read `N` individual integers (each between -10000 and 10000). Your program should compute the sum of these `N` integers and print the final sum to standard output, followed by a newline.\n\nWORKED EXAMPLE:\nInput: 3 10 20 30 \u2192 sum: 0 \u2192 10 \u2192 30 \u2192 60. Output: 60.",
+      "solution": "#include <stdio.h>\n#include <stdlib.h> // Required for malloc and free\n\nint main() {\n    int N;\n    int *arr; // Pointer to store the base address of the dynamically allocated array\n    long long sum = 0; // Use long long for sum to avoid potential overflow\n\n    // Read the number of elements\n    if (scanf(\"%d\", &N) != 1 || N < 1 || N > 1000) {\n        fprintf(stderr, \"Invalid input for N.\\n\");\n        return 1; // Indicate an error\n    }\n\n    // Dynamically allocate memory for N integers\n    arr = (int *)malloc(N * sizeof(int));\n\n    // Check if malloc was successful\n    if (arr == NULL) {\n        fprintf(stderr, \"Memory allocation failed.\\n\");\n        return 1; // Indicate an error\n    }\n\n    // Read N integers into the dynamically allocated array and calculate their sum\n    for (int i = 0; i < N; i++) {\n        if (scanf(\"%d\", &arr[i]) != 1) {\n            fprintf(stderr, \"Failed to read integer at index %d.\\n\", i);\n            free(arr); // Free memory before exiting on error\n            return 1;\n        }\n        sum += arr[i];\n    }\n\n    // Print the calculated sum\n    printf(\"%lld\\n\", sum);\n\n    // Free the dynamically allocated memory\n    free(arr);\n    arr = NULL; // Good practice to set pointer to NULL after freeing\n\n    return 0; // Indicate successful execution\n}",
+      "test_cases": [
+        {
+          "input": "5\n10 20 30 40 50",
+          "expected_output": "150"
+        },
+        {
+          "input": "1\n-100",
+          "expected_output": "-100"
+        },
+        {
+          "input": "4\n5 -10 15 -20",
+          "expected_output": "-10"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5\n10 20 30 40 50",
+            "expected": "150",
+            "actual": "150",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1\n-100",
+            "expected": "-100",
+            "actual": "-100",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4\n5 -10 15 -20",
+            "expected": "-10",
+            "actual": "-10",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

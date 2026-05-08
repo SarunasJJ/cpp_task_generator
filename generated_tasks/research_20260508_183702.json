@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-08T18:37:02.205285",
+  "provider": "gemini",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Unit Converter: Feet and Inches to Centimeters",
+      "description": "Understanding different units of measurement is fundamental in many fields, from engineering to daily life. Often, you might encounter measurements in one system (like imperial) and need to convert them to another (like metric) for consistency or specific requirements. Knowing how to perform these conversions programmatically is a practical skill.\n\nYour task is to write a C program that reads a length in feet and inches, then converts this total length into centimeters. The program must read two integer values from standard input: first the number of feet, then the number of inches. Assume 1 foot = 12 inches and 1 inch = 2.54 centimeters. The output should be the total length in centimeters, displayed as a floating-point number with two decimal places. Ensure that feet and inches are non-negative.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int feet;\n    int inches;\n    double total_inches;\n    double centimeters;\n\n    // Read feet and inches from stdin\n    scanf(\"%d %d\", &feet, &inches);\n\n    // Convert feet to inches and add to existing inches\n    total_inches = (double)feet * 12.0 + inches;\n\n    // Convert total inches to centimeters\n    centimeters = total_inches * 2.54;\n\n    // Print the result formatted to two decimal places\n    printf(\"Total Centimeters: %.2f\\n\", centimeters);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 8",
+          "expected_output": "Total Centimeters: 172.72"
+        },
+        {
+          "input": "0 10",
+          "expected_output": "Total Centimeters: 25.40"
+        },
+        {
+          "input": "10 0",
+          "expected_output": "Total Centimeters: 304.80"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 8",
+            "expected": "Total Centimeters: 172.72",
+            "actual": "Total Centimeters: 172.72",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 10",
+            "expected": "Total Centimeters: 25.40",
+            "actual": "Total Centimeters: 25.40",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10 0",
+            "expected": "Total Centimeters: 304.80",
+            "actual": "Total Centimeters: 304.80",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Time Splitter: Total Seconds to HH:MM:SS",
+      "description": "In computing, time is often represented as a single large number, such as total seconds since an epoch. However, for human readability, it's frequently necessary to break this down into more intuitive units like hours, minutes, and remaining seconds. This conversion requires careful use of integer division and the modulo operator.\n\nYour task is to write a C program that takes a single non-negative integer representing a total number of seconds. The program should then calculate and print the equivalent duration in hours, minutes, and seconds. The output format should clearly label each component. Assume the total seconds will not exceed what can be stored in an `int`.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int total_seconds;\n    int hours;\n    int minutes;\n    int seconds;\n\n    // Read total seconds from stdin\n    scanf(\"%d\", &total_seconds);\n\n    // Calculate hours\n    hours = total_seconds / 3600;\n\n    // Calculate remaining seconds after extracting hours\n    total_seconds = total_seconds % 3600;\n\n    // Calculate minutes from remaining seconds\n    minutes = total_seconds / 60;\n\n    // Calculate remaining seconds after extracting minutes\n    seconds = total_seconds % 60;\n\n    // Print the result\n    printf(\"Hours: %d, Minutes: %d, Seconds: %d\\n\", hours, minutes, seconds);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "7385",
+          "expected_output": "Hours: 2, Minutes: 3, Seconds: 5"
+        },
+        {
+          "input": "3600",
+          "expected_output": "Hours: 1, Minutes: 0, Seconds: 0"
+        },
+        {
+          "input": "59",
+          "expected_output": "Hours: 0, Minutes: 0, Seconds: 59"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "7385",
+            "expected": "Hours: 2, Minutes: 3, Seconds: 5",
+            "actual": "Hours: 2, Minutes: 3, Seconds: 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "3600",
+            "expected": "Hours: 1, Minutes: 0, Seconds: 0",
+            "actual": "Hours: 1, Minutes: 0, Seconds: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "59",
+            "expected": "Hours: 0, Minutes: 0, Seconds: 59",
+            "actual": "Hours: 0, Minutes: 0, Seconds: 59",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Simple Interest Calculator",
+      "description": "Simple interest is a quick and easy method of calculating the interest charge on a loan or investment. It is determined by multiplying the principal amount, the interest rate, and the number of periods for which the money is borrowed or invested. Financial calculations like these are common applications for programming, allowing for quick computation of various scenarios.\n\nYour task is to write a C program that calculates the simple interest. The program will read three values from standard input: the principal amount (a double), the annual interest rate (a double, as a decimal, e.g., 0.05 for 5%), and the time period in years (an integer). The program should then compute and print the simple interest, formatted to two decimal places. All inputs will be non-negative.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    double principal;\n    double rate;\n    int time;\n    double simple_interest;\n\n    // Read principal, rate, and time from stdin\n    scanf(\"%lf %lf %d\", &principal, &rate, &time);\n\n    // Calculate simple interest: P * R * T\n    simple_interest = principal * rate * time;\n\n    // Print the result formatted to two decimal places\n    printf(\"Simple Interest: %.2f\\n\", simple_interest);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1000.0 0.05 3",
+          "expected_output": "Simple Interest: 150.00"
+        },
+        {
+          "input": "500.0 0.025 10",
+          "expected_output": "Simple Interest: 125.00"
+        },
+        {
+          "input": "2500.0 0.07 1",
+          "expected_output": "Simple Interest: 175.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1000.0 0.05 3",
+            "expected": "Simple Interest: 150.00",
+            "actual": "Simple Interest: 150.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "500.0 0.025 10",
+            "expected": "Simple Interest: 125.00",
+            "actual": "Simple Interest: 125.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "2500.0 0.07 1",
+            "expected": "Simple Interest: 175.00",
+            "actual": "Simple Interest: 175.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Number Swapper (Arithmetic Method)",
+      "description": "Swapping the values of two variables is a common operation in programming. While typically done with a temporary variable, it's also possible to achieve this using only arithmetic operators, without declaring any additional variables. This technique demonstrates a clever use of operators and understanding how values change during sequential assignments.\n\nYour task is to write a C program that reads two integer values from standard input, then swaps their values using only arithmetic operators (`+`, `-`, `*`, `/`, `%`) and assignment operators. You are expressly forbidden from using a third temporary variable. After swapping, print the new values of the two numbers. The input integers will be within the `int` range.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num1;\n    int num2;\n\n    // Read two integers from stdin\n    scanf(\"%d %d\", &num1, &num2);\n\n    // Swap using arithmetic operations\n    num1 = num1 + num2; // num1 now holds the sum of original num1 and num2\n    num2 = num1 - num2; // num2 now holds original num1 (sum - original num2)\n    num1 = num1 - num2; // num1 now holds original num2 (sum - new num2 which is original num1)\n\n    // Print the swapped values\n    printf(\"Swapped values: %d %d\\n\", num1, num2);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10 20",
+          "expected_output": "Swapped values: 20 10"
+        },
+        {
+          "input": "5 -3",
+          "expected_output": "Swapped values: -3 5"
+        },
+        {
+          "input": "0 0",
+          "expected_output": "Swapped values: 0 0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 20",
+            "expected": "Swapped values: 20 10",
+            "actual": "Swapped values: 20 10",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 -3",
+            "expected": "Swapped values: -3 5",
+            "actual": "Swapped values: -3 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0 0",
+            "expected": "Swapped values: 0 0",
+            "actual": "Swapped values: 0 0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Temperature Converter: Celsius to Fahrenheit and Kelvin",
+      "description": "Temperature conversion is a common requirement in science, engineering, and daily weather reports. Different scales, such as Celsius, Fahrenheit, and Kelvin, are used worldwide, and understanding how to convert between them is a fundamental skill, both conceptually and programmatically. This exercise focuses on converting from Celsius to two other popular scales.\n\nYour task is to write a C program that reads a temperature in Celsius (as a double) from standard input. It should then calculate and print the equivalent temperatures in Fahrenheit and Kelvin. Use the following formulas:\nFahrenheit = (Celsius * 9/5) + 32\nKelvin = Celsius + 273.15\nBoth output temperatures should be formatted to two decimal places.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    double celsius;\n    double fahrenheit;\n    double kelvin;\n\n    // Read Celsius temperature from stdin\n    scanf(\"%lf\", &celsius);\n\n    // Calculate Fahrenheit temperature\n    fahrenheit = (celsius * 9.0 / 5.0) + 32.0;\n\n    // Calculate Kelvin temperature\n    kelvin = celsius + 273.15;\n\n    // Print the results formatted to two decimal places\n    printf(\"Fahrenheit: %.2f\\n\", fahrenheit);\n    printf(\"Kelvin: %.2f\\n\", kelvin);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "25.0",
+          "expected_output": "Fahrenheit: 77.00\nKelvin: 298.15"
+        },
+        {
+          "input": "0.0",
+          "expected_output": "Fahrenheit: 32.00\nKelvin: 273.15"
+        },
+        {
+          "input": "-40.0",
+          "expected_output": "Fahrenheit: -40.00\nKelvin: 233.15"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "25.0",
+            "expected": "Fahrenheit: 77.00\nKelvin: 298.15",
+            "actual": "Fahrenheit: 77.00\nKelvin: 298.15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0.0",
+            "expected": "Fahrenheit: 32.00\nKelvin: 273.15",
+            "actual": "Fahrenheit: 32.00\nKelvin: 273.15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-40.0",
+            "expected": "Fahrenheit: -40.00\nKelvin: 233.15",
+            "actual": "Fahrenheit: -40.00\nKelvin: 233.15",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Weighted Average of Three Scores",
+      "description": "Weighted averages are frequently used in academics, finance, and statistics to give different importance to various components when calculating an overall average. For example, in a course, exams might count for more than homework assignments. This requires multiplying each component by its specific weight before summing them up and dividing by the total weight.\n\nYour task is to write a C program that calculates the weighted average of three scores. The program will read six integer values from standard input: `score1`, `weight1`, `score2`, `weight2`, `score3`, `weight3`. Each score and weight will be a non-negative integer. The program should compute and print the weighted average, formatted to two decimal places.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int score1, weight1;\n    int score2, weight2;\n    int score3, weight3;\n    double weighted_average;\n    int total_weight;\n\n    // Read scores and weights from stdin\n    scanf(\"%d %d %d %d %d %d\", &score1, &weight1, &score2, &weight2, &score3, &weight3);\n\n    // Calculate the sum of (score * weight)\n    double weighted_sum = (double)(score1 * weight1) + (score2 * weight2) + (score3 * weight3);\n\n    // Calculate the total weight\n    total_weight = weight1 + weight2 + weight3;\n\n    // Calculate the weighted average\n    weighted_average = weighted_sum / total_weight;\n\n    // Print the result formatted to two decimal places\n    printf(\"Weighted Average: %.2f\\n\", weighted_average);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "80 2 90 3 70 1",
+          "expected_output": "Weighted Average: 83.33"
+        },
+        {
+          "input": "100 1 100 1 100 1",
+          "expected_output": "Weighted Average: 100.00"
+        },
+        {
+          "input": "60 4 75 1 90 2",
+          "expected_output": "Weighted Average: 70.71"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "80 2 90 3 70 1",
+            "expected": "Weighted Average: 83.33",
+            "actual": "Weighted Average: 83.33",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100 1 100 1 100 1",
+            "expected": "Weighted Average: 100.00",
+            "actual": "Weighted Average: 100.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "60 4 75 1 90 2",
+            "expected": "Weighted Average: 70.71",
+            "actual": "Weighted Average: 70.71",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Resource Distributor: Items Per Person and Remainder",
+      "description": "Distributing a quantity of items evenly among a group is a common scenario, from sharing resources to allocating tasks. In such situations, it's often necessary to know not only how many items each person receives but also how many items, if any, are left over. This involves a direct application of integer division and the modulo operator.\n\nYour task is to write a C program that simulates the distribution of items. The program will read two positive integer values from standard input: the total number of items available and the number of people. It should then calculate and print two values: the number of items each person receives (assuming an equal, whole number distribution) and the number of items remaining. Both outputs should be clearly labeled. Assume `people` will always be greater than 0.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int total_items;\n    int num_people;\n    int items_per_person;\n    int remaining_items;\n\n    // Read total items and number of people from stdin\n    scanf(\"%d %d\", &total_items, &num_people);\n\n    // Calculate items each person receives\n    items_per_person = total_items / num_people;\n\n    // Calculate remaining items\n    remaining_items = total_items % num_people;\n\n    // Print the results\n    printf(\"Items per person: %d\\n\", items_per_person);\n    printf(\"Remaining items: %d\\n\", remaining_items);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "100 7",
+          "expected_output": "Items per person: 14\nRemaining items: 2"
+        },
+        {
+          "input": "50 5",
+          "expected_output": "Items per person: 10\nRemaining items: 0"
+        },
+        {
+          "input": "10 3",
+          "expected_output": "Items per person: 3\nRemaining items: 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "100 7",
+            "expected": "Items per person: 14\nRemaining items: 2",
+            "actual": "Items per person: 14\nRemaining items: 2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "50 5",
+            "expected": "Items per person: 10\nRemaining items: 0",
+            "actual": "Items per person: 10\nRemaining items: 0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "10 3",
+            "expected": "Items per person: 3\nRemaining items: 1",
+            "actual": "Items per person: 3\nRemaining items: 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Digit Extractor for 3-Digit Numbers",
+      "description": "Decomposing a number into its individual digits is a classic problem in programming that helps solidify understanding of integer division and the modulo operator. This technique is useful in various algorithms, such as checksum calculations or converting numbers to different bases, and serves as a fundamental building block for more complex numeric manipulations.\n\nYour task is to write a C program that reads a single 3-digit positive integer from standard input (e.g., 123, 589, 901). The program should then extract and print each of its digits: the hundreds digit, the tens digit, and the units (ones) digit. Each digit should be printed on a separate line, clearly labeled. Assume the input is always a positive 3-digit integer (100-999).",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int number;\n    int hundreds_digit;\n    int tens_digit;\n    int units_digit;\n\n    // Read the 3-digit number from stdin\n    scanf(\"%d\", &number);\n\n    // Extract the hundreds digit\n    hundreds_digit = number / 100;\n\n    // Extract the tens digit (first remove hundreds, then divide by 10)\n    tens_digit = (number % 100) / 10;\n\n    // Extract the units digit\n    units_digit = number % 10;\n\n    // Print the extracted digits\n    printf(\"Hundreds digit: %d\\n\", hundreds_digit);\n    printf(\"Tens digit: %d\\n\", tens_digit);\n    printf(\"Units digit: %d\\n\", units_digit);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "472",
+          "expected_output": "Hundreds digit: 4\nTens digit: 7\nUnits digit: 2"
+        },
+        {
+          "input": "905",
+          "expected_output": "Hundreds digit: 9\nTens digit: 0\nUnits digit: 5"
+        },
+        {
+          "input": "111",
+          "expected_output": "Hundreds digit: 1\nTens digit: 1\nUnits digit: 1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "472",
+            "expected": "Hundreds digit: 4\nTens digit: 7\nUnits digit: 2",
+            "actual": "Hundreds digit: 4\nTens digit: 7\nUnits digit: 2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "905",
+            "expected": "Hundreds digit: 9\nTens digit: 0\nUnits digit: 5",
+            "actual": "Hundreds digit: 9\nTens digit: 0\nUnits digit: 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "111",
+            "expected": "Hundreds digit: 1\nTens digit: 1\nUnits digit: 1",
+            "actual": "Hundreds digit: 1\nTens digit: 1\nUnits digit: 1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Fuel Efficiency Calculator (Miles Per Gallon)",
+      "description": "Calculating fuel efficiency, typically measured in Miles Per Gallon (MPG), is important for drivers to monitor vehicle performance and fuel consumption. This simple calculation provides insight into how efficiently a vehicle uses fuel, allowing for comparisons or identification of potential issues. It's a straightforward application of basic arithmetic operations.\n\nYour task is to write a C program that calculates a car's fuel efficiency. The program will read three double values from standard input: the initial odometer reading, the final odometer reading, and the amount of fuel consumed in gallons. All values will be non-negative. The program should then compute the MPG and print it, formatted to two decimal places.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    double initial_odometer;\n    double final_odometer;\n    double fuel_consumed;\n    double miles_driven;\n    double mpg;\n\n    // Read initial odometer, final odometer, and fuel consumed from stdin\n    scanf(\"%lf %lf %lf\", &initial_odometer, &final_odometer, &fuel_consumed);\n\n    // Calculate total miles driven\n    miles_driven = final_odometer - initial_odometer;\n\n    // Calculate Miles Per Gallon (MPG)\n    mpg = miles_driven / fuel_consumed;\n\n    // Print the result formatted to two decimal places\n    printf(\"Miles Per Gallon: %.2f\\n\", mpg);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10000.0 10300.0 10.0",
+          "expected_output": "Miles Per Gallon: 30.00"
+        },
+        {
+          "input": "50000.0 50250.0 7.5",
+          "expected_output": "Miles Per Gallon: 33.33"
+        },
+        {
+          "input": "0.0 45.0 2.0",
+          "expected_output": "Miles Per Gallon: 22.50"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10000.0 10300.0 10.0",
+            "expected": "Miles Per Gallon: 30.00",
+            "actual": "Miles Per Gallon: 30.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "50000.0 50250.0 7.5",
+            "expected": "Miles Per Gallon: 33.33",
+            "actual": "Miles Per Gallon: 33.33",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0.0 45.0 2.0",
+            "expected": "Miles Per Gallon: 22.50",
+            "actual": "Miles Per Gallon: 22.50",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Transaction Change Calculator",
+      "description": "Calculating change after a purchase is a routine task in everyday commerce. While simple for humans, programming this task requires converting all monetary values to a common unit (like cents), performing subtraction, and then converting the total change back into dollars and cents. This exercise combines multiple steps of unit conversion and arithmetic.\n\nYour task is to write a C program that calculates the exact change to be given for a transaction. The program will read four integer values from standard input: `item_dollars`, `item_cents` (for the price of the item), and `paid_dollars`, `paid_cents` (for the amount paid by the customer). All values will be non-negative, and the paid amount will always be greater than or equal to the item's price. The program should calculate the total change in dollars and cents and print it in a clear format.",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int item_dollars, item_cents;\n    int paid_dollars, paid_cents;\n    int item_total_cents;\n    int paid_total_cents;\n    int change_total_cents;\n    int change_dollars;\n    int change_cents;\n\n    // Read item price (dollars and cents)\n    scanf(\"%d %d\", &item_dollars, &item_cents);\n\n    // Read amount paid (dollars and cents)\n    scanf(\"%d %d\", &paid_dollars, &paid_cents);\n\n    // Convert item price to total cents\n    item_total_cents = item_dollars * 100 + item_cents;\n\n    // Convert paid amount to total cents\n    paid_total_cents = paid_dollars * 100 + paid_cents;\n\n    // Calculate total change in cents\n    change_total_cents = paid_total_cents - item_total_cents;\n\n    // Convert total change cents back to dollars and cents\n    change_dollars = change_total_cents / 100;\n    change_cents = change_total_cents % 100;\n\n    // Print the change\n    printf(\"Change: %d dollars and %d cents\\n\", change_dollars, change_cents);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "15 75\n20 0",
+          "expected_output": "Change: 4 dollars and 25 cents"
+        },
+        {
+          "input": "10 0\n10 0",
+          "expected_output": "Change: 0 dollars and 0 cents"
+        },
+        {
+          "input": "3 99\n5 50",
+          "expected_output": "Change: 1 dollars and 51 cents"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "15 75\n20 0",
+            "expected": "Change: 4 dollars and 25 cents",
+            "actual": "Change: 4 dollars and 25 cents",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "10 0\n10 0",
+            "expected": "Change: 0 dollars and 0 cents",
+            "actual": "Change: 0 dollars and 0 cents",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "3 99\n5 50",
+            "expected": "Change: 1 dollars and 51 cents",
+            "actual": "Change: 1 dollars and 51 cents",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

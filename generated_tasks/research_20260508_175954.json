@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-05-08T17:59:54.887469",
+  "provider": "claude",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Temperature Conversion with Range Validation",
+      "description": "Temperature conversion is a fundamental operation in many applications, from weather forecasting to industrial process control. When converting between temperature scales, it is important not only to perform the mathematical transformation but also to validate that the input falls within physically reasonable or application-specific bounds.\n\nYour program must read a temperature value in Celsius and convert it to Fahrenheit. However, you must first check whether the input temperature is within the valid range of \u221250 to 50 degrees Celsius (inclusive). If the temperature is outside this range, print an error message. If it is valid, compute the Fahrenheit equivalent using the formula F = (C \u00d7 9/5) + 32 and print the result rounded to one decimal place.\n\nWORKED EXAMPLE:\nInput: 0 \u2192 valid, F = 32.0. Input: \u221240 \u2192 valid, F = \u221240.0. Input: 60 \u2192 outside range, error.",
+      "solution": "#include <stdio.h>\n#include <math.h>\n\nint main(void) {\n    double celsius;\n    \n    scanf(\"%lf\", &celsius);\n    \n    if (celsius < -50.0 || celsius > 50.0) {\n        printf(\"Error: temperature out of range\\n\");\n    } else {\n        double fahrenheit = (celsius * 9.0 / 5.0) + 32.0;\n        printf(\"%.1f\\n\", fahrenheit);\n    }\n    \n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "0",
+          "expected_output": "32.0"
+        },
+        {
+          "input": "-40",
+          "expected_output": "-40.0"
+        },
+        {
+          "input": "25",
+          "expected_output": "77.0"
+        },
+        {
+          "input": "60",
+          "expected_output": "Error: temperature out of range"
+        },
+        {
+          "input": "-51",
+          "expected_output": "Error: temperature out of range"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "0",
+            "expected": "32.0",
+            "actual": "32.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-40",
+            "expected": "-40.0",
+            "actual": "-40.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "25",
+            "expected": "77.0",
+            "actual": "77.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 4,
+            "input": "60",
+            "expected": "Error: temperature out of range",
+            "actual": "Error: temperature out of range",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 5,
+            "input": "-51",
+            "expected": "Error: temperature out of range",
+            "actual": "Error: temperature out of range",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

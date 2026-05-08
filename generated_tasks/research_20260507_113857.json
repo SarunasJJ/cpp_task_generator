@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-07T11:38:57.943164",
+  "provider": "gpt",
+  "num_tasks": 1,
+  "tasks": [
+    {
+      "title": "Count the Numbers Above a Threshold",
+      "description": "In many real situations, you need to check a list of values and count how many meet a certain condition. For example, a teacher might want to know how many test scores are above a passing mark, or a store might count how many items are priced above a budget limit. This exercise uses simple conditional checks inside a loop.\n\nYour program must read two integers `n` and `limit` from stdin, where `0 <= n <= 1000`. Then it must read exactly `n` more integers. Count how many of those `n` integers are strictly greater than `limit`, and print that count followed by a newline. If `n` is 0, no additional integers are read, and the program must print `0`. Negative numbers may appear in the list and should be handled normally.\n\nWORKED EXAMPLE:\nInput: 5 10 3 12 10 18 7 \u2192 count: 0 \u2192 1 \u2192 1 \u2192 2 \u2192 2. Output: 2",
+      "solution": "#include <stdio.h>\n\nint main(void) {\n    int n, limit;\n    int count = 0;\n\n    if (scanf(\"%d %d\", &n, &limit) != 2) {\n        return 0;\n    }\n\n    for (int i = 0; i < n; i++) {\n        int x;\n        if (scanf(\"%d\", &x) != 1) {\n            return 0;\n        }\n        if (x > limit) {\n            count++;\n        }\n    }\n\n    printf(\"%d\\n\", count);\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 10\n3 12 10 18 7",
+          "expected_output": "2"
+        },
+        {
+          "input": "0 100",
+          "expected_output": "0"
+        },
+        {
+          "input": "4 -2\n-5 -2 0 -1",
+          "expected_output": "2"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 10\n3 12 10 18 7",
+            "expected": "2",
+            "actual": "2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "0 100",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "4 -2\n-5 -2 0 -1",
+            "expected": "2",
+            "actual": "2",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}

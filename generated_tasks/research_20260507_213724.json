@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-05-07T21:37:24.451026",
+  "provider": "gemini",
+  "num_tasks": 10,
+  "tasks": [
+    {
+      "title": "Sum of Two Integers",
+      "description": "Variables are fundamental building blocks in programming, acting as containers to store data. Arithmetic operators like `+` allow us to perform basic mathematical calculations with these stored values, which is essential for tasks ranging from totaling items in a shopping cart to summing numerical series.\n\nYour task is to write a program that reads two whole numbers (integers) from standard input. It should then calculate their sum and print the result to standard output, followed by a newline character. The input integers will be within the range of -1000 to 1000.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num1;\n    int num2;\n\n    // Read two integers from stdin\n    scanf(\"%d %d\", &num1, &num2);\n\n    // Calculate their sum and print it\n    printf(\"%d\\n\", num1 + num2);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 10",
+          "expected_output": "15"
+        },
+        {
+          "input": "-3 7",
+          "expected_output": "4"
+        },
+        {
+          "input": "100 0",
+          "expected_output": "100"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 10",
+            "expected": "15",
+            "actual": "15",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-3 7",
+            "expected": "4",
+            "actual": "4",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "100 0",
+            "expected": "100",
+            "actual": "100",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Product and Integer Quotient",
+      "description": "Beyond addition, multiplication (`*`) and division (`/`) are crucial arithmetic operations for manipulating numerical data. Multiplication helps calculate totals, while division can distribute quantities. When dividing two integers in C, the result is an integer, meaning any fractional part is truncated.\n\nYour program must read two integers from standard input. It should first calculate their product and print it. Then, on a new line, it should calculate the integer quotient of the first number divided by the second number and print that result. Assume the second integer will always be non-zero.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int a;\n    int b;\n\n    // Read two integers\n    scanf(\"%d %d\", &a, &b);\n\n    // Calculate and print product\n    printf(\"%d\\n\", a * b);\n\n    // Calculate and print integer quotient\n    printf(\"%d\\n\", a / b);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10 3",
+          "expected_output": "30\n3"
+        },
+        {
+          "input": "7 2",
+          "expected_output": "14\n3"
+        },
+        {
+          "input": "-15 4",
+          "expected_output": "-60\n-3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 3",
+            "expected": "30\n3",
+            "actual": "30\n3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "7 2",
+            "expected": "14\n3",
+            "actual": "14\n3",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-15 4",
+            "expected": "-60\n-3",
+            "actual": "-60\n-3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Remainder Calculation",
+      "description": "The modulo operator (`%`) is a special arithmetic operator that computes the remainder of a division. It's incredibly useful for tasks like determining if a number is even or odd, cycling through a sequence, or distributing items evenly. Understanding its behavior is key for many programming patterns.\n\nYour program should read two positive integers from standard input. It must then calculate the remainder when the first integer is divided by the second integer. Finally, print this remainder to standard output. Both input integers will be positive, and the second integer will always be greater than zero.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int dividend;\n    int divisor;\n\n    // Read two positive integers\n    scanf(\"%d %d\", &dividend, &divisor);\n\n    // Calculate and print the remainder\n    printf(\"%d\\n\", dividend % divisor);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "17 5",
+          "expected_output": "2"
+        },
+        {
+          "input": "10 2",
+          "expected_output": "0"
+        },
+        {
+          "input": "3 8",
+          "expected_output": "3"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "17 5",
+            "expected": "2",
+            "actual": "2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "10 2",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "3 8",
+            "expected": "3",
+            "actual": "3",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Rectangle Area Calculator",
+      "description": "Variables are perfect for storing real-world measurements like the dimensions of a shape. Arithmetic operators then allow us to apply mathematical formulas to these measurements. Calculating the area of a rectangle is a basic geometry problem, commonly encountered in design, construction, or resource allocation.\n\nYour program should read two positive integers representing the length and width of a rectangle from standard input. It must then calculate the area of the rectangle (length multiplied by width) and print the resulting area to standard output, followed by a newline. Both length and width will be positive integers.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int length;\n    int width;\n\n    // Read length and width\n    scanf(\"%d %d\", &length, &width);\n\n    // Calculate and print the area\n    printf(\"%d\\n\", length * width);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 8",
+          "expected_output": "40"
+        },
+        {
+          "input": "10 1",
+          "expected_output": "10"
+        },
+        {
+          "input": "12 12",
+          "expected_output": "144"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 8",
+            "expected": "40",
+            "actual": "40",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "10 1",
+            "expected": "10",
+            "actual": "10",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "12 12",
+            "expected": "144",
+            "actual": "144",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Average of Three Numbers",
+      "description": "When performing calculations that might result in fractional values, such as computing an average, it's important to use floating-point variables (like `float` or `double`) to preserve precision. Type casting is often necessary to ensure that integer operations yield a floating-point result, preventing truncation of decimal parts.\n\nYour program needs to read three integers from standard input. Calculate their average. The result should be printed as a floating-point number, rounded to two decimal places.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num1, num2, num3;\n\n    // Read three integers\n    scanf(\"%d %d %d\", &num1, &num2, &num3);\n\n    // Calculate sum as float to ensure float division\n    float sum = (float)(num1 + num2 + num3);\n    float average = sum / 3.0f; // Use 3.0f to ensure float division\n\n    // Print the average rounded to two decimal places\n    printf(\"%.2f\\n\", average);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "10 20 30",
+          "expected_output": "20.00"
+        },
+        {
+          "input": "5 5 6",
+          "expected_output": "5.33"
+        },
+        {
+          "input": "1 2 3",
+          "expected_output": "2.00"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "10 20 30",
+            "expected": "20.00",
+            "actual": "20.00",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "5 5 6",
+            "expected": "5.33",
+            "actual": "5.33",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "1 2 3",
+            "expected": "2.00",
+            "actual": "2.00",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Celsius to Fahrenheit Converter",
+      "description": "Many scientific and engineering applications involve converting values between different units using specific formulas. Variables declared as `float` are ideal for holding these real numbers with decimal points, and standard arithmetic operators are used to apply the conversion logic.\n\nYour task is to write a program that reads a floating-point number representing a temperature in Celsius from standard input. It should convert this temperature to Fahrenheit using the formula `F = C * 9/5 + 32`. Print the resulting Fahrenheit temperature, rounded to one decimal place.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    float celsius;\n\n    // Read Celsius temperature\n    scanf(\"%f\", &celsius);\n\n    // Convert to Fahrenheit using the formula\n    // Use 9.0f/5.0f to ensure float division\n    float fahrenheit = celsius * (9.0f / 5.0f) + 32.0f;\n\n    // Print Fahrenheit temperature rounded to one decimal place\n    printf(\"%.1f\\n\", fahrenheit);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "0.0",
+          "expected_output": "32.0"
+        },
+        {
+          "input": "25.5",
+          "expected_output": "77.9"
+        },
+        {
+          "input": "-10.0",
+          "expected_output": "14.0"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "0.0",
+            "expected": "32.0",
+            "actual": "32.0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "25.5",
+            "expected": "77.9",
+            "actual": "77.9",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-10.0",
+            "expected": "14.0",
+            "actual": "14.0",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Swap Two Numbers",
+      "description": "Sometimes, it's necessary to exchange the values held by two variables. A common technique for this involves using a third, temporary variable to hold one of the values during the swap, preventing data loss. This demonstrates the basic assignment operator (`=`) and variable manipulation.\n\nYour program should read two integers from standard input. Using a temporary variable, swap the values of these two integers. After swapping, print the new value of the first integer, followed by a space, and then the new value of the second integer.\n\nWORKED EXAMPLE:\nInput: 10 20 \u2192 First value: 10 \u2192 20, Second value: 20 \u2192 10. Output: 20 10",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num1;\n    int num2;\n    int temp; // Temporary variable for swapping\n\n    // Read the two integers\n    scanf(\"%d %d\", &num1, &num2);\n\n    // Swap the values using a temporary variable\n    temp = num1;\n    num1 = num2;\n    num2 = temp;\n\n    // Print the swapped values\n    printf(\"%d %d\\n\", num1, num2);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5 10",
+          "expected_output": "10 5"
+        },
+        {
+          "input": "100 200",
+          "expected_output": "200 100"
+        },
+        {
+          "input": "-7 3",
+          "expected_output": "3 -7"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5 10",
+            "expected": "10 5",
+            "actual": "10 5",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "100 200",
+            "expected": "200 100",
+            "actual": "200 100",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "-7 3",
+            "expected": "3 -7",
+            "actual": "3 -7",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Increment and Decrement Operations",
+      "description": "The increment (`++`) and decrement (`--`) operators are unary operators that provide a shorthand way to add or subtract one from a variable's value. They are frequently used in loops and counters to efficiently modify numerical variables.\n\nYour program should read a single integer from standard input. First, increment its value by 1 using the `++` operator and print the new value. Then, starting with the *original input value* (you may need to store it in a separate variable), decrement it by 1 using the `--` operator and print its new value. Each new value should be printed on a separate line.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int value;\n    int original_value;\n\n    // Read the integer\n    scanf(\"%d\", &value);\n\n    // Store the original value for the decrement operation\n    original_value = value;\n\n    // Increment value and print\n    value++;\n    printf(\"%d\\n\", value);\n\n    // Decrement original_value and print\n    original_value--;\n    printf(\"%d\\n\", original_value);\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "6\n4"
+        },
+        {
+          "input": "-1",
+          "expected_output": "0\n-2"
+        },
+        {
+          "input": "0",
+          "expected_output": "1\n-1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "5",
+            "expected": "6\n4",
+            "actual": "6\n4",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "-1",
+            "expected": "0\n-2",
+            "actual": "0\n-2",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0",
+            "expected": "1\n-1",
+            "actual": "1\n-1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Is a Number Even?",
+      "description": "The modulo operator combined with relational operators (`==`, `!=`, etc.) allows us to test conditions and properties of numbers. Determining if a number is even or odd is a fundamental check used in many algorithms, from sorting to number theory problems.\n\nYour program needs to read a single integer from standard input. Determine if this number is even. Print `1` to standard output if the number is even, and `0` if it is odd. Use the modulo operator and a relational operator for this check.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int num;\n\n    // Read the integer\n    scanf(\"%d\", &num);\n\n    // Check if the number is even (remainder when divided by 2 is 0)\n    // The expression (num % 2 == 0) evaluates to 1 (true) or 0 (false)\n    printf(\"%d\\n\", (num % 2 == 0));\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "4",
+          "expected_output": "1"
+        },
+        {
+          "input": "7",
+          "expected_output": "0"
+        },
+        {
+          "input": "0",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "4",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "7",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "0",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    },
+    {
+      "title": "Simple Logical AND",
+      "description": "Logical operators (`&&` for AND, `||` for OR, `!` for NOT) are used to combine or negate boolean conditions, forming more complex decision-making logic. The logical AND operator (`&&`) evaluates to true only if both of its operands are true. In C, `0` is considered false, and any non-zero value is considered true.\n\nYour program should read two integers from standard input. Treat these integers as boolean values (0 for false, any non-zero for true). Compute their logical AND. Print `1` to standard output if the result is true (both inputs were non-zero), and `0` otherwise.\n\nWORKED EXAMPLE:\n(Omitted as no value accumulates or changes across steps.)",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int condition1;\n    int condition2;\n\n    // Read two integers representing boolean values\n    scanf(\"%d %d\", &condition1, &condition2);\n\n    // Compute their logical AND\n    // The expression (condition1 && condition2) evaluates to 1 (true) or 0 (false)\n    printf(\"%d\\n\", (condition1 && condition2));\n\n    return 0;\n}",
+      "test_cases": [
+        {
+          "input": "1 1",
+          "expected_output": "1"
+        },
+        {
+          "input": "1 0",
+          "expected_output": "0"
+        },
+        {
+          "input": "5 10",
+          "expected_output": "1"
+        }
+      ],
+      "validation": {
+        "compiled": true,
+        "compilation_error": null,
+        "test_results": [
+          {
+            "test_number": 1,
+            "input": "1 1",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 2,
+            "input": "1 0",
+            "expected": "0",
+            "actual": "0",
+            "passed": true,
+            "error": null
+          },
+          {
+            "test_number": 3,
+            "input": "5 10",
+            "expected": "1",
+            "actual": "1",
+            "passed": true,
+            "error": null
+          }
+        ],
+        "all_passed": true
+      },
+      "valid": true
+    }
+  ]
+}
