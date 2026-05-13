@@ -53,7 +53,7 @@ class LLMClient:
                 model = os.getenv("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
                 msg = self._anthropic_client.messages.create(
                     model=model,
-                    max_tokens=8192,
+                    max_tokens=int(os.getenv("CLAUDE_MAX_TOKENS", "16000")),
                     messages=[{"role": "user", "content": prompt}],
                 )
                 block = msg.content[0]

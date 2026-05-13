@@ -115,7 +115,7 @@ function TaskCard({ task, index }) {
                 <div>
                   <strong>Input:</strong>{' '}
                   <span style={{ whiteSpace: 'pre-wrap' }}>{tc.input}</span>
-                </div>
+                </div>``
                 <div>
                   <strong>Expected output:</strong>{' '}
                   <span style={{ whiteSpace: 'pre-wrap' }}>{tc.expected_output}</span>
