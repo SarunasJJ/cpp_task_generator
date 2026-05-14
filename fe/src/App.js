@@ -115,7 +115,7 @@ function TaskCard({ task, index }) {
                 <div>
                   <strong>Input:</strong>{' '}
                   <span style={{ whiteSpace: 'pre-wrap' }}>{tc.input}</span>
-                </div>``
+                </div>
                 <div>
                   <strong>Expected output:</strong>{' '}
                   <span style={{ whiteSpace: 'pre-wrap' }}>{tc.expected_output}</span>
@@ -193,47 +193,18 @@ function App() {
     topic: TOPICS[0].value,
     num_tasks: 1,
     provider: 'gemini',
-    api_key: '',
   });
 
   const [tasks, setTasks] = useState([]);
   const [meta, setMeta] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [configLoading, setConfigLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [configMessage, setConfigMessage] = useState(null);
   const [activeTab, setActiveTab] = useState('generator');
 
   const [jsonFiles, setJsonFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState(null);
   const [loadingFiles, setLoadingFiles] = useState(false);
-
-  const saveConfig = async () => {
-    setConfigMessage(null);
-    setError(null);
-    if (!config.api_key.trim()) {
-      setConfigMessage({ type: 'error', text: 'Enter an API key to save.' });
-      return;
-    }
-    setConfigLoading(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/config`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ provider: config.provider, api_key: config.api_key.trim() }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setConfigMessage({ type: 'ok', text: `${data.provider} API key saved on server.` });
-      } else {
-        setConfigMessage({ type: 'error', text: data.error || 'Config failed' });
-      }
-    } catch (err) {
-      setConfigMessage({ type: 'error', text: 'Network error talking to server.' });
-    }
-    setConfigLoading(false);
-  };
 
   const generate = async () => {
     setLoading(true);
@@ -246,9 +217,6 @@ function App() {
       num_tasks: parseInt(config.num_tasks, 10),
       provider: config.provider,
     };
-    if (config.api_key.trim()) {
-      body.api_key = config.api_key.trim();
-    }
 
     try {
       const res = await fetch(`${API_BASE}/api/generate`, {
@@ -385,51 +353,6 @@ function App() {
             </label>
 
             <label>
-              <strong>API key (optional if set in env or saved):</strong>
-              <br />
-              <input
-                type="password"
-                name="api_key"
-                autoComplete="off"
-                placeholder="Paste key — or rely on server env / saved config"
-                value={config.api_key}
-                onChange={handleChange}
-                style={{ width: '100%', padding: '8px', marginTop: '4px', boxSizing: 'border-box' }}
-              />
-            </label>
-
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <button
-                type="button"
-                onClick={saveConfig}
-                disabled={configLoading}
-                style={{
-                  padding: '10px 16px',
-                  background: configLoading ? '#ccc' : '#6c757d',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: configLoading ? 'not-allowed' : 'pointer',
-                }}
-              >
-                {configLoading ? 'Saving…' : 'Save key on server'}
-              </button>
-            </div>
-
-            {configMessage && (
-              <div
-                style={{
-                  padding: '10px',
-                  borderRadius: '4px',
-                  background: configMessage.type === 'ok' ? '#e8f5e9' : '#ffebee',
-                  color: configMessage.type === 'ok' ? '#1b5e20' : '#b71c1c',
-                }}
-              >
-                {configMessage.text}
-              </div>
-            )}
-
-            <label>
               <strong>Topic:</strong>
               <br />
               <select name="topic" value={config.topic} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px' }}>
@@ -525,7 +448,7 @@ function App() {
               )}
             </>
           ) : (
-            !loading && <p style={{ textAlign: 'center', color: '#666' }}>Choose options and generate, or save an API key first.</p>
+            !loading && <p style={{ textAlign: 'center', color: '#666' }}>Choose options and click Generate.</p>
           )}
         </>
       )}
